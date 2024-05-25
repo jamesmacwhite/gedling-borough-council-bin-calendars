@@ -34,7 +34,7 @@ The calendar ICS files are named in the format of `gedling_borough_council_[DAY]
 * Green Bin day - Recycling collection
 * Green Bin + Glass Box day - Recycling and glass collection
 
-This matches the key used on the printed calendar versionss.
+This matches the key used on the printed calendar versions.
 
 All bin day events are set as "All day" events. Bin collections generally occur in the morning, but the time can vary.
 
