@@ -30,7 +30,7 @@ This repostiory hosts all the calendars within the `ical` folder. Using the raw 
 
 In addition, various types of home automation can be driven from calendar events too. I won't go into specific concepts or methods, but chances are if you are interested in doing this, you probably have an idea of what to use and the setup.
 
-Te calendar .ics files try to be as minimalist as possible to provide what is needed as a calendar, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
+The calendar .ics files try to be as minimalist as possible, each event is a simple title with the information available at a glance, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
 
 ## Original printed calendars
 
