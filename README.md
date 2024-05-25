@@ -32,6 +32,20 @@ In addition, various types of home automation can be driven from calendar events
 
 Te calendar .ics files try to be as minimalist as possible to provide what is needed as a calendar, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
 
+## Original printed calendars
+
+Gedling Borough Council produces the official calendars which are intended to be printed documents. These are also available to be viewed as PDF. The location these documents are hosted is on the `apps.gedling.gov.uk` website within the following path:
+
+```
+# Replace [DAY], [CODE] and [YEAR] with relevant data
+https://apps.gedling.gov.uk/refuse/data/[DAY][CODE]-[YEAR].pdf
+
+# Example file
+https://apps.gedling.gov.uk/refuse/data/MondayG2-2024.pdf
+```
+
+This is the original source of data for the calendars.
+
 ## Disclaimer
 
 The information and calendars published in this repository are not provided by Gedling Borough Council and are unofficial. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format is possible. If you spot an error or notice something wrong, please let me know.
