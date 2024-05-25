@@ -18,9 +18,11 @@ There are a total of 20 bin schedules provided by Gedling Borough Council. The b
 
 The Green bin collection is combined with the glass bin collection on the same day, although glass is collected separately.
 
-There is also a further garden bin collection, this however is an extra paid service. Garden waste collections **are not** currently included in the ICS files.
+There is also an additional garden bin collection, this however is an extra paid service. Garden waste collections **are not** currently included in the .ics files.
 
-Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day and code being either G1, G2, G3 or G4, this is visible in both the PDF filename and email subscription URL link. You can use this to then select the correct calendar that matches your area.
+### Finding your bin collection schedule
+
+Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day of the week and code being either G1, G2, G3 or G4, this is visible on the PDF calendar, the PDF filename and email subscription URL link. You can use this information to then select the correct calendar that matches your area.
 
 ## Calendars
 
