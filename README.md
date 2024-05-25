@@ -14,7 +14,7 @@ Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/
 
 ## Calendars
 
-The calendars hosted are labelled in the format of gedling_borough_council_[DAY]_[G1-4]_[YEAR]_bin_schedule.ics. The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date and time is added as a single occurrence with (Changed Collection) in the title.
+The calendars hosted are labelled in the format of `gedling_borough_council_[DAY]_[G1-4]_[YEAR]_bin_schedule.ics`. The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date and time is added as a single occurrence with (Changed Collection) in the title.
 
 The calendar entries are labelled as:
 
