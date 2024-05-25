@@ -58,6 +58,10 @@ https://apps.gedling.gov.uk/refuse/data/MondayG2-2024.pdf
 
 These files are the original source of data for the calendars produced.
 
+## How are these calendars generated?
+
+Nothing fancy, the original printed calendars are human translated into a repeated occurrence calendar events, with the exception of changed collection days which are then one-off instances. I use Google Calendar to create them and then download the public .ics calendar file to this repostiory.
+
 ## Disclaimer
 
 The information and calendars published in this repository are not provided by Gedling Borough Council and are unofficial. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible. If you spot an error or notice something wrong, please let me know.
