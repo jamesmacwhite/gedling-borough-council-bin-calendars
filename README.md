@@ -49,10 +49,14 @@ The calendar .ics files try to be as minimalist as possible, each event is a sim
 Gedling Borough Council produces the official calendars which are intended to be printed flyer documents. These are also available to be viewed as a PDF. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following path:
 
 ```
-# Replace [DAY], [CODE] and [YEAR] with relevant data
 https://apps.gedling.gov.uk/refuse/data/[DAY][CODE]-[YEAR].pdf
+```
 
-# Calendar PDF file
+Replace `[DAY]`, `[CODE]` and `[YEAR]` with relevant data.
+
+An example file stored on this server for the Monday G2 2024 (2023/24) calendar:
+
+```
 https://apps.gedling.gov.uk/refuse/data/MondayG2-2024.pdf
 ```
 
