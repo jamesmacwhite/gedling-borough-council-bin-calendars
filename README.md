@@ -63,8 +63,6 @@ Replace `[DAY]`, `[CODE]` and `[YEAR]` with relevant data.
 https://apps.gedling.gov.uk/refuse/data/[DAY][CODE]-[YEAR].pdf
 ```
 
-Replace `[DAY]`, `[CODE]` and `[YEAR]` with relevant data.
-
 An example file stored on this server for the Monday G2 2024 (2023/24) calendar:
 
 ```
@@ -76,8 +74,11 @@ Replace the `[LETTER]` and `[YEAR]` for garden waste collection.
 ```
 # Example garden waste collection calendar path
 https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20[LETTER]-[YEAR].pdf
+```
 
-# Calendar PDF file
+An example file stored on this server for the Friday J 2024/25 garden waste collection calendar:
+
+```
 https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2024.pdf
 ```
 
@@ -85,7 +86,7 @@ These files are the original source of data for the calendars produced.
 
 ## How are these calendars generated?
 
-Nothing fancy. the original printed calendars are human translated into a repeated calendar occurrence events, with the exception of changed collection days which are then one-off instances. I use Google Calendar to create them and then download the public .ics calendar file to this repostiory. The data shouldn't change, given the documents are printed and set for the year.
+Nothing fancy. the original printed calendars are human translated into a repeated calendar occurrence events, with the exception of changed collection days which are then one-off instances. I use Google Calendar to create them and then download the public .ics calendar file to this repostiory. The data **shouldn't** change, given the documents are printed and set for the year, but there's perhaps a small chance.
 
 ## Disclaimer
 
