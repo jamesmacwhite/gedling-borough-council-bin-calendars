@@ -36,8 +36,8 @@ You can use this information to then select the correct calendar from the ical f
 
 The calendar ICS files are named in the format of: 
 
-* `gedling_borough_council_[DAY]_[G1-4]_bin_schedule.ics` for general bin collection (Black, Green and Glass bin collection)
-* `gedling_borough_council_[DAY]_[A-J]_garden_bin_schedule.ics` for garden waste collection. 
+* `gedling_borough_council_[day]_[g1-4]_bin_schedule.ics` for general bin collection (Black, Green and Glass bin collection)
+* `gedling_borough_council_[day]_[a-j]_garden_bin_schedule.ics` for garden waste collection. 
 
 The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date is added as a single occurrence with (Changed Collection) in the title.
 
@@ -45,7 +45,7 @@ The calendars use a repeating occurrence schedule and end on the last occurrence
 
 * Black Bin Day (also known as grey bin) - For general/domestic waste collection.
 * Green Bin Day - Recycling collection.
-* Green Bin + Glass Box day - Recycling and glass collection.
+* Green Bin + Glass Box Day - Recycling and glass collection.
 * Garden Waste Collection - Extra garden waste collection service.
 
 The iCal calendars try to match the PDF versions as closely as possible.
