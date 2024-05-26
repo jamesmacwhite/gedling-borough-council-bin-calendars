@@ -8,7 +8,9 @@ For a few years now I have created my own calendar for my specific collection sc
 
 ## Bin collection schedules
 
-There are a total of 20 bin schedules provided by Gedling Borough Council. The bin schedules Gedling Borough Council operate are labelled G1 - G4 and occur Monday to Friday (under normal collection days). Depending on where you are in the Gedling district area, you will have a bin day schedule on a specific weekday.
+### General bin collection schedule
+
+There are a total of 20 bin schedules provided by Gedling Borough Council. The bin schedules Gedling Borough Council operate are labelled G1 - G4 and occur Monday to Friday (under normal collection days). Depending on where you are in the Gedling Borough area, you will have a bin day schedule on a specific weekday.
 
 **The schedule of each type of bin collections is:**
 
@@ -18,21 +20,25 @@ There are a total of 20 bin schedules provided by Gedling Borough Council. The b
 
 The Green bin collection is combined with the glass bin collection on the same day, although any glass recycling is collected separately.
 
-There is also an additional garden bin collection, this however is an extra paid service. Garden waste collections **are not** currently included in the ical folder. If there is demand for this, I will review adding them as separate .ics files.
+### Garden waste collection schedule
+
+Gedling Borough Council provide an additional [garden bin collection service](https://www.gedling.gov.uk/rubbish/gardenwaste/), this however is an extra paid service. There are a total of 10 different garden waste collection schedules. Collections are fortnightly (bi-weekly) from April to March (of the following year), with no collections in January and February. For collection weekdays which fall on bank holidays, these collections will be collected on the Saturday before.
 
 ### Finding your bin collection schedule
 
-Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day of the week and code being either G1, G2, G3 or G4, this is visible on the PDF calendar, in PDF filename and email subscription URL link. You can use this information to then select the correct calendar that matches your area from this repository.
+Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day of the week and code being either G1, G2, G3 or G4 for your general bin collection (his is visible on the PDF calendar, the PDF filename and email subscription URL link). You can use this information to then select the correct calendar that matches your area.
+
+For garden waste collection, this is labelled as A - J with each letter being assigned to a weekday e.g. Monday A, Wednesday C or Tuesday G.
 
 ## Calendars
 
-The calendar ICS files are named in the format of `gedling_borough_council_[DAY]_[G1-4]_bin_schedule.ics` for easy identification. The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date is added as a one-off single occurrence with (Changed Collection) in the title.
+The calendar ICS files are named in the format of `gedling_borough_council_[DAY]_[G1-4]_bin_schedule.ics` for general bin collection (Black, Green and Glass bin collection) and `gedling_borough_council_[DAY]_[A-J]_garden_bin_schedule.ics` for garden waste collection. The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date is added as a single occurrence with (Changed Collection) in the title.
 
 **The calendar entries are titled as:**
 
-* Black Bin day (also known as grey bin) - For general/domestic waste collection
-* Green Bin day - Recycling collection
-* Green Bin + Glass Box day - Recycling and glass collection
+* Black Bin day (also known as grey bin) - For general/domestic waste collection.
+* Green Bin day - Recycling collection.
+* Green Bin + Glass Box day - Recycling and glass collection.
 
 This matches the key used on the printed calendar versions.
 
@@ -48,9 +54,12 @@ The calendar .ics files try to be as minimalist as possible, each event is a sim
 
 ## Original calendar sources
 
-Gedling Borough Council produces the official calendars which are intended to be printed flyers. These are also available to be viewed as a PDF. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following path:
+Gedling Borough Council produces the official calendars which are intended to be printed flyer documents. These are also available to be viewed as a PDF. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below.
+
+Replace `[DAY]`, `[CODE]` and `[YEAR]` with relevant data.
 
 ```
+# Example bin collection calendar path
 https://apps.gedling.gov.uk/refuse/data/[DAY][CODE]-[YEAR].pdf
 ```
 
@@ -60,6 +69,16 @@ An example file stored on this server for the Monday G2 2024 (2023/24) calendar:
 
 ```
 https://apps.gedling.gov.uk/refuse/data/MondayG2-2024.pdf
+```
+
+Replace the `[LETTER]` and `[YEAR]` for garden waste collection.
+
+```
+# Example garden waste collection calendar path
+https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20[LETTER]-[YEAR].pdf
+
+# Calendar PDF file
+https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2024.pdf
 ```
 
 These files are the original source of data for the calendars produced.
