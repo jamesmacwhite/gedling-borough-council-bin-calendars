@@ -2,11 +2,13 @@
 
 As a resident within the Gedling district in Nottingham, I like to have the bin collection day in my calendar which can be used by multiple devices as well for home automation. 
 
-It is somewhat annoying that [Gedling Borough Council](https://www.gedling.gov.uk/) does not provide either a iCal calendar or API to view the bin schedule dates in full that can be parsed easily. Instead they offer either a PDF (which is horrible for accessibility) or the option to subscribe to email alerts which notifies you the day before.
+It is somewhat frustrating that [Gedling Borough Council](https://www.gedling.gov.uk/) does not provide either a iCal calendar or API to view the bin schedule dates in full that can be parsed easily. Instead they offer either a PDF (which is horrible for accessibility) or the option to subscribe to email alerts which notifies you the day before.
 
 For a few years now I have created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I decided to convert all the bin collections into the iCal format.
 
 ## Bin collection schedules
+
+If you are a new resident or are unsure of how the bin schedules work, they are explained below.
 
 ### General bin collection schedule
 
@@ -18,7 +20,7 @@ There are a total of 20 bin schedules provided by Gedling Borough Council. The b
 * Green Bin - Every 2 weeks
 * Glass Bin - Every 4 weeks
 
-The Green bin collection is combined with the glass bin collection on the same day, although any glass recycling is collected separately.
+The Green bin collection is combined with the glass bin collection and occurs on same day, although any glass recycling is collected separately.
 
 ### Garden waste collection schedule
 
@@ -26,9 +28,15 @@ Gedling Borough Council provide an additional [garden bin collection service](ht
 
 ### Finding your bin collection schedule
 
-Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day of the week and code being either G1, G2, G3 or G4 for your general bin collection (his is visible on the PDF calendar, the PDF filename and email subscription URL link).
+Gedling Borough Council [have a search tool](https://apps.gedling.gov.uk/refuse/search.aspx) where by you enter your street name and it will provide the correct schedule where you'll also be able to see the day of the week and code being either G1, G2, G3 or G4 for your general bin collection (this is visible on the PDF calendar, the PDF filename and email subscription URL link).
 
-For garden waste collection, this is labelled as A - J with each letter being assigned to a weekday e.g. Monday A, Wednesday C or Tuesday G.
+For garden waste collection, this is labelled as A - J with each letter being assigned to a weekday.
+
+* Monday - A or F
+* Tuesday - B or G
+* Wednesday - C or H
+* Thursday - D or I
+* Friday - E or J
 
 You can use this information to then select the correct calendar from the ical folder that matches your area.
 
@@ -56,9 +64,11 @@ All bin day events are set as "All day" events. Bin collections generally occur 
 
 This repostiory hosts all the calendars within the `ical` folder. Using the raw URL of any ics file will provide an ednpotint/URL for either downloading, importing or further parsing by software tools.
 
-In addition, various types of home automation can be driven from calendar events too. One example is the [HACS Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) Home Assistant integration. I won't go into specific concepts or methods, but chances are if you are interested in using this data, you probably have an idea of what to use and the setup required.
+In addition, various types of home automation can be driven from calendar events too. One example is the [HACS Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) Home Assistant integration.
 
 The calendar .ics files try to be as minimalist as possible, each event is a simple summary title with the information available at a glance, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
+
+The calendar files are updated yearly overwriting the previous year, so you won't need to update any software if referencing the URLs. Gedling Borough Council release the schedules around November time.
 
 ## Original calendar sources
 
