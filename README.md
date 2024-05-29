@@ -62,17 +62,17 @@ All bin day events are set as "All day" events. Bin collections generally occur 
 
 ## Using these calendars
 
-This repostiory hosts all the calendars within the `ical` folder. Using the raw URL of any ics file will provide an ednpotint/URL for either downloading, importing or further parsing by software tools.
+This repostiory hosts all the calendars within the `ical` folder. Using the raw URL of any .ics file will provide an consistent endpoint/URL for either downloading, importing or further parsing by software.
 
 In addition, various types of home automation can be driven from calendar events too. One example is the [HACS Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) Home Assistant integration.
 
 The calendar .ics files try to be as minimalist as possible, each event is a simple summary title with the information available at a glance, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
 
-The calendar files are updated yearly overwriting the previous year, so you won't need to update any software if referencing the URLs. Gedling Borough Council release the schedules around November time.
+The calendar files are updated yearly overwriting the previous year. This will remove the previous historic references, although this shouldn't be a problem. You won't need to update any software if referencing the URLs. Gedling Borough Council release the bin collection schedules towards the end of the current year, covering up until November of the following year.
 
 ## Original calendar sources
 
-Gedling Borough Council produces the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability. These are also available to be viewed as a PDF but this format is not very accessible. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below.
+Gedling Borough Council produces the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability. These are also available to be viewed as a PDF but this format is not very accessible. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below. I don't believe there's a specific page that provides all of the PDF files in a single place, but with some file path snooping reveals the following naming convention to find them.
 
 ### General bin collection PDFs
 
@@ -110,6 +110,8 @@ The original printed calendars are human translated into a repeated calendar occ
 
 ## Disclaimer
 
-The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible. If you spot an error or notice something wrong, please let me know.
+The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible.
 
-Any bin day collection schedule may be subject to change by Gedling Borough Council at any time.
+Any bin day collection schedule may be subject to change by Gedling Borough Council at any time. While this is unlikely, it is possible.
+
+If you spot an error or notice something wrong, please let me know.
