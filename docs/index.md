@@ -113,45 +113,55 @@ garden_collection:
     Monday:
         -
           name: A
+          id: garden_a
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
 
         -
           name: F
+          id: garden_f
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_monday_f_garden_bin_schedule.ics
 
     Tuesday:
         -
           name: B
+          id: garden_b
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
 
         -
           name: G
+          id: garden_g
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_tuesday_g_garden_bin_schedule.ics
 
     Wednesday:
         - 
           name: C
+          id: garden_c
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
 
         -
           name: H
+          id: garden_h
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_h_garden_bin_schedule.ics
 
     Thursday:
         - 
           name: D
+          id: garden_d
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_thursday_d_garden_bin_schedule.ics
 
         - 
           name: I
+          id: garden_i
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_thursday_i_garden_bin_schedule.ics
 
     Friday:
         - 
           name: E
+          id: garden_e
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
 
         -
           name: J
+          id: garden_j
           ics: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_j_garden_bin_schedule.ics
 ---

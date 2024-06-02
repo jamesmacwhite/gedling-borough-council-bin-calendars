@@ -12,8 +12,18 @@
                     <h4>{{ schedule.name }}</h3>
                     <div class="d-grid gap-2 d-block d-md-inline-block">
                         <a href="{{ schedule.ics }}" class="btn btn-primary" download>Download iCal</a>
-                        <button type="button" class="btn btn-secondary">Copy to clipboard</button>
+                        <button id="{{ schedule.id }}" type="button" class="btn btn-secondary">Copy to clipboard</button>
                     </div>
+
+                    <script>
+                        document.querySelector("button#{{ schedule.id }}").addEventListener('click', async () => {
+                            try {
+                                await navigator.clipboard.writeText('{{ schedule.ics }}');
+                            } catch (err) {
+                                console.error(err.name, err.message);
+                            }
+                        });
+                    </script>
                 </div>
             {% endfor %}
         </div>
