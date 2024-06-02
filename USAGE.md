@@ -10,7 +10,7 @@ https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-cale
 
 The .ics files have been tested with mutiple calendar software applications to ensure compatibility. Ensure you are using the raw URL i.e. https://raw.githubusercontent.com if using the URL option.
 
-[A GitHub pages site](https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_g4_bin_schedule.ics) exists to display all calendars in a logical order and to make it easier to display them all.
+[A GitHub pages site](https://jamesmacwhite.github.io/gedling-borough-council-bin-calendars/) exists to display all calendars in a logical order and to make it easier to display them all.
 
 ## HomeAssistant: Waste Collection Schedule integration
 
