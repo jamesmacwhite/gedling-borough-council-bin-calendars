@@ -10,6 +10,8 @@ https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-cale
 
 The .ics files have been tested with mutiple calendar software applications to ensure compatibility. Ensure you are using the raw URL i.e. https://raw.githubusercontent.com if using the URL option.
 
+[A GitHub pages site](https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_friday_g4_bin_schedule.ics) exists to display all calendars in a logical order and to make it easier to display them all.
+
 ## HomeAssistant: Waste Collection Schedule integration
 
 The [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration supports .ics formatted calendars and provides both a sensor and calendar entity for use in HomeAssistant.
@@ -33,11 +35,13 @@ Multiple sources are supported e.g. if you also use the Garden Waste Collection 
 
 ```yaml
 waste_collection_schedule:
+  # Wednesday G2 collection
   sources:
     - name: ics
       calendar_title: Gedling Borough Council bin collection
       args:
         url: https://raw.githubusercontent.com/jamesmacwhite/gedling-borough-council-bin-calendars/main/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
+  # Friday E collection      
     - name: ics
       calendar_title: Gedling Borough Council garden waste colleciton
       args:
