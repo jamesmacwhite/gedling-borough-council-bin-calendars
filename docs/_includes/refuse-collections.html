@@ -2,7 +2,7 @@
 
 <p>There are a total of 20 different schedules depending on your area. These are labelled G1-G4 across each weekday.</p>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
     {% for day in page.refuse_collection %}
         <div class="col">
             <h3>{{ day[0] }}</h3>
@@ -11,7 +11,7 @@
                 <div class="schedule mb-3">
                     <h4><span class="visually-hidden">Schedule:</span> {{ schedule.name }}</h3>
 
-                    <div class="d-grid gap-2 d-block d-md-inline-block">
+                    <div class="d-grid gap-2 d-block d-lg-flex">
                         <a aria-label="Download iCal for {{ day[0] }} {{ schedule.name }} schedule" href="{{ schedule.ics }}" class="btn btn-primary" download>Download iCal</a>
                         <button type="button" id="{{ schedule.id }}" class="btn btn-secondary">Copy to clipboard</button>
                     </div>
