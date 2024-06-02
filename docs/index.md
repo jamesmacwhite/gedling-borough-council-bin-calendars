@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Gedling Borough Council Bin Calendars"
+title: "Waste, Recycling, Glass and Garden bin schedules"
 
 refuse_collection:
     Monday:

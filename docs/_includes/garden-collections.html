@@ -9,7 +9,7 @@
 
             {% for schedule in day[1] %}
                 <div class="schedule mb-3">
-                    <h4>{{ schedule.name }}</h3>
+                    <h4><span class="visually-hidden">Schedule:</span> {{ schedule.name }}</h3>
                     <div class="d-grid gap-2 d-block d-md-inline-block">
                         <a href="{{ schedule.ics }}" class="btn btn-primary" download>Download iCal</a>
                         <button id="{{ schedule.id }}" type="button" class="btn btn-secondary">Copy to clipboard</button>
