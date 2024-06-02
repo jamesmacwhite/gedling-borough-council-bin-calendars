@@ -13,17 +13,17 @@
   <body>
       <a class="visually-hidden-focusable" href="#content">Skip to main content</a>
       {% include header.html %}
-      <main id="content">
+      <main id="content" class="mt-3">
         <div class="container">
           <h2>Finding your collection schedule</h2>
-          <p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, allowing you to input your street name within the Gedling district area which will provide your collection weekday and schedule.</p>
-          <p>The calendar are hosted on GitHub, the "Download iCal" button provides the raw iCalendar data which you can save locally, the copy to clipboard button provides the path to .ics file for subscribing or using in other software.</p>
+          <p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, allowing you to input a street name within the Gedling district area which will provide the collection weekday and specific schedule for the area.</p>
+          <p>The calendar are hosted on GitHub, the "Download iCal" button provides the raw iCalendar data which you can save locally. The "copy to clipboard" button will put the path to .ics file for subscribing or using in other software.</p>
 
           {% include refuse-collections.html %}
           {% include garden-collections.html %}
         </div>
       </main>
+      
       {% include footer.html %}
-    </div>
   </body>
 </html>
