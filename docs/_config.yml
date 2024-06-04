@@ -1,7 +1,7 @@
 theme: jekyll-theme-primer
-url: "https://jamesmacwhite.github.io/gedling-borough-council-bin-calendars/" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "/gedling-borough-council-bin-calendars" # the subpath of your site, e.g. /blog
-title: "Gedling Borough Council Refuse Collection Calendars" # the name of your site, e.g. ACME Corp.
+url: "https://www.gbcbincalendars.co.uk"
+baseurl: ""
+title: "Gedling Borough Council Refuse Collection Calendars"
 plugins:
   - jekyll-seo-tag
 
