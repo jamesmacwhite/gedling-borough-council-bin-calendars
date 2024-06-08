@@ -2,15 +2,15 @@
 
 ## Importing to a calendar
 
-Being iCal formatted calendars, you can import the calendar events or subscribe using the raw URLs, an example for the Wednesday G2 bin collection:
+Offering iCal formatted calendars, you can import the calendar events locally or subscribe using the calendar endpoint URLs, an example for the Wednesday G2 bin collection:
 
 ```
 https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
 ```
 
-The .ics files have been tested with multiple calendar software applications to ensure compatibility. Ensure you are using the raw URL i.e. https://raw.githubusercontent.com if using the URL option.
+The .ics files have been tested with multiple calendar software applications to ensure compatibility.
 
-[A GitHub pages site](https://www.gbcbincalendars.co.uk) exists to display all calendars in a logical order and to make it easier to display them all.
+[A GitHub pages site](https://www.gbcbincalendars.co.uk) exists to display all calendars in a logical order offering the .ics calendar for each schedule available to download and the direct URL to use in calendars for subscribing for a dynamic updating calendar.
 
 ## HomeAssistant: Waste Collection Schedule integration
 
@@ -41,14 +41,18 @@ waste_collection_schedule:
       calendar_title: Gedling Borough Council bin collection
       args:
         url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
-  # Friday E collection      
+  # Tuesday B collection      
     - name: ics
       calendar_title: Gedling Borough Council garden waste collection
       args:
-        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
+        url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
 ```
 
-## Other software
+## JSON format
 
-The .ics files are available to use by other software. They are structured in a open format (iCal) and anyone is welcome to use them for any purpose desired.
+Using the [ical2json library](https://www.npmjs.com/package/ical2json) all iCal files are also available as JSON endpoints, published under: `https://www.gbcbincalendars.co.uk/json/`, with the filename being the same as ical path with the exception of being `.json` instead of `.ical`. E.g. `https://www.gbcbincalendars.co.uk/json/gedling_borough_council_wednesday_g2_bin_schedule.json`. If you would like to parse the data as JSON, these formats may be better suited for you.
+
+## Other
+
+The .ics or .json files are freely available to be used by anyone.
 

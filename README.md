@@ -1,3 +1,5 @@
+![Gedling Borough Council](assets/images/gedling-council-logo.jpg)
+
 # Gedling Borough Council bin collection/refuse collection day calendars
 
 As a resident within the Gedling district in Nottingham, I like to have the bin collection day in my calendar which can be used by multiple devices as well for home automation. 
