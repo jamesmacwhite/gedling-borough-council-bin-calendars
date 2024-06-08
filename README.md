@@ -62,7 +62,7 @@ All bin day events are set as "All day" events. Bin collections generally occur 
 
 ## Using these calendars
 
-This repostiory hosts all the calendars within the `ical` folder. Using the raw URL of any .ics file will provide an consistent endpoint/URL for either downloading, importing or further parsing by software. For easier visibility of all calendars in a logical order, view the [GitHub pages site](https://jamesmacwhite.github.io/gedling-borough-council-bin-calendars/).
+This repository hosts all the calendars within the `ical` folder. For easier visibility of all calendars in a logical order and hosted versions of the files, view the [GitHub pages site](https://www.gbcbincalendars.co.uk).
 
 In addition, various types of home automation can be driven from calendar events too. One example is the [HACS Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) Home Assistant integration.
 
@@ -106,7 +106,7 @@ These files are the original source of data for the calendars produced.
 
 ## How are these calendars generated?
 
-The original printed calendars are human translated into a repeated calendar occurrence events, with the exception of changed collection days which are then one-off instances. Each calendar is exported in the iCal format and hosted in this repository. The data **shouldn't** change, given each calendar is created for the year.
+The original printed calendars are human translated into a repeated calendar occurrence events, with the exception of changed collection days which are then one-off instances. Each calendar is exported in the iCal format and hosted in this repository. The data *shouldn't* change, given each calendar is created for the year.
 
 ## Disclaimer
 
