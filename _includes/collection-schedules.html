@@ -1,0 +1,55 @@
+{% for type in site.data.calendars.bin_collections %}
+    <div class="collection {%- if forloop.first %} mb-5{% endif %}">
+        <h2>{{ type.name }}</h2>
+
+        <p>{{ type.description|markdownify }}</p>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for day in type.collections %}
+                <div class="col">
+                    <h3 class="mb-4 text-uppercase">{{ day[0] }}</h3>
+
+                    {% for schedule in day[1] %}
+                        <div class="schedule mb-4">
+                            <h4>{{ schedule.name }} Collection</h3>
+                            <div class="d-grid gap-2 d-block d-lg-flex">
+                                <a aria-label="Download iCal for {{ day[0] }} {{ schedule.name }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</span></a>
+                                <button id="{{ schedule.id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
+                            </div>
+
+                            <script>
+                                document.querySelector("button#{{ schedule.id }}").addEventListener('click', async () => {
+                                    try {
+                                        await navigator.clipboard.writeText('{{ schedule.ics }}');
+                                        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+                                        var toastList = toastElList.map(function(toastEl) {
+                                            return new bootstrap.Toast(toastEl);
+                                        });
+                                        toastList.forEach(toast => toast.show());
+                                    } catch (err) {
+                                        console.error(err.name, err.message);
+                                    }
+                                });
+                            </script>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div><!--//.row-->
+    </div>
+{% endfor %}
+
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+            <strong class="me-auto">Calendar URL copied!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+            The calendar URL for the schedule was copied to your clipboard.
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

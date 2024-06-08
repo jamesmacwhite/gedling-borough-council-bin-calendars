@@ -24,23 +24,7 @@
           <p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, allowing you to input a street name within the Gedling district which will provide the collection weekday and specific schedule name.</p>
           <p>The calendars are hosted on GitHub, the "Download iCal" button provides the .ics file of the iCalendar for local use. The "copy to clipboard" button will provide the URL to the .ics file for subscribing or using in other software.</p>
 
-          {% include refuse-collections.html %}
-          {% include garden-collections.html %}
-
-          <div aria-live="polite" aria-atomic="true" class="position-relative">
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                  <div class="toast-header">
-                    <strong class="me-auto">Calendar URL copied!</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                  </div>
-                  <div class="toast-body">
-                    The calendar URL for the schedule was copied to your clipboard.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% include collection-schedules.html %}
 
         </div>
       </main>

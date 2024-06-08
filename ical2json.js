@@ -1,3 +1,4 @@
+'use strict';
 const path = require('path');
 const ical2json = require("ical2json");
 const jetpack = require("fs-jetpack");
