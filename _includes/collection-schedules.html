@@ -1,5 +1,5 @@
 {% for type in site.data.calendars.bin_collections %}
-    <div class="collection {%- if forloop.first %} mb-5{% endif %}">
+    <div data-collection-type="{{ type.name }}" class="collection {%- if forloop.first %} mb-5{% endif %}">
         <h2>{{ type.name }}</h2>
 
         {{ type.description|markdownify }}
@@ -7,13 +7,15 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             {% for day in type.collections %}
                 <div class="col">
-                    <h3 class="mb-4 text-uppercase">{{ day[0] }}</h3>
+                    {% assign weekday = day[0] %}
+
+                    <h3 class="mb-4 text-uppercase">{{ weekday }}</h3>
 
                     {% for schedule in day[1] %}
-                        <div class="schedule mb-4">
+                        <div data-schedule-weekday="{{ weekday }}" data-schedule-name="{{ schedule.name }}" class="schedule mb-4">
                             <h4>{{ schedule.name }} Collection</h4>
                             <div class="d-grid gap-2 d-block d-lg-flex">
-                                <a aria-label="Download iCal for {{ day[0] }} {{ schedule.name }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</a>
+                                <a aria-label="Download iCal for {{ weekday }} {{ schedule.name }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</a>
                                 <button id="{{ schedule.id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 
