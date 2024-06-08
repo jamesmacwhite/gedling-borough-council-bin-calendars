@@ -4,6 +4,7 @@ baseurl: ""
 title: "Gedling Borough Council Refuse Collection Calendars"
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 exclude: 
   - ical2json.js
