@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "fs-jetpack": "^5.1.0",
+    "ical2json": "^3.2.0"
+  },
+  "scripts": {
+    "ical2json": "node ./ical2json.js"
+  }
+}
