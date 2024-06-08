@@ -8,12 +8,10 @@ refuse_collection:
           name: G2
           id: monday_g2
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_g2_bin_schedule.ics
-
         -
           name: G3
           id: monday_g3
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_g3_bin_schedule.ics
-
         -
           name: G4
           id: monday_g4
@@ -24,17 +22,14 @@ refuse_collection:
           name: G1
           id: tuesday_g1
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_g1_bin_schedule.ics
-
         -
           name: G2
           id: tuesday_g2
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_g2_bin_schedule.ics
-
         -
           name: G3
           id: tuesday_g3
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_g3_bin_schedule.ics
-
         -
           name: G4
           id: tuesday_g4
@@ -45,61 +40,50 @@ refuse_collection:
           name: G1
           id: wednesday_g1
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g1_bin_schedule.ics
-
         -
           name: G2
           id: wednesday_g2
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
-
         -
           name: G3
           id: wednesday_g3
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g3_bin_schedule.ics
-
         -
           name: G4
           id: wednesday_g4
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g4_bin_schedule.ics
-
 
     Thursday:
         -
           name: G1
           id: thursday_g1
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_thursday_g1_bin_schedule.ics
-
         -
           name: G2
           id: thursday_g2
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_thursday_g2_bin_schedule.ics
-
         -
           name: G3
           id: thursday_g3
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_thursday_g3_bin_schedule.ics
-
         -
           name: G4
           id: thursday_g4
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_thursday_g4_bin_schedule.ics
-
 
     Friday:
         -
           name: G1
           id: friday_g1
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_g1_bin_schedule.ics
-
         -
           name: G2
           id: friday_g2
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_g2_bin_schedule.ics
-
         -
           name: G3
           id: friday_g3
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_g3_bin_schedule.ics
-
         -
           name: G4
           id: friday_g4
@@ -111,7 +95,6 @@ garden_collection:
           name: A
           id: garden_a
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
-
         -
           name: F
           id: garden_f
@@ -122,7 +105,6 @@ garden_collection:
           name: B
           id: garden_b
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
-
         -
           name: G
           id: garden_g
@@ -133,7 +115,6 @@ garden_collection:
           name: C
           id: garden_c
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
-
         -
           name: H
           id: garden_h
@@ -144,7 +125,6 @@ garden_collection:
           name: D
           id: garden_d
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_thursday_d_garden_bin_schedule.ics
-
         - 
           name: I
           id: garden_i
@@ -155,7 +135,6 @@ garden_collection:
           name: E
           id: garden_e
           ics: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
-
         -
           name: J
           id: garden_j
