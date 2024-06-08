@@ -19,6 +19,11 @@
                         document.querySelector("button#{{ schedule.id }}").addEventListener('click', async () => {
                             try {
                                 await navigator.clipboard.writeText('{{ schedule.ics }}');
+                                var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+                                var toastList = toastElList.map(function(toastEl) {
+                                    return new bootstrap.Toast(toastEl);
+                                });
+                                toastList.forEach(toast => toast.show());
                             } catch (err) {
                                 console.error(err.name, err.message);
                             }

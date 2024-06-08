@@ -9,3 +9,11 @@ body {
     color: white !important;
     text-decoration: none !important;
 }
+
+.toast-container {
+    z-index: 11;
+
+    .toast-body {
+        background-color: #fafafa;
+    }
+}

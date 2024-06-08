@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     {% seo %}
+
   </head>
   <body>
       <a class="visually-hidden-focusable" href="#content">Skip to main content</a>
@@ -25,6 +26,22 @@
 
           {% include refuse-collections.html %}
           {% include garden-collections.html %}
+
+          <div aria-live="polite" aria-atomic="true" class="position-relative">
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+              <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="toast-header">
+                    <strong class="me-auto">Calendar URL copied!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                  <div class="toast-body">
+                    The calendar URL for the schedule was copied to your clipboard.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
 
