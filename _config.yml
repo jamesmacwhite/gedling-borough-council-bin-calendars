@@ -5,5 +5,14 @@ title: "Gedling Borough Council Refuse Collection Calendars"
 plugins:
   - jekyll-seo-tag
 
+exclude: 
+  - ical2json.js
+  - LICENSE
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - README.md
+  - USAGE.md
+
 sass:
   style: compressed
