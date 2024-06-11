@@ -17,7 +17,7 @@
                         <div data-schedule-weekday="{{ weekday }}" data-schedule-name="{{ schedule.name }}" class="schedule mb-4">
                             <h4>{{ schedule.name }} Collection</h4>
                             <div class="d-grid gap-2 d-block d-lg-flex">
-                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</a>
+                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling-red{%- else %} btn-success{% endif %}" download>Download iCal</a>
                                 <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribe_id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "fs-jetpack": "^5.1.0",
     "ical2json": "^3.2.0"
   },
