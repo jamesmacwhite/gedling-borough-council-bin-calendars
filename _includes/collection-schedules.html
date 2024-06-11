@@ -12,11 +12,12 @@
                     <h3 class="mb-4 text-uppercase">{{ weekday }}</h3>
 
                     {% for schedule in day[1] %}
+                        {% assign scheduleTitle = weekday|append: ' ' |append: schedule.name %}
                         <div data-schedule-weekday="{{ weekday }}" data-schedule-name="{{ schedule.name }}" class="schedule mb-4">
                             <h4>{{ schedule.name }} Collection</h4>
                             <div class="d-grid gap-2 d-block d-lg-flex">
-                                <a aria-label="Download iCal for {{ weekday }} {{ schedule.name }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</a>
-                                <button id="{{ schedule.id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
+                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling{%- else %} btn-success{% endif %}" download>Download iCal</a>
+                                <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="url_{{ schedule.id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 
                             <script>
@@ -49,7 +50,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                The calendar URL for the schedule was copied to your clipboard.
+                The calendar URL for the bin collection schedule was copied to your clipboard.
             </div>
         </div>
     </div>
