@@ -5,6 +5,6 @@
     "ical2json": "^3.2.0"
   },
   "scripts": {
-    "ical2json": "node ./ical2json.js"
+    "build": "node ./build.js"
   }
 }
