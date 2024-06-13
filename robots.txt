@@ -2,5 +2,6 @@
 ---
 User-agent: *
 Disallow: /ical/
+Disallow: /json/
 Allow: /
-Sitemap: {{ site.url }}/sitemap.xml
+Sitemap: {{ "sitemap.xml" | absolute_url }}
