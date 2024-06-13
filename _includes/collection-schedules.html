@@ -13,16 +13,17 @@
 
                     {% for schedule in day[1] %}
                         {% assign scheduleTitle = weekday|append: ' ' |append: schedule.name %}
-                        {% assign subscribe_id = 'url'|append: '_' |append: schedule.id %}
+                        {% assign subscribeId = 'url'|append: '_' |append: schedule.id %}
+                        {% assign calendarUrl = schedule.ics | absolute_url %}
                         <div data-schedule-weekday="{{ weekday }}" data-schedule-name="{{ schedule.name }}" class="schedule mb-4">
                             <h4>{{ schedule.name }} Collection</h4>
                             <div class="d-grid gap-2 d-block d-lg-flex">
-                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ schedule.ics }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling-red{%- else %} btn-success{% endif %}" download>Download iCal</a>
-                                <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribe_id }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
+                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ calendarUrl }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling-red{%- else %} btn-success{% endif %}" download>Download iCal</a>
+                                <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribeId }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 
                             <script>
-                                document.querySelector("button#{{ subscribe_id }}").addEventListener('click', async () => {
+                                document.querySelector("button#{{ subscribeId }}").addEventListener('click', async () => {
 
                                     // Tracking for iCal URL/subscribe
                                     window.dataLayer.push({
@@ -33,12 +34,9 @@
                                     });
 
                                     try {
-                                        await navigator.clipboard.writeText('{{ site.url }}{{ schedule.ics }}');
-                                        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
-                                        var toastList = toastElList.map(function(toastEl) {
-                                            return new bootstrap.Toast(toastEl);
-                                        });
-                                        toastList.forEach(toast => toast.show());
+                                        await navigator.clipboard.writeText('{{ calendarUrl }}');
+                                        let toast = new bootstrap.Toast(document.querySelector('.toast'));
+                                        toast.show();
                                     } catch (err) {
                                         console.error(err.name, err.message);
                                     }
