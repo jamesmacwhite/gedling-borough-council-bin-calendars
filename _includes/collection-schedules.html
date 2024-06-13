@@ -22,15 +22,17 @@
                                 <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribeId }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 
+                            <p class="mt-2"><a href="{{ schedule.json | absolute_url }}" target="_blank">JSON endpoint</a></p>
+
                             <script>
-                                document.querySelector("button#{{ subscribeId }}").addEventListener('click', async () => {
+                                document.querySelector('button#{{ subscribeId }}').addEventListener('click', async () => {
 
                                     // Tracking for iCal URL/subscribe
                                     window.dataLayer.push({
                                         'event': 'bin_collection_calendar_subscribe',
-                                        'bin_type': "{{ type.name }}",
-                                        'bin_weekday':  "{{ weekday }}",
-                                        'bin_schedule': "{{ schedule.name }}"
+                                        'bin_type': '{{ type.name }}',
+                                        'bin_weekday':  '{{ weekday }}',
+                                        'bin_schedule': '{{ schedule.name }}'
                                     });
 
                                     try {
