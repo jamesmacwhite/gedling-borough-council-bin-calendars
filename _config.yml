@@ -1,12 +1,16 @@
 theme: jekyll-theme-primer
 url: "https://www.gbcbincalendars.co.uk"
 title: "Gedling Borough Council Refuse Collection Calendars"
+lang: en-GB
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
 exclude: 
-  - ical2json.js
+  - build.js
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
   - LICENSE
   - node_modules/
   - package.json

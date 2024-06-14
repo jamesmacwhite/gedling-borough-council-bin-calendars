@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="{{ site.lang }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,8 +9,6 @@
     <link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | relative_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -23,21 +21,21 @@
         'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth={{ site.gtm.auth }}&gtm_preview={{ site.gtm.preview }}&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');</script>
     {% else %}    
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');</script>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');</script>
     {% endif %}
 
   </head>
   <body>
     {% if jekyll.environment != 'production' %}
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm.container_id }}&gtm_auth={{ site.gtm.auth }}&gtm_preview={{ site.gtm.preview }}&gtm_cookies_win=x"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm.container_id }}&gtm_auth={{ site.gtm.auth }}&gtm_preview={{ site.gtm.preview }}&gtm_cookies_win=x"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% else %}
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm.container_id }}"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm.container_id }}"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% endif %}
       <a class="visually-hidden-focusable" href="#content">Skip to main content</a>
 

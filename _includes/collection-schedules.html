@@ -22,7 +22,9 @@
                                 <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribeId }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
                             </div>
 
-                            <p class="mt-2"><a href="{{ schedule.json | absolute_url }}" target="_blank">JSON endpoint</a></p>
+                            <p class="mt-2 mb-0">
+                                <a href="{{ schedule.json | absolute_url }}" target="_blank">JSON endpoint</a>
+                            </p>
 
                             <script>
                                 document.querySelector('button#{{ subscribeId }}').addEventListener('click', async () => {
@@ -60,7 +62,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                The calendar URL for the bin collection schedule was copied to your clipboard.
+                The calendar URL for the selected bin collection schedule was copied to your clipboard.
             </div>
         </div>
     </div>
