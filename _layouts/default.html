@@ -19,13 +19,15 @@
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth={{ site.gtm.auth }}&gtm_preview={{ site.gtm.preview }}&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');</script>
+        })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');
+      </script>
     {% else %}    
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');</script>
+        })(window,document,'script','dataLayer','{{ site.gtm.container_id }}');
+      </script>
     {% endif %}
 
   </head>
@@ -43,13 +45,7 @@
 
       <main id="content" class="mt-3">
         <div class="container">
-          <h2>Finding your collection schedule</h2>
-
-          <p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, allowing you to input a street name within the Gedling district which will provide the collection weekday and specific schedule name.</p>
-          <p>The calendars provided are hosted within a GitHub repository and published through GitHub pages. The "Download iCal" button provides the .ics file of the iCalendar for local use. The "copy to clipboard" button will provide the public URL to the .ics file for subscribing through calendar software or for using as an endpoint in other software that supports the iCalendar format.</p>
-
-          {% include collection-schedules.html %}
-
+          {{ content }}
         </div>
       </main>
 
