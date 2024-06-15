@@ -2,7 +2,8 @@
 
 const path = require('path');
 const jetpack = require("fs-jetpack");
-var _ = require('underscore');
+const _ = require('underscore');
+const { exit } = require('process');
 const calendars = jetpack.find("ical", { matching: "*.ics" });
 const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
@@ -23,6 +24,7 @@ jetpack.cwd(jsonDest).remove();
 // Process each ical file to conver to JSON format
 calendars.forEach(function(filepath) {
 
+    const icalJs = require('ical.js');
     const IcalExpander = require('ical-expander');
     const ics = jetpack.read(filepath);
     const icalExpander = new IcalExpander({ ics, maxIterations: 100 });
@@ -39,6 +41,18 @@ calendars.forEach(function(filepath) {
         "Green Bin + Glass Box Day (Changed Collection)": "green-glass-bin",
         "Garden Waste Collection": "garden-bin",
         "Garden Waste Collection (Changed Collection)": "garden-bin"
+    };
+
+
+    const jcalData = icalJs.parse(ics);
+    const comp = new icalJs.Component(jcalData);
+
+    // Create JSON header
+    const jsonData = {
+        "filename": filename,
+        "name": comp.getFirstPropertyValue('x-wr-calname'),
+        "description": comp.getFirstPropertyValue('x-wr-caldesc'),
+        "collectionDates": []
     };
 
     const mappedEvents = events.events.map(e => ({ 
@@ -59,7 +73,7 @@ calendars.forEach(function(filepath) {
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
     // Workaround for same date appearing as both single and occurence after parsing
-    const jsonData = _.unique(allEvents, 'collectionDate');
+    jsonData['collectionDates'] = _.unique(allEvents, 'collectionDate');
 
     // Write to JSON folder for public API
     jetpack.write(`${jsonDest}/${filename}`, jsonData);
