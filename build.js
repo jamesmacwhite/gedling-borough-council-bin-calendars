@@ -4,6 +4,7 @@ const path = require('path');
 const jetpack = require("fs-jetpack");
 var _ = require('underscore');
 const calendars = jetpack.find("ical", { matching: "*.ics" });
+const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
 const bootstrapJsBundle = './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -16,7 +17,7 @@ console.log('Copying Bootstrap JS bundle from node_modules...');
 jetpack.copy(bootstrapJsBundle, "./assets/js/bootstrap.bundle.min.js", { overwrite: true });
 
 // Remove json folder if exists
-jetpack.cwd('_data/icaljs');
+jetpack.cwd(icaljsDest).remove();
 jetpack.cwd(jsonDest).remove();
 
 // Process each ical file to conver to JSON format
@@ -64,5 +65,5 @@ calendars.forEach(function(filepath) {
     jetpack.write(`${jsonDest}/${filename}`, jsonData);
 
     // Write to _data folder for internal use for schedule listing template
-    jetpack.write(`_data/icaljs/${filename}`, jsonData);
+    jetpack.write(`${icaljsDest}/${filename}`, jsonData);
 });
