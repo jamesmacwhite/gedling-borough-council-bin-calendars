@@ -1,0 +1,20 @@
+---
+title: Refuse collection schedules
+layout: default
+---
+
+<h2>Garden Waste Collection schedules</h2>
+
+<ul>
+    {% for collections in site.data.calendars.bin_collections %}
+        {% if collections.name == 'Garden Waste Collections' %}
+            {% for weekday in collections.collections %}
+                {% for collection in weekday[1] %}
+                    <li>
+                        <a href="{{ collection.permalink | absolute_url }}">{{ weekday[0] }} {{ collection.name }} Garden Waste Collection Calendar</a>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul>

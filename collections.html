@@ -1,0 +1,26 @@
+---
+title: Collections
+layout: default
+---
+
+<h2>{{ page.title }}</h2>
+
+<p>Find all links to HTML calendars for refuse/garden bin collections.</p>
+
+<div class="row row-cols-1 row-cols-sm-2 g-4">
+    {% for type in site.data.calendars.bin_collections %}
+        <div class="col">
+            <h3>{{ type.name }}</h3>
+
+            <ul>
+                {% for weekday in type.collections %}
+                    {% for collection in weekday[1] %}
+                        <li>
+                            <a href="{{ collection.permalink | absolute_url }}">{{ weekday[0] }} {{ collection.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
