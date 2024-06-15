@@ -8,7 +8,7 @@ const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
 const bootstrapJsBundle = './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 
-if(!jetpack.exists(bootstrapJsBundle)) {
+if (!jetpack.exists(bootstrapJsBundle)) {
     console.error('node_modules Bootstrap JS bundle does not exist.');
     process.exit(1);
 }
