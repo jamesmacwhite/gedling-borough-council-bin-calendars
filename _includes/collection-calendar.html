@@ -18,28 +18,28 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         {% for month in months %}
             <div class="col">
-                <h3>{{ month.name }}</h3>
+                <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
 
                 <ol class="list-unstyled">
                     {% for item in month.items %}
-                        <li>{{ item.collectionDate | date: "%-d %B %Y" }}</li>
+                        <li class="{% if item.isChangedCollection %}text-danger fw-bold{% endif %}">{{ item.collectionDate | date: "%A %-d %B" }}</li>
                     {% endfor %}
                 </ol>
             </div>
         {% endfor %}
     </div>
 {% else %}
-<div class="row row-cols-1 row-cols-sm-2 g-4">
-    {% for month in months %}
-        <div class="col">
-            <h3>{{ month.name }}</h3>
+    <div class="row row-cols-1 row-cols-sm-2 g-4">
+        {% for month in months %}
+            <div class="col">
+                <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
 
-            {% for item in month.items %}
-                <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %}">
-                    <span class="fw-bold">{{ item.collectionDate | date: "%-d %B %Y" }} - {{ item.name }}</span>
-                </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
-</div>
+                {% for item in month.items %}
+                    <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %}">
+                        <span class="fw-bold">{{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}
