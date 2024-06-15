@@ -36,7 +36,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "bootstrap/scss/close";
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/toasts";
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/breadcrumb";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
 
