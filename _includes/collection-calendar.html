@@ -6,7 +6,7 @@
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
 {% endif %}
 
-{% assign jsonData = site.data.icaljs[dataKey] %}
+{% assign jsonData = site.data.icaljs[dataKey].collectionDates %}
 
 <h2>{{ page.title }}</h2>
 
