@@ -17,14 +17,15 @@
                         {% assign calendarUrl = schedule.ics | absolute_url %}
                         <div data-schedule-weekday="{{ weekday }}" data-schedule-name="{{ schedule.name }}" class="schedule mb-4">
                             <h4>{{ schedule.name }} Collection</h4>
-                            <div class="d-grid gap-2 d-block d-lg-flex">
-                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ calendarUrl }}" class="btn {%- if type.name == 'Refuse/Recycling Collections' %} btn-gedling-red{%- else %} btn-success{% endif %}" download>Download iCal</a>
-                                <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribeId }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
-                            </div>
 
-                            <p class="mt-2 mb-0">
-                                <a href="{{ schedule.json | absolute_url }}" target="_blank">JSON endpoint</a>
-                            </p>
+                            <div class="d-grid gap-2 d-block d-lg-flex mb-2">
+                                <a aria-label="View {{ scheduleTitle }} collection" href="{{ schedule.permalink | absolute_url }}" class="btn btn-primary">View calendar</a>
+                                <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ calendarUrl }}" class="btn btn-gedling-red" download>Download iCal</a>
+                            </div>
+                            <div class="d-grid gap-2 d-block d-lg-flex">
+                                <button data-schedule-title="iCal URL {{ scheduleTitle }}" id="{{ subscribeId }}" type="button" class="btn btn-secondary">Copy iCal URL</button>
+                                <a href="{{ schedule.json | absolute_url }}" class="btn btn-success" target="_blank">JSON API</a>
+                            </div>
 
                             <script>
                                 document.querySelector('button#{{ subscribeId }}').addEventListener('click', async () => {

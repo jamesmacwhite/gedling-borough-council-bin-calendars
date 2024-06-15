@@ -9,21 +9,25 @@ bin_collections:
             id: monday_g1
             ics: /ical/gedling_borough_council_monday_g1_bin_schedule.ics
             json: /json/gedling_borough_council_monday_g1_bin_schedule.json
+            permalink: /collections/refuse/monday-g1
           -
             name: G2
             id: monday_g2
             ics: /ical/gedling_borough_council_monday_g2_bin_schedule.ics
             json: /json/gedling_borough_council_monday_g2_bin_schedule.json
+            permalink: /collections/refuse/monday-g2
           -
             name: G3
             id: monday_g3
             ics: /ical/gedling_borough_council_monday_g3_bin_schedule.ics
             json: /json/gedling_borough_council_monday_g3_bin_schedule.json
+            permalink: /collections/refuse/monday-g3
           -
             name: G4
             id: monday_g4
             ics: /ical/gedling_borough_council_monday_g4_bin_schedule.ics
             json: /json/gedling_borough_council_monday_g4_bin_schedule.json
+            permalink: /collections/refuse/monday-g4
 
       Tuesday:
           -
@@ -31,21 +35,25 @@ bin_collections:
             id: tuesday_g1
             ics: /ical/gedling_borough_council_tuesday_g1_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_g1_bin_schedule.json
+            permalink: /collections/refuse/tuesday-g1
           -
             name: G2
             id: tuesday_g2
             ics: /ical/gedling_borough_council_tuesday_g2_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_g2_bin_schedule.json
+            permalink: /collections/refuse/tuesday-g2
           -
             name: G3
             id: tuesday_g3
             ics: /ical/gedling_borough_council_tuesday_g3_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_g3_bin_schedule.json
+            permalink: /collections/refuse/tuesday-g3
           -
             name: G4
             id: tuesday_g4
             ics: /ical/gedling_borough_council_tuesday_g4_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_g4_bin_schedule.json
+            permalink: /collections/refuse/tuesday-g4
 
       Wednesday:
           -
@@ -53,21 +61,25 @@ bin_collections:
             id: wednesday_g1
             ics: /ical/gedling_borough_council_wednesday_g1_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_g1_bin_schedule.json
+            permalink: /collections/refuse/wednesday-g1
           -
             name: G2
             id: wednesday_g2
             ics: /ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_g2_bin_schedule.json
+            permalink: /collections/refuse/wednesday-g2
           -
             name: G3
             id: wednesday_g3
             ics: /ical/gedling_borough_council_wednesday_g3_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_g3_bin_schedule.json
+            permalink: /collections/refuse/wednesday-g3
           -
             name: G4
             id: wednesday_g4
             ics: /ical/gedling_borough_council_wednesday_g4_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_g4_bin_schedule.json
+            permalink: /collections/refuse/wednesday-g4
 
       Thursday:
           -
@@ -75,21 +87,25 @@ bin_collections:
             id: thursday_g1
             ics: /ical/gedling_borough_council_thursday_g1_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_g1_bin_schedule.json
+            permalink: /collections/refuse/thursday-g1
           -
             name: G2
             id: thursday_g2
             ics: /ical/gedling_borough_council_thursday_g2_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_g2_bin_schedule.json
+            permalink: /collections/refuse/thursday-g2
           -
             name: G3
             id: thursday_g3
             ics: /ical/gedling_borough_council_thursday_g3_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_g3_bin_schedule.json
+            permalink: /collections/refuse/thursday-g3
           -
             name: G4
             id: thursday_g4
             ics: /ical/gedling_borough_council_thursday_g4_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_g4_bin_schedule.json
+            permalink: /collections/refuse/thursday-g4
 
       Friday:
           -
@@ -97,21 +113,25 @@ bin_collections:
             id: friday_g1
             ics: /ical/gedling_borough_council_friday_g1_bin_schedule.ics
             json: /json/gedling_borough_council_friday_g1_bin_schedule.json
+            permalink: /collections/refuse/friday-g1
           -
             name: G2
             id: friday_g2
             ics: /ical/gedling_borough_council_friday_g2_bin_schedule.ics
             json: /json/gedling_borough_council_friday_g2_bin_schedule.json
+            permalink: /collections/refuse/friday-g2
           -
             name: G3
             id: friday_g3
             ics: /ical/gedling_borough_council_friday_g3_bin_schedule.ics
             json: /json/gedling_borough_council_friday_g3_bin_schedule.json
+            permalink: /collections/refuse/friday-g3
           -
             name: G4
             id: friday_g4
             ics: /ical/gedling_borough_council_friday_g4_bin_schedule.ics
             json: /json/gedling_borough_council_friday_g4_bin_schedule.json
+            permalink: /collections/refuse/friday-g4
 
   - name: "Garden Waste Collections"
     id: "garden"
@@ -124,11 +144,13 @@ bin_collections:
             id: garden_a
             ics: /ical/gedling_borough_council_monday_a_garden_bin_schedule.ics
             json: /json/gedling_borough_council_monday_a_garden_bin_schedule.json
+            permalink: /collections/garden/monday-a
           -
             name: F
             id: garden_f
             ics: /ical/gedling_borough_council_monday_f_garden_bin_schedule.ics
             json: /json/gedling_borough_council_monday_f_garden_bin_schedule.json
+            permalink: /collections/garden/monday-f
 
       Tuesday:
           -
@@ -136,11 +158,13 @@ bin_collections:
             id: garden_b
             ics: /ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_b_garden_bin_schedule.json
+            permalink: /collections/garden/tuesday-b
           -
             name: G
             id: garden_g
             ics: /ical/gedling_borough_council_tuesday_g_garden_bin_schedule.ics
             json: /json/gedling_borough_council_tuesday_g_garden_bin_schedule.json
+            permalink: /collections/garden/tuesday-g
 
       Wednesday:
           - 
@@ -148,11 +172,13 @@ bin_collections:
             id: garden_c
             ics: /ical/gedling_borough_council_wednesday_c_garden_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_c_garden_bin_schedule.json
+            permalink: /collections/garden/wednesday-c
           -
             name: H
             id: garden_h
             ics: /ical/gedling_borough_council_wednesday_h_garden_bin_schedule.ics
             json: /json/gedling_borough_council_wednesday_h_garden_bin_schedule.json
+            permalink: /collections/garden/wednesday-h
 
       Thursday:
           - 
@@ -160,11 +186,13 @@ bin_collections:
             id: garden_d
             ics: /ical/gedling_borough_council_thursday_d_garden_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_d_garden_bin_schedule.json
+            permalink: /collections/garden/thursday-d
           - 
             name: I
             id: garden_i
             ics: /ical/gedling_borough_council_thursday_i_garden_bin_schedule.ics
             json: /json/gedling_borough_council_thursday_i_garden_bin_schedule.json
+            permalink: /collections/garden/thursday-i
 
       Friday:
           - 
@@ -172,8 +200,10 @@ bin_collections:
             id: garden_e
             ics: /ical/gedling_borough_council_friday_e_garden_bin_schedule.ics
             json: /json/gedling_borough_council_friday_e_garden_bin_schedule.json
+            permalink: /collections/garden/friday-e
           -
             name: J
             id: garden_j
             ics: /ical/gedling_borough_council_friday_j_garden_bin_schedule.ics
             json: /json/gedling_borough_council_friday_j_garden_bin_schedule.json
+            permalink: /collections/garden/friday-j

@@ -1,0 +1,45 @@
+{% assign dataId = page.name | replace: "-", "_" | remove: '.html' %}
+
+{% if page.url contains 'garden' %}
+    {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_garden_bin_schedule" %}
+{% else %}
+    {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
+{% endif %}
+
+{% assign jsonData = site.data.icaljs[dataKey] %}
+
+<h2>{{ page.title }}</h2>
+
+<p>You can view the collection dates for the {{ page.title }} schedule below.</p>
+
+{% assign months = jsonData | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
+
+{% if page.url contains 'garden' %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {% for month in months %}
+            <div class="col">
+                <h3>{{ month.name }}</h3>
+
+                <ol class="list-unstyled">
+                    {% for item in month.items %}
+                        <li>{{ item.collectionDate | date: "%-d %B %Y" }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+<div class="row row-cols-1 row-cols-sm-2 g-4">
+    {% for month in months %}
+        <div class="col">
+            <h3>{{ month.name }}</h3>
+
+            {% for item in month.items %}
+                <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %}">
+                    <span class="fw-bold">{{ item.collectionDate | date: "%-d %B %Y" }} - {{ item.name }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

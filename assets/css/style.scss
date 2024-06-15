@@ -12,8 +12,13 @@ $font-family-sans-serif: "Montserrat", sans-serif;
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
 
+$green-bin: #6eb43f;
+
 $custom-colors: (
-    "gedling-red": #a9233e
+    "gedling-red": #a9233e,
+    "green-bin": $green-bin,
+    "black-bin": #a7a9ac,
+    "garden-bin": #eee7d0
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -33,6 +38,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "bootstrap/scss/toasts";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
+
+.bg-green-glass-bin {
+    @include gradient-directional($green-bin, #00aeef, 135deg);
+}
 
 // Custom
 @import "custom";

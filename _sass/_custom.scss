@@ -1,5 +1,17 @@
 // Custom CSS
 
+.schedule {
+    .btn {
+        width: 100%;
+    }
+
+    @include media-breakpoint-up(md) {
+        .schedule {
+          width: 100%;
+        }
+      }
+}
+
 .toast-container {
     z-index: 11;
 

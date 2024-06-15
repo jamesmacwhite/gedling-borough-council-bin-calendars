@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% seo title=false %}
-    <title>{{ site.title|default: page.title }}</title>
+    <title>{% if page.url == '/' %}{{ site.title }}{% else %}{{ page.title }} - {{ site.title }}{% endif %}</title>
     <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
     <link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | relative_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
