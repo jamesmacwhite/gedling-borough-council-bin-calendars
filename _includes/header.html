@@ -1,5 +1,12 @@
 <header class="container-fluid text-center bg-black text-white py-4">
-    <img src="{{ "/assets/images/gedling-council-logo-white.png" | relative_url }}" alt="Gedling Borough Council" class="img-fluid mb-3" width="300">
+    
+    {% if page.url == '/' %}
+        {% include logo.html %}
+    {% else %}
+        <a href="{{ site.url }}">
+            {% include logo.html %}
+        </a>
+    {% endif %}
 
     <h1 class="mb-3">Refuse/Waste, Recycling, Glass and Garden bin schedules</h1>
 
