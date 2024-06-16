@@ -73,11 +73,11 @@
 {% else %}
     <div class="row row-cols-1 row-cols-sm-2 g-4">
         {% for month in months %}
-            <div class="col">
+            <div class="col" data-collection-month-start="{{ month.name | date: '%F' }}">
                 <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
 
                 {% for item in month.items %}
-                    <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %} fw-bold">
+                    <div data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 bg-{{ item.type }} fw-bold">
                         {{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}
                     </div>
                 {% endfor %}
@@ -110,4 +110,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var months = document.querySelectorAll('[data-collection-month-start]');
+
+        Array.prototype.forEach.call(months, function(el) {
+
+            var collectionMonthStart = el.getAttribute('data-collection-month-start');
+
+            if (collectionMonthStart) {
+                var monthStart = new Date(collectionMonthStart);
+                var monthEnd = monthStart.setMonth(monthStart.getMonth() + 1);
+
+                // If whole month has past, set opacity on main column
+                if (new Date().getTime() > monthEnd) {
+                    el.classList.add('opacity-75');
+                }
+                // Check specific collection dates that may be in the past during a month
+                else {
+                    Array.prototype.forEach.call(el.children, function(el) {
+                        var collectionDate = el.getAttribute('data-bin-collection-date');
+                        if (collectionDate) {
+                            if (new Date().getTime() > new Date(collectionDate)) {
+                                el.classList.add('opacity-75');
+                            }
+                        }  
+                    });
+                }
+            }
+        });
+    </script>
 {% endif %}
