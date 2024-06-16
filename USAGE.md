@@ -1,5 +1,9 @@
 # Usage
 
+## HTML calendars
+
+All calendars are available to be viewed as HTML using the "View calendar" button for each schedule.
+
 ## Importing to a calendar
 
 Offering iCal formatted calendars, you can import the calendar events locally or subscribe using the calendar endpoint URLs, an example for the Wednesday G2 bin collection:
@@ -48,9 +52,11 @@ waste_collection_schedule:
         url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
 ```
 
-## JSON format
+## JSON
 
-Using the [ical2json library](https://www.npmjs.com/package/ical2json) all iCal files are also available as JSON endpoints, published under: `https://www.gbcbincalendars.co.uk/json/`, with the filename being the same as ical path with the exception of being `.json` instead of `.ical`. E.g. `https://www.gbcbincalendars.co.uk/json/gedling_borough_council_wednesday_g2_bin_schedule.json`. If you would like to parse the data as JSON, these formats may be better suited for you.
+Using the [ical.js library](https://github.com/kewisch/ical.js) all calendars are also available as JSON endpoints, published under: `https://www.gbcbincalendars.co.uk/json/`, with the filename being the same as ical path with the exception of being `.json` instead of `.ical`. E.g. `https://www.gbcbincalendars.co.uk/json/gedling_borough_council_wednesday_g2_bin_schedule.json`.
+
+Internally, the HTML calendars are derived from the same JSON data.
 
 ## Other
 
