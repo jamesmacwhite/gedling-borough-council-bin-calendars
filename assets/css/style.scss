@@ -4,6 +4,10 @@
 // Google fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+// Bootstrap icons
+$bootstrap-icons-font-src: url("../fonts/bootstrap-icons.woff2") format("woff2"), url("../fonts/bootstrap-icons.woff") format("woff");
+@import "bootstrap-icons/font/bootstrap-icons";
+
 // Boostrap 5
 @import "bootstrap/scss/functions";
 

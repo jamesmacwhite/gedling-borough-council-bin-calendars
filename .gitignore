@@ -6,6 +6,7 @@ _site
 *:Zone.Identifier
 _data/icaljs
 assets/js
+assets/fonts
 json
 node_modules
 vendor

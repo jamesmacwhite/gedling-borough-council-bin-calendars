@@ -68,6 +68,7 @@
     </div>
 
     <p class="my-2 fw-bold text-danger">There are no collections in January and February.</p>
+
 {% else %}
     <div class="row row-cols-1 row-cols-sm-2 g-4">
         {% for month in months %}
@@ -81,5 +82,29 @@
                 {% endfor %}
             </div>
         {% endfor %}
+    </div>
+
+    <div class="refuse-collection-key my-4" aria-hidden="true">
+        <div class="d-md-flex">
+            <div class="me-md-3">
+                <i class="bi bi-square-fill text-black-bin"></i>
+                <span class="ms-1">General Waste</span>
+            </div>
+
+            <div class="me-md-3">
+                <i class="bi bi-square-fill text-green-bin"></i>
+                <span class="ms-1">Recycling</span>
+            </div>
+
+            <div class="me-md-3">
+                <i class="bi bi-square-fill text-glass-bin"></i>
+                <span class="ms-1">Recycling &amp; Glass</span>
+            </div>
+
+            <div>
+                <i class="bi bi-square-fill text-danger"></i>
+                <span class="ms-1">Changed Collection</span>
+            </div>
+        </div>
     </div>
 {% endif %}

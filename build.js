@@ -17,6 +17,9 @@ if (!jetpack.exists(bootstrapJsBundle)) {
 console.log('Copying Bootstrap JS bundle from node_modules...');
 jetpack.copy(bootstrapJsBundle, "./assets/js/bootstrap.bundle.min.js", { overwrite: true });
 
+console.log('Copy bootstrap web font files');
+jetpack.copy('./node_modules/bootstrap-icons/font/fonts', './assets/fonts', { overwrite: true });
+
 // Remove json folder if exists
 jetpack.cwd(icaljsDest).remove();
 jetpack.cwd(jsonDest).remove();
