@@ -27,30 +27,31 @@ calendars.forEach(function(filepath) {
     const icalJs = require('ical.js');
     const IcalExpander = require('ical-expander');
     const ics = jetpack.read(filepath);
-    const icalExpander = new IcalExpander({ ics, maxIterations: 100 });
+    const icalExpander = new IcalExpander({ ics, maxIterations: 50 });
     const events = icalExpander.all();
     const filename = `${path.parse(filepath).name}.json`;
 
     // Assign a specific key for the calendar summary values for a consistent identifier
     const collectionKey = {
         "Black Bin Day": "black-bin",
-        "Green Bin Day": "green-bin",
-        "Green Bin + Glass Box Day": "green-glass-bin",
         "Black Bin Day (Changed Collection)": "black-bin",
+        "Green Bin Day": "green-bin",
         "Green Bin Day (Changed Collection)": "green-bin",
+        "Green Bin + Glass Box Day": "green-glass-bin",
         "Green Bin + Glass Box Day (Changed Collection)": "green-glass-bin",
         "Garden Waste Collection": "garden-bin",
         "Garden Waste Collection (Changed Collection)": "garden-bin"
     };
 
-
     const jcalData = icalJs.parse(ics);
     const comp = new icalJs.Component(jcalData);
+    const fileProperties = jetpack.inspect(`./${filepath}`, { times: true });
 
     // Create JSON header
     const jsonData = {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
+        "lastModified": fileProperties.modifyTime,
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
         "collectionDates": []
     };
