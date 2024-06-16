@@ -55,7 +55,12 @@
 
                 <ol class="list-unstyled">
                     {% for item in month.items %}
-                        <li class="{% if item.isChangedCollection %}text-danger fw-bold{% endif %}">{{ item.collectionDate | date: "%A" }} {{ item.collectionDate | date: "%-d %B" }}</li>
+                        <li class="{% if item.isChangedCollection %}text-danger fw-bold{% endif %}">
+                            {{ item.collectionDate | date: "%A" }} {{ item.collectionDate | date: "%-d %B" }}
+                            {% if item.isChangedCollection %}
+                                (Changed Collection)
+                            {% endif %}
+                        </li>
                     {% endfor %}
                 </ol>
             </div>
