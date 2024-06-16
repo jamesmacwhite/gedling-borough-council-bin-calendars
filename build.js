@@ -21,7 +21,7 @@ jetpack.copy(bootstrapJsBundle, "./assets/js/bootstrap.bundle.min.js", { overwri
 jetpack.cwd(icaljsDest).remove();
 jetpack.cwd(jsonDest).remove();
 
-// Process each ical file to conver to JSON format
+// Process each ical file to convert to JSON format
 calendars.forEach(function(filepath) {
 
     const icalJs = require('ical.js');
