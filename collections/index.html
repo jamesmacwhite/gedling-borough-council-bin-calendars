@@ -10,17 +10,19 @@ layout: default
 <div class="row row-cols-1 row-cols-sm-2 g-4">
     {% for type in site.data.calendars.bin_collections %}
         <div class="col">
-            <h3>{{ type.name }}</h3>
-
-            <ul>
+            <h3 class="mb-3">{{ type.name }}</h3>
                 {% for weekday in type.collections %}
-                    {% for collection in weekday[1] %}
-                        <li>
-                            <a href="{{ collection.permalink | absolute_url }}">{{ weekday[0] }} {{ collection.name }}</a>
-                        </li>
-                    {% endfor %}
+
+                    <h4>{{ weekday[0] }}</h4>
+
+                    <ul>
+                        {% for collection in weekday[1] %}
+                            <li>
+                                <a href="{{ collection.permalink | absolute_url }}">{{ collection.name }} Collection Schedule</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 {% endfor %}
-            </ul>
         </div>
     {% endfor %}
 </div>

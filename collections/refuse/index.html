@@ -3,18 +3,24 @@ title: Refuse collection schedules
 layout: default
 ---
 
-<h2>Refuse collection schedules</h2>
+<h2 class="mb-3">Refuse collection schedules</h2>
 
-<ul>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
     {% for collections in site.data.calendars.bin_collections %}
         {% if collections.name == 'Refuse/Recycling Collections' %}
             {% for weekday in collections.collections %}
-                {% for collection in weekday[1] %}
-                    <li>
-                        <a href="{{ collection.permalink | absolute_url }}">{{ weekday[0] }} {{ collection.name }} Bin Collection Calendar</a>
-                    </li>
-                {% endfor %}
+                <div class="col">
+                    <h3>{{ weekday[0] }}</h3>
+
+                    <ul>
+                        {% for collection in weekday[1] %}
+                            <li>
+                                <a href="{{ collection.permalink | absolute_url }}">{{ collection.name }} Bin Collection Calendar</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endfor %}
         {% endif %}
     {% endfor %}
-</ul>
+</div>
