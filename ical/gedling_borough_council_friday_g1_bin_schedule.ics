@@ -5,7 +5,7 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Gedling Borough Council Bin Day 2023/24 Friday G1
 X-WR-TIMEZONE:Europe/London
-X-WR-CALDESC:https://apps.gedling.gov.uk/refuse/data/FridayG1-2024.pdf\n
+X-WR-CALDESC:https://apps.gedling.gov.uk/refuse/data/FridayG1-2024.pdf
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:20231201
 DTEND;VALUE=DATE:20231202
