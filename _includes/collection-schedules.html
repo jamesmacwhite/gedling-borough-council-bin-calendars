@@ -19,7 +19,7 @@
                             <h4>{{ schedule.name }} Collection</h4>
 
                             <div class="d-grid gap-2 d-block d-lg-flex mb-2">
-                                <a aria-label="View {{ scheduleTitle }} collection" href="{{ schedule.permalink | absolute_url }}" class="btn btn-primary">View calendar</a>
+                                <a aria-label="View {{ scheduleTitle }} collection" href="{{ schedule.permalink | absolute_url }}#{{ site.time | date: '%B %Y' | slugify }}" class="btn btn-primary">View calendar</a>
                                 <a id="ical_{{ schedule.id }}" data-schedule-title="iCal download {{ scheduleTitle }}" aria-label="Download iCal calendar for {{ scheduleTitle }} collection" href="{{ calendarUrl }}" class="btn btn-gedling-red" download>Download iCal</a>
                             </div>
                             <div class="d-grid gap-2 d-block d-lg-flex">
