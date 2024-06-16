@@ -21,11 +21,29 @@
 
 <p>To subscribe to this calendar use the following iCal URL:</p>
 
-<div class="bg-light p-3 mb-4 border border-1">
-    <code>
-        {{ icalUrl }}
-    </code>
+<div class="bg-light p-3 mb-3 border border-1">
+    <label for="ical-url" class="visually-hidden">iCal URL</label>
+    <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
 </div>
+
+<button type="button" class="btn btn-secondary mb-4" onclick="copyToClipboard()">Copy to clipboard</button>
+
+<script>
+    function copyToClipboard() {
+        var icalUrl = document.getElementById("ical-url");
+        var icalUrlOriginalValue = icalUrl.value;
+
+        icalUrl.select();
+        icalUrl.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(icalUrl.value);
+
+        icalUrl.setAttribute('value', 'iCal URL has been copied to the clipboard!');
+
+        setTimeout(function() {
+            icalUrl.setAttribute('value', icalUrlOriginalValue)
+        }, 3000);
+    }
+</script>
 
 {% assign months = jsonData | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
 

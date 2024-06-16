@@ -46,7 +46,11 @@
     {% endif %}
       <a class="visually-hidden-focusable" href="#content">Skip to main content</a>
 
-      {% include header.html %}
+      {% if isHome == true %}
+        {% include header.html %}
+      {% else %}
+        {% include header-minimal.html %}
+      {% endif %}
 
       <main id="content" class="mt-3">
         <div class="container">
