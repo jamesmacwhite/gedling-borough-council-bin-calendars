@@ -24,23 +24,24 @@
     <div class="bg-light p-3 mb-3 border border-1">
         <label for="ical-url" class="visually-hidden">iCal URL</label>
         <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
+        <p id="ical-url-copied" class="d-none mb-0">
+            <span class="text-success">iCal URL has been copied to the clipboard!</span>
+        </p>
+        <button type="button" class="btn btn-secondary mt-2" onclick="copyToClipboard()">Copy iCal URL</button>
     </div>
-
-    <button type="button" class="btn btn-secondary mb-4" onclick="copyToClipboard()">Copy to clipboard</button>
 
     <script>
         function copyToClipboard() {
             var icalUrl = document.getElementById("ical-url");
-            var icalUrlOriginalValue = icalUrl.value;
+            var icalMessage = document.getElementById("ical-url-copied");
 
             icalUrl.select();
             icalUrl.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(icalUrl.value);
-
-            icalUrl.setAttribute('value', 'iCal URL has been copied to the clipboard!');
+            icalMessage.classList.remove('d-none');
 
             setTimeout(function() {
-                icalUrl.setAttribute('value', icalUrlOriginalValue)
+                icalMessage.classList.add('d-none');
             }, 3000);
         }
     </script>
