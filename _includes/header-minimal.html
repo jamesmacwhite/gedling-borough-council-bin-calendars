@@ -1,7 +1,15 @@
 <header class="bg-black text-white py-2">
     <div class="container">
-        <a href="/">
-            {% include logo.html width="200" %}
-        </a>
+        <div class="d-md-flex justify-content-between align-items-center">
+            <a href="/">
+                {% include logo.html width="200" %}
+            </a>
+
+            {% if page.url != '/collections/' %}
+                <a href="/collections" class="d-none d-md-block btn btn-light">
+                    View all calendars
+                </a>
+            {% endif %}
+        </div>
     </div>
 </header>
