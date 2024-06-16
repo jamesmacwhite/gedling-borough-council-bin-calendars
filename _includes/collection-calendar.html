@@ -19,9 +19,7 @@
 
         <label for="ical-url" class="visually-hidden">iCal URL</label>
         <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
-        <p id="ical-url-copied" class="d-none mt-1 mb-0">
-            <span class="text-success">iCal URL has been copied to the clipboard!</span>
-        </p>
+        <p id="ical-url-copy-result" class="d-none mt-1 mb-0"></p>
 
         <div class="d-grid d-md-flex gap-1 mt-2">
             <button type="button" class="btn btn-secondary" onclick="copyToClipboard()">Copy iCal URL</button>
@@ -33,15 +31,24 @@
     <script>
         function copyToClipboard() {
             var icalUrl = document.getElementById("ical-url");
-            var icalMessage = document.getElementById("ical-url-copied");
+            var icalCopyMessage = document.getElementById("ical-url-copy-result");
 
             icalUrl.select();
-            icalUrl.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(icalUrl.value);
-            icalMessage.classList.remove('d-none');
+            icalUrl.setSelectionRange(0, icalUrl.value.length);
+
+            navigator.clipboard.writeText(icalUrl.value).then(() => {
+                icalCopyMessage.textContent = 'iCal URL has been copied to the clipboard!';
+                icalCopyMessage.classList.add('text-success');
+                icalCopyMessage.classList.remove('d-none');
+            }, () => {
+                icalCopyMessage.classList.remove('d-none');
+                icalCopyMessage.classList.add('text-danger');
+                icalCopyMessage.textContent = 'iCal URL could not be copied to clipboard, please manually copy the URL.';
+            });
 
             setTimeout(function() {
-                icalMessage.classList.add('d-none');
+                icalCopyMessage.classList.add('d-none');
+                icalCopyMessage.classList.remove('text-success', 'text-danger');
             }, 3000);
         }
     </script>
