@@ -56,7 +56,7 @@
                 <ol class="list-unstyled">
                     {% for item in month.items %}
                         <li class="{% if item.isChangedCollection %}text-danger fw-bold{% endif %}">
-                            {{ item.collectionDate | date: "%A" }} {{ item.collectionDate | date: "%-d %B" }}
+                            {{ item.collectionDate | date: "%A %-d %B" }}
                             {% if item.isChangedCollection %}
                                 (Changed Collection)
                             {% endif %}
@@ -73,8 +73,8 @@
                 <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
 
                 {% for item in month.items %}
-                    <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %}">
-                        <span class="fw-bold">{{ item.collectionDate | date: "%A" }} {{ item.collectionDate | date: "%-d %B" }} - {{ item.name }}</span>
+                    <div class="p-3 mb-2 bg-{{ item.type }} {% if item.isChangedCollection %}border border-3 border-danger{% endif %} fw-bold">
+                        {{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}
                     </div>
                 {% endfor %}
             </div>
