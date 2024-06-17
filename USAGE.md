@@ -1,6 +1,6 @@
-# Usage
+# Using the calendars
 
-The bin calendars are published in several formats, designed to be more accessible and in open data formats for wider usage.
+All bin collection calendars are published in several formats, designed to be more accessible and in open data formats for use by both general users and other software.
 
 ## HTML calendars
 
@@ -8,7 +8,7 @@ All calendars are [available to be viewed as HTML](https://www.gbcbincalendars.c
 
 ## Importing to a calendar
 
-You can import the calendar events locally or subscribe using the calendar endpoint URLs, an example for the Wednesday G2 bin collection:
+You can import any calendar as static or subscribe using the iCal URL, an example for the Wednesday G2 bin collection:
 
 ```
 https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
@@ -37,7 +37,7 @@ waste_collection_schedule:
         url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
 ```
 
-Multiple sources are supported e.g. if you also use the Garden Waste Collection service, you can add another .ics source pointing to the garden bin collection for your area.
+Multiple sources are supported e.g. if you also use the Garden Waste Collection service, you can add another iCalendar source pointing to the garden bin collection for your area.
 
 ```yaml
 waste_collection_schedule:
