@@ -38,13 +38,9 @@ calendars.forEach(function(filepath) {
     // Assign a specific key for the calendar summary values for a consistent identifier
     const collectionKey = {
         "Black Bin Day": "black-bin",
-        "Black Bin Day (Changed Collection)": "black-bin",
         "Green Bin Day": "green-bin",
-        "Green Bin Day (Changed Collection)": "green-bin",
         "Green Bin + Glass Box Day": "green-glass-bin",
-        "Green Bin + Glass Box Day (Changed Collection)": "green-glass-bin",
         "Garden Waste Collection": "garden-bin",
-        "Garden Waste Collection (Changed Collection)": "garden-bin"
     };
 
     const jcalData = icalJs.parse(ics);
@@ -60,20 +56,25 @@ calendars.forEach(function(filepath) {
         "collectionDates": []
     };
 
+    function getBinType(key) {
+        var keyParsed = key.replace('(Changed Collection)', '').trim();
+        return collectionKey[keyParsed] || 'Unknown';
+    }
+
     function isChangedCollection(eventTitle) {
         return eventTitle.toLowerCase().includes('changed collection');
     }
 
     const mappedEvents = events.events.map(e => ({ 
         name: e.summary,
-        type: collectionKey[e.summary] || null,
+        type: getBinType(e.summary),
         collectionDate: e.startDate.toString(),
         isChangedCollection: isChangedCollection(e.summary)
     }));
 
     const mappedOccurrences = events.occurrences.map(o => ({
         name: o.item.summary,
-        type: collectionKey[o.item.summary] || null,
+        type: getBinType(o.item.summary),
         collectionDate: o.startDate.toString(),
         isChangedCollection: isChangedCollection(o.item.summary)
     }));
