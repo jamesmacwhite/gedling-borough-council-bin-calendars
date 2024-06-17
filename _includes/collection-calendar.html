@@ -1,9 +1,11 @@
 {% assign dataId = page.name | replace: "-", "_" | remove: '.html' %}
 
 {% if page.url contains 'garden' %}
+    {% assign isGardenCollection = true %}
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_garden_bin_schedule" %}
 {% else %}
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
+    {% assign isGardenCollection = false %}
 {% endif %}
 
 {% assign jsonData = site.data.icaljs[dataKey].collectionDates %}
@@ -56,7 +58,7 @@
 
 {% assign months = jsonData | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
 
-{% if page.url contains 'garden' %}
+{% if isGardenCollection %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         {% for month in months %}
             <div class="col">
@@ -120,33 +122,36 @@
     </div>
 
     <script>
-        var months = document.querySelectorAll('[data-collection-month-start]');
+        var collectionMonths = document.querySelectorAll('[data-collection-month-start]');
 
-        Array.prototype.forEach.call(months, function(el) {
-
+        collectionMonths.forEach(function(el) {
             var collectionMonthStart = el.getAttribute('data-collection-month-start');
+            var dateNow = new Date().getTime();
 
             if (collectionMonthStart) {
                 var monthStart = new Date(collectionMonthStart);
-                var monthEnd = monthStart.setMonth(monthStart.getMonth() + 1);
+                var monthEnd = new Date(monthStart);
+                monthEnd.setMonth(monthStart.getMonth() + 1);
 
-                // If whole month has past, set opacity on main column
-                if (new Date().getTime() > monthEnd) {
+                // If the whole month has passed, set opacity on the main column
+                if (dateNow > monthEnd) {
                     el.classList.add('opacity-75');
-                }
-                // Check for any collection dates that may be in the past during a month
-                else {
-                    Array.prototype.forEach.call(el.children, function(el) {
-                        var collectionBinDate = el.getAttribute('data-bin-collection-date');
+                } else {
+                    // Check for any collection dates that may be in the past during the month
+                    Array.from(el.children).forEach(function(childEl) {
+                        var collectionBinDate = childEl.getAttribute('data-bin-collection-date');
 
                         if (collectionBinDate) {
                             var collectionDate = new Date(collectionBinDate);
-                            var collectionEndDate = collectionDate.setDate(collectionDate.getDate() + 1);
+                            var collectionEndDate = new Date(collectionDate);
+                            // Add 12 hours to collection date for midday
+                            collectionEndDate.setHours(collectionDate.getHours() + 12);
 
-                            if (new Date().getTime() >= collectionEndDate) {
-                                el.classList.add('opacity-75');
+                            // Check for any past collections within the month
+                            if (dateNow >= collectionEndDate) {
+                                childEl.classList.add('opacity-75');
                             }
-                        }  
+                        }
                     });
                 }
             }
