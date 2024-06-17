@@ -11,12 +11,12 @@
 {% assign jsonData = site.data.icaljs[dataKey].collectionDates %}
 {% assign icalUrl = "/ical/" | append: dataKey | append: ".ics" | absolute_url %}
 
-<div class="border-bottom border-1 mb-4">
+<div>
     <h2>{{ page.title }}</h2>
 
     <p>You can view the collection dates for the {{ page.title }} schedule below.</p>
 
-    <div class="bg-light p-3 mb-3 border border-1">
+    <div class="bg-light p-3 mb-4 border border-1">
         <p>To subscribe to this calendar use the following iCal URL:</p>
 
         <label for="ical-url" class="visually-hidden">iCal URL</label>
