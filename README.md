@@ -4,17 +4,17 @@
 
 As a resident within the Gedling district in Nottingham, I like to have the bin collection day in my calendar which can be used by multiple devices as well for home automation. 
 
-It is somewhat frustrating that [Gedling Borough Council](https://www.gedling.gov.uk/) does not provide either a iCal calendar or API to view the bin schedule dates in full that can be parsed easily. Instead they offer either a PDF (which is horrible for accessibility) or the option to subscribe to email alerts which notifies you the day before.
+It is somewhat frustrating that [Gedling Borough Council](https://www.gedling.gov.uk/) does not provide either a iCal calendar or API to view the bin schedule dates in full that can be parsed easily. Instead they offer either a PDF (which is horrible for accessibility) or the option to subscribe to email alerts which notifies you the day before but no way to have the entire schedule in a usable open format.
 
-For a few years now I have created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I decided to convert all the bin collections into the iCal format.
+For a few years now I had always created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I started this project with the original intention of providing all the bin collections in the iCal format, this then expanded to going further by providing HTML for better accessibility as well as JSON for other software to leverage a consistent API for using the data too.
 
-## Bin collection schedules
+## Gedling bin collection schedules
 
 If you are a new resident or are unsure of how the bin schedules work, they are explained below.
 
-### General bin collection schedule
+### Refuse/recycling
 
-There are a total of 20 bin schedules provided by Gedling Borough Council. The bin schedules Gedling Borough Council operate are labelled G1 - G4 and occur Monday to Friday (under normal collection days). Depending on where you are in the Gedling Borough area, you will have a bin day schedule on a specific weekday labelled as G1, G2, G3 or G4.
+There are a total of 20 bin schedules provided by Gedling Borough Council (who knew there were that many?!). The bin schedules Gedling Borough Council operate are labelled G1 - G4 and occur Monday to Friday (under normal collection days). Depending on where you are in the Gedling Borough area, you will have a bin day schedule on a specific weekday labelled as G1, G2, G3 or G4.
 
 **The schedule of each type of bin collections is:**
 
@@ -40,16 +40,14 @@ For garden waste collection, this is labelled as A - J with each letter being as
 * Thursday - D or I
 * Friday - E or J
 
-You can use this information to then select the correct calendar from the ical folder that matches your area.
+Once you know your specific schedule, you can [find all calendars](https://www.gbcbincalendars.co.uk) available in HTML, iCal and JSON.
 
 ## Calendars
 
-The calendar ICS files are named in the format of: 
+The ICalendar files are named in the format of: 
 
 * `gedling_borough_council_[day]_[g1-4]_bin_schedule.ics` for general bin collection (Black, Green and Glass bin collection)
 * `gedling_borough_council_[day]_[a-j]_garden_bin_schedule.ics` for garden waste collection. 
-
-The calendars use a repeating occurrence schedule and end on the last occurrence per the PDF calendar. When a collection day falls on a national holiday, the revised date is added as a single occurrence with (Changed Collection) in the title.
 
 **The calendar entries are titled as:**
 
@@ -58,23 +56,23 @@ The calendars use a repeating occurrence schedule and end on the last occurrence
 * Green Bin + Glass Box Day - Recycling and glass collection.
 * Garden Waste Collection - Extra garden waste collection service.
 
-The iCal calendars try to match the PDF versions as closely as possible.
+When a collection day falls on a national holiday i.e. Bank holiday, the revised date is added as a single occurrence with (Changed Collection) in the title to denote this.
+
+The iCal calendars try to match the PDF document versions as closely as possible.
 
 All bin day events are set as "All day" events. Bin collections generally occur in the morning, but the time can vary.
 
 ## Using these calendars
 
-This repository hosts all the calendars within the `ical` folder. For easier visibility of all calendars in a logical order and hosted versions of the files, view the [GitHub pages site](https://www.gbcbincalendars.co.uk).
+This repository hosts all the calendars within the `ical` folder. For easier visibility of all calendars in a logical order and having a public iCal URL to subscribe to, view the [GitHub pages site](https://www.gbcbincalendars.co.uk). All calendars are also available in HTML and JSON formats.
 
-In addition, various types of home automation can be driven from calendar events too. One example is the [HACS Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) Home Assistant integration.
-
-The calendar .ics files try to be as minimalist as possible, each event is a simple summary title with the information available at a glance, other systems or integrations are welcome to use the iCal data for other purposes with further parsing and adjustments.
-
-The calendar files are updated yearly overwriting the previous year. This will remove the previous historic references, although this shouldn't be a problem. You won't need to update any software if referencing the URLs. Gedling Borough Council release the bin collection schedules towards the end of the current year, covering up until November of the following year.
+The calendar files are updated yearly overwriting the previous year, this is to maintain a consistent iCal subscribe URL.
 
 ## Original calendar sources
 
 Gedling Borough Council produces the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability. These are also available to be viewed as a PDF but this format is not very accessible. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below. I don't believe there's a specific page that provides all of the PDF files in a single place, but with some file path snooping reveals the following naming convention to find them.
+
+If you wanted to view the original source documents, you can find all of the PDF files following the instructions below.
 
 ### General bin collection PDFs
 
@@ -108,7 +106,7 @@ These files are the original source of data for the calendars produced.
 
 ## How are these calendars generated?
 
-The original printed calendars are human translated into a repeated calendar occurrence events, with the exception of changed collection days which are then one-off instances. Each calendar is exported in the iCal format and hosted in this repository. The data *shouldn't* change, given each calendar is created for the year.
+The original printed calendars are human translated into a recurring calendar events, with the exception of changed collection days which are then one-off instances. Each calendar is exported in the iCal format and hosted in this repository, the HTML and JSON formats are generated from the iCal data.
 
 ## Disclaimer
 
