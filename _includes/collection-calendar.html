@@ -17,7 +17,7 @@
     <p>You can view the collection dates for the {{ page.title }} schedule below.</p>
 
     <div class="bg-light p-3 mb-4 border border-1">
-        <p>To subscribe to this calendar use the following iCal URL:</p>
+        <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
 
         <label for="ical-url" class="visually-hidden">iCal URL</label>
         <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
@@ -136,7 +136,8 @@
                 // If the whole month has passed, set opacity on the main column
                 if (dateNow > monthEnd) {
                     el.classList.add('opacity-75');
-                } else {
+                } 
+                else {
                     // Check for any collection dates that may be in the past during the month
                     Array.from(el.children).forEach(function(childEl) {
                         var collectionBinDate = childEl.getAttribute('data-bin-collection-date');
