@@ -8,17 +8,18 @@ const calendars = jetpack.find("ical", { matching: "*.ics" });
 const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
 const bootstrapJsBundle = './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+const bootstrapIconFonts = './node_modules/bootstrap-icons/font/fonts';
 
-if (!jetpack.exists(bootstrapJsBundle)) {
-    console.error('node_modules Bootstrap JS bundle does not exist.');
+if (!jetpack.exists(bootstrapJsBundle) || !jetpack.exists(bootstrapIconFonts)) {
+    console.error('Missing node_module dependency. Could not complete build.');
     process.exit(1);
 }
 
 console.log('Copying Bootstrap JS bundle from node_modules...');
-jetpack.copy(bootstrapJsBundle, "./assets/js/bootstrap.bundle.min.js", { overwrite: true });
+jetpack.copy(bootstrapJsBundle, './assets/js/bootstrap.bundle.min.js', { overwrite: true });
 
-console.log('Copy bootstrap web font files...');
-jetpack.copy('./node_modules/bootstrap-icons/font/fonts', './assets/fonts', { overwrite: true });
+console.log('Copying bootstrap web font files...');
+jetpack.copy(bootstrapIconFonts, './assets/fonts', { overwrite: true });
 
 // Remove json folder if exists
 jetpack.cwd(icaljsDest).remove();
@@ -59,18 +60,22 @@ calendars.forEach(function(filepath) {
         "collectionDates": []
     };
 
+    function isChangedCollection(eventTitle) {
+        return eventTitle.toLowerCase().includes('changed collection');
+    }
+
     const mappedEvents = events.events.map(e => ({ 
         name: e.summary,
         type: collectionKey[e.summary] || null,
         collectionDate: e.startDate.toString(),
-        isChangedCollection: e.summary.includes("Changed Collection")
+        isChangedCollection: isChangedCollection(e.summary)
     }));
 
     const mappedOccurrences = events.occurrences.map(o => ({
         name: o.item.summary,
         type: collectionKey[o.item.summary] || null,
         collectionDate: o.startDate.toString(),
-        isChangedCollection: o.item.summary.includes("Changed Collection")
+        isChangedCollection: isChangedCollection(o.item.summary)
     }));
 
     const allEvents = [].concat(mappedEvents, mappedOccurrences)
@@ -81,7 +86,9 @@ calendars.forEach(function(filepath) {
 
     // Write to JSON folder for public API
     jetpack.write(`${jsonDest}/${filename}`, jsonData);
+    console.log(`Output ${filename} to JSON directory.`)
 
     // Write to _data folder for internal use for schedule listing template
     jetpack.write(`${icaljsDest}/${filename}`, jsonData);
+    console.log(`Output ${filename} to _data directory.`);
 });
