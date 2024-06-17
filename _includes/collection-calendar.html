@@ -134,12 +134,16 @@
                 if (new Date().getTime() > monthEnd) {
                     el.classList.add('opacity-75');
                 }
-                // Check specific collection dates that may be in the past during a month
+                // Check for any collection dates that may be in the past during a month
                 else {
                     Array.prototype.forEach.call(el.children, function(el) {
-                        var collectionDate = el.getAttribute('data-bin-collection-date');
-                        if (collectionDate) {
-                            if (new Date().getTime() > new Date(collectionDate)) {
+                        var collectionBinDate = el.getAttribute('data-bin-collection-date');
+
+                        if (collectionBinDate) {
+                            var collectionDate = new Date(collectionBinDate);
+                            var collectionEndDate = collectionDate.setDate(collectionDate.getDate() + 1);
+
+                            if (new Date().getTime() >= collectionEndDate) {
                                 el.classList.add('opacity-75');
                             }
                         }  
