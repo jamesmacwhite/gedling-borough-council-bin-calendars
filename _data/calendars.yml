@@ -1,7 +1,7 @@
 bin_collections:
   - name: "Refuse/Recycling Collections"
     id: "refuse"
-    description: "There are a total of 20 different collection schedules. 4 schedules for each weekday labelled G1-G4."
+    description: "There are a total of 20 different bin collection schedules, 4 schedules per weekday which are labelled (G1 - G4)."
     collections:
       Monday:
           -
@@ -136,7 +136,7 @@ bin_collections:
   - name: "Garden Waste Collections"
     id: "garden"
     description: | 
-      [Garden Waste Collections](https://www.gedling.gov.uk/rubbish/gardenwaste/) are an additional paid service and follow a different schedule to refuse/recycling. There are a total of 10 schedules labelled A - J, with each weekday being assigned two schedules.
+      [Garden Waste Collections](https://www.gedling.gov.uk/rubbish/gardenwaste/) are an additional paid service and follow a different schedule to refuse/recycling. There are a total of 10 schedules labelled A - J, with each weekday being assigned two different schedules.
     collections:
       Monday:
           -
