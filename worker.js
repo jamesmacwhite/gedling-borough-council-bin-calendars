@@ -101,8 +101,8 @@ export default {
 
 
     if (!refuseCollectionEmailSubscribeUrl || !gardenWasteCollectionEmailSubscribeUrl) {
-      return new Response('Street name did not return bin collection data.', {
-        status: 500,
+      return new Response('The street name entered did not return any bin collection data. Please check the street name entered is valid, spelt correctly and within the Gedling district and try again.', {
+        status: 404,
         headers: corsHeaders
       });
     }

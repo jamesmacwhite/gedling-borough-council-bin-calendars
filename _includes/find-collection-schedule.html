@@ -1,0 +1,58 @@
+<p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, using the search bar below, you can enter any valid street name in the Gedling area and the correct schedules for both refuse/recycling and garden waste collection will be provided for you.</p>
+
+<form id="collection-search">
+    <label for="street-name" class="form-label">Enter your street name</label>
+    <input type="text" class="form-control" id="street-name" placeholder="Oxclose Lane" required>
+
+    <button type="submit" class="btn btn-primary mt-2 mb-3">Search</button>
+</form>
+
+<div aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none text-center">
+
+</div>
+
+<script>
+    let form = document.querySelector('form#collection-search');
+    let searchResult = document.querySelector('.collection-search-result');
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        let streetName = document.querySelector('#street-name');
+        searchResult.classList.remove('d-none');
+
+        fetch(`{{ site.collectionSearchUrl }}${streetName.value}`)
+            .then((response) => {
+
+                if (!response.ok) {
+
+                    if (response.status === 404) {
+                        throw new Error('The street name entered did not return any bin collection data. Please check the street name entered and try again.');
+                    }
+
+                    if (response.status === 500) { 
+                        throw new Error('The Gedling Borough Council website did not provide a valid response to the request.');
+                    }
+                    
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                searchResult.innerHTML = `
+                <p class="mb-0 fw-bold">Your refuse/recycling collection is:</p>
+                <p class="fs-3">
+                    <a href="/collections/refuse/${data.refuseCollectionScheduleId}" class="link-dark">${data.refuseCollectionScheduleName}</a>
+                </p>
+                <p class="mb-0 fw-bold">Your garden waste collection is:</p>
+                <p class="fs-3 mb-0">
+                    <a href="/collections/garden/${data.gardenWasteCollectionScheduleId}" class="link-dark">${data.gardenWasteCollectionScheduleName}</a>
+                </p>`;
+            })
+            .catch((error) => {
+                searchResult.innerHTML = `<p class="text-danger fw-bold mb-0">${error}</p>`
+                console.error("Error fetching data:", error);
+            });
+    });
+</script>

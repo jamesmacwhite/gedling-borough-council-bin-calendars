@@ -28,3 +28,5 @@ gtm:
   container_id: GTM-P3MHVNSB
   auth: J1DjljiZzoVaDdrd1ACJBw
   preview: env-3
+
+collectionSearchUrl: https://gbc-find-bin-collection-schedule.jamesmacwhite.workers.dev?streetName=
