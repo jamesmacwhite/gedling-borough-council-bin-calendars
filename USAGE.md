@@ -54,11 +54,15 @@ waste_collection_schedule:
         url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
 ```
 
-## JSON
+## JSON calendar API
 
 Using the [ical.js library](https://github.com/kewisch/ical.js) all calendars are also available as JSON endpoints, published under: `https://www.gbcbincalendars.co.uk/json/`, with the filename being the same as ical path with the exception of being `.json` instead of `.ical`. E.g. `https://www.gbcbincalendars.co.uk/json/gedling_borough_council_wednesday_g2_bin_schedule.json`.
 
 The HTML calendars are derived from the same JSON data.
+
+## Bin collection API
+
+Using a Cloudflare Worker, an API is available at api.gbcbincalendars.co.uk which provides bin collection schedule identifiers and names for the refuse/recycling and garden waste collections returned. The source of this data is from https://apps.gedling.gov.uk/refuse/search.aspx. This is the official data source from Gedling, however it lacks any form of API/endpoint. The Cloudflare worker performs searches and scrapes the result to return as JSON.
 
 ## Other
 
