@@ -1,8 +1,10 @@
 _site
+.dev.vars
 .sass-cache
 .jekyll-cache
 .jekyll-metadata
 .vscode
+.wrangler/
 *:Zone.Identifier
 _data/icaljs
 assets/js
