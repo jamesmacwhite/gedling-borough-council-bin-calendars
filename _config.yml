@@ -17,6 +17,8 @@ exclude:
   - package-lock.json
   - README.md
   - USAGE.md
+  - worker.js
+  - wrangler.toml
 
 sass:
   style: compressed
