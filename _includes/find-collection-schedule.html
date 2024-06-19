@@ -1,3 +1,9 @@
+{% if jekyll.environment != 'production' %}
+    {% assign apiUrl = 'http://localhost:8787?streetName=' %}
+{% else %}
+    {% assign apiUrl = site.collectionSearchUrl %}
+{% endif %}
+
 <p>Gedling Borough Council provides a <a href="https://apps.gedling.gov.uk/refuse/search.aspx">Refuse Collection Days search tool</a>, using the search bar below, you can enter any valid street name in the Gedling area and the correct schedules for both refuse/recycling and garden waste collection will be provided for you.</p>
 
 <form id="collection-search">
@@ -21,7 +27,7 @@
         let streetName = document.querySelector('#street-name');
         searchResult.classList.remove('d-none');
 
-        fetch(`{{ site.collectionSearchUrl }}${streetName.value}`)
+        fetch(`{{ apiUrl }}${streetName.value}`)
             .then((response) => {
 
                 if (!response.ok) {
@@ -40,15 +46,38 @@
                 return response.json();
             })
             .then((data) => {
-                searchResult.innerHTML = `
-                <p class="mb-0 fw-bold">Your refuse/recycling collection is:</p>
-                <p class="fs-3">
-                    <a href="/collections/refuse/${data.refuseCollectionScheduleId}" class="link-dark">${data.refuseCollectionScheduleName}</a>
-                </p>
-                <p class="mb-0 fw-bold">Your garden waste collection is:</p>
-                <p class="fs-3 mb-0">
-                    <a href="/collections/garden/${data.gardenWasteCollectionScheduleId}" class="link-dark">${data.gardenWasteCollectionScheduleName}</a>
-                </p>`;
+                let refuseCollections = data.refuseCollections;
+                let gardenWasteCollections = data.gardenWasteCollections;
+
+                searchResult.innerHTML = '';
+
+                searchResult.innerHTML += `<p class="mb-0 fw-bold">Your refuse/recycling ${refuseCollections.length === 1 ? 'collection is' : 'collections are'}:</p>`;
+
+                refuseCollections.forEach(function(collection) {
+                    searchResult.innerHTML += `
+                    <div class="refuse-collection-result">
+                        <p class="fs-3 mb-0">
+                            <a href="/collections/refuse/${collection['Schedule Identifier']}">
+                                ${collection['Schedule Name']}
+                            </a>
+                        </p>
+                        <p class="mb-0">${collection['Location']}, ${collection['Area']}</p>
+                    </div>`
+                });
+
+                searchResult.innerHTML += `<p class="mt-2 mb-0 fw-bold">Your garden waste ${gardenWasteCollections.length === 1 ? 'collection is' : 'collections are'}:</p>`;
+
+                gardenWasteCollections.forEach(function(collection) {
+                    searchResult.innerHTML += `
+                    <div class="garden-waste-collection-result">
+                        <p class="fs-3 mb-0">
+                            <a href="/collections/garden/${collection['Schedule Identifier']}">
+                                ${collection['Schedule Name']}
+                            </a>
+                        </p>
+                        <p class="mb-0">${collection['Location']}, ${collection['Numbers'] !== null ? collection['Numbers'] + ',' : ''} ${collection['Area']}</p>
+                    </div>`
+                });
             })
             .catch((error) => {
                 searchResult.innerHTML = `<p class="text-danger fw-bold mb-0">${error}</p>`
