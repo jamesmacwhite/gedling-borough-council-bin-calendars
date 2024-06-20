@@ -12,7 +12,7 @@
 {% assign icalUrl = "/ical/" | append: dataKey | append: ".ics" | absolute_url %}
 
 <div>
-    <h2>{{ page.title }}</h2>
+    <h1 class="h2">{{ page.title }}</h1>
 
     <p>You can view the collection dates for the {{ page.title }} schedule below.</p>
 
@@ -62,7 +62,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         {% for month in months %}
             <div class="col">
-                <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
+                <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
 
                 <ol class="list-unstyled">
                     {% for item in month.items %}
@@ -84,7 +84,7 @@
     <div class="row row-cols-1 row-cols-sm-2 g-4">
         {% for month in months %}
             <div class="col" data-collection-month-start="{{ month.name | date: '%F' }}">
-                <h3 id="{{ month.name | slugify }}">{{ month.name }}</h3>
+                <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
 
                 {% for item in month.items %}
                     <div data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 bg-{{ item.type }} fw-bold">

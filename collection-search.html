@@ -1,0 +1,18 @@
+---
+title: Refuse Collection Days Search
+layout: default
+---
+
+<h1 class="h2">{{ page.title }}</h1>
+
+<p>Gedling Borough Council provides 20 different refuse/waste collections and 10 garden waste collections. Depending on the area within the Gedling district, a specific weekday and schedule name is assigned. Using this search tool, you can find the specific collection information for bin collections.</p>
+
+<p class="fw-bold text-danger">You must enter a street name only, no property numbers or postcode information.</p>
+
+{% include find-collection-schedule.html %}
+
+<p>Some street names will return multiple collections, due to being on a boundary. When multiple results are returned, the area and in some cases property numbers are shown to help identify the correct collection. This additional data is provided by Gedling Borough Council.</p>
+
+<h2 class="h3">About this data source</h2>
+
+<p>This search tool uses data from Gedling Borough Council and the official <a href="{{ site.gedlingRefuseSearchUrl }}">refuse collection days search</a>. The search result format provided by apps.gedling.gov.uk does not provide the collection day and name directly, so this search tool takes all the available data, while linking directly to collection calendars from search results.</p>
