@@ -1,19 +1,20 @@
 import { parse } from 'node-html-parser';
 
 export default {
+
   async fetch(request) {
-    let viewState = '';
-    let viewStateGenerator = '';
-    let eventValidation = '';
 
     const refuseCollectionJsonKeys = ['Location', 'Area', 'Calendar URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name'];
     const gardenWasteCollectionJsonKeys = ['Location', 'Numbers', 'Area', 'Calendar URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name'];
     const gedlingAppDomainUrl = 'https://apps.gedling.gov.uk';
+    const refuseSearchUrl = `${gedlingAppDomainUrl}/refuse/search.aspx`;
     
     let refuseCollectionData = [];
     let gardenWasteCollectionData = [];
-    let refuseRowsHtml = '';
-    let gardenWasteRowsHtml = '';
+
+    function getAttributeValue(root, selector) {
+      return parse(root).querySelector(selector).getAttribute('value');
+    }
 
     function getCollectionIdentifier(url) {
       return url.split("/").pop() || null;
@@ -67,99 +68,64 @@ export default {
       });
     }
 
-    const searchUrl = 'https://apps.gedling.gov.uk/refuse/search.aspx';
-    const searchPage = await fetch(searchUrl);
+    // Make GET request to search page to get ASP.NET hidden input values required for POST request
+    const searchPageFormData = await fetch(refuseSearchUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${refuseSearchUrl}. HTTP error: ${response.status} ${response.statusText}.`);
+        }
 
-    if (searchPage.status !== 200) {
-      return new Response(`Request to ${searchUrl} failed.`, {
-        status: 500,
-        headers: corsHeaders
-      });
+        return response.text();
+
+      })
+      .then((data) => {
+        // Parse the input values needed
+        return {
+          '__VIEWSTATE': getAttributeValue(data, 'input#__VIEWSTATE'),
+          '__VIEWSTATEGENERATOR': getAttributeValue(data, 'input#__VIEWSTATEGENERATOR'),
+          '__EVENTVALIDATION': getAttributeValue(data, 'input#__EVENTVALIDATION')
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+    // Build POST parameters for search
+    let formData = new FormData();
+
+    for (var key in searchPageFormData) {
+      formData.append(key, searchPageFormData[key]);
     }
 
-    // Obtain the __VIEWSTATE, __VIEWSTATEGENERATOR and __EVENTVALIDATION values for a valid POST request
-    await new HTMLRewriter()
-      .on('input#__VIEWSTATE', {
-        element(elem) {
-          viewState = elem.getAttribute('value');
-        }
-      })
-      .on('input#__VIEWSTATEGENERATOR', {
-        element(elem) {
-          viewStateGenerator = elem.getAttribute('value');
-        }
-      })
-      .on('input#__EVENTVALIDATION', {
-        element(elem) {
-          eventValidation = elem.getAttribute('value');
-        }
-      })
-      .transform(searchPage)
-      .text();
-
-    // Build POST parameters
-    let formData = new FormData();
-    formData.append('__VIEWSTATE', viewState);
-    formData.append('__EVENTVALIDATION', eventValidation);
+    // Pass the street value from URL query as form data
     formData.append('ctl00$MainContent$street', streetName);
     formData.append('ctl00$MainContent$mybutton', 'Search');
 
-    const searchRequest = await fetch(searchUrl, {
+    const searchRequestResults = await fetch(refuseSearchUrl, {
       method: 'POST',
       body: formData
-    });
+    }).then((response) => response.text());
 
-    await new HTMLRewriter()
-      .on('table#ctl00_MainContent_streetgridview tbody', {
-        text({ text }) { 
-          refuseRowsHtml += text 
-        },
-      })
-      .on('table#ctl00_MainContent_streetgridview tbody *', {
-        element(el) { 
-          const attrs = [...el.attributes].map(([k, v]) => ` ${k}="${v}"`).join('');
-          refuseRowsHtml += `<${el.tagName}${attrs}>`;
-          el.onEndTag(endTag => { 
-            refuseRowsHtml += `</${endTag.name}>`;
-          });
-        }
-      })
-      .on('table#ctl00_MainContent_gardenGridView tbody', {
-        text({ text }) { gardenWasteRowsHtml += text }
-      })
-      .on('table#ctl00_MainContent_gardenGridView tbody *', {
-        element(el) {
-          const attrs = [...el.attributes].map(([k, v]) => ` ${k}="${v}"`).join('');
-          gardenWasteRowsHtml += `<${el.tagName}${attrs}>`;
-          el.onEndTag(endTag => { 
-            gardenWasteRowsHtml += `</${endTag.name}>`;
-          });
-        }
-      })
-      .transform(searchRequest)
-      .text()
-
-    let refuseData = parse(refuseRowsHtml).querySelectorAll('tr');
-    let gardenWasteData = parse(gardenWasteRowsHtml).querySelectorAll('tr');
+    let refuseData = parse(searchRequestResults).querySelectorAll('table#ctl00_MainContent_streetgridview tbody tr');
+    let gardenWasteData = parse(searchRequestResults).querySelectorAll('table#ctl00_MainContent_gardenGridView tbody tr');
 
     let subscribeUrl = '';
 
     refuseData.forEach((row) => {
       const cells = row.removeWhitespace().querySelectorAll('td');
       const rowData = cells.map(function(cell) {
+        if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
+          let href = cell.querySelector('a').getAttribute('href');
 
-      if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
-        let href = cell.querySelector('a').getAttribute('href');
+          if (cell.text === 'Download Calendar') {
+              return formatRefuseCalendarPDFUrl(href);
+          }
 
-        if (cell.text === 'Download Calendar') {
-            return formatRefuseCalendarPDFUrl(href);
+          if (cell.text === 'Subscribe') {
+            subscribeUrl = href;
+            return href;
+          }
         }
-
-        if (cell.text === 'Subscribe') {
-          subscribeUrl = href;
-          return href;
-        }
-      }
 
         return cell.text;
 
@@ -170,8 +136,8 @@ export default {
 
       const rowObject = {};
 
-      for (let i = 0; i < refuseCollectionJsonKeys.length; i++) {
-          rowObject[refuseCollectionJsonKeys[i]] = rowData[i];
+      for (const [key, value] of refuseCollectionJsonKeys.entries()) {
+        rowObject[value] = rowData[key];
       }
 
       refuseCollectionData.push(rowObject);
@@ -179,21 +145,21 @@ export default {
     });
 
     gardenWasteData.forEach((row) => {
+
       const cells = row.removeWhitespace().querySelectorAll('td');
       const rowData = cells.map(function(cell, index) {
+        if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
+          let href = cell.querySelector('a').getAttribute('href');
 
-      if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
-        let href = cell.querySelector('a').getAttribute('href');
+          if (cell.text === 'Download Calendar') {
+              return formatGardenCalendarPDFUrl(href);
+          }
 
-        if (cell.text === 'Download Calendar') {
-            return formatGardenCalendarPDFUrl(href);
+          if (cell.text === 'Subscribe') {
+            subscribeUrl = href;
+            return href;
+          }
         }
-
-        if (cell.text === 'Subscribe') {
-          subscribeUrl = href;
-          return href;
-        }
-      }
 
         return cell.text || null;
 
@@ -204,8 +170,8 @@ export default {
 
       const rowObject = {};
 
-      for (let i = 0; i < gardenWasteCollectionJsonKeys.length; i++) {
-          rowObject[gardenWasteCollectionJsonKeys[i]] = rowData[i];
+      for (const [key, value] of gardenWasteCollectionJsonKeys.entries()) {
+        rowObject[value] = rowData[key];
       }
 
       gardenWasteCollectionData.push(rowObject);
@@ -213,7 +179,7 @@ export default {
     });
 
     if (refuseCollectionData.length === 0 && gardenWasteCollectionData.length === 0) {
-      return new Response('The street name entered did not return any bin collection data. Please check the street name entered is valid, spelt correctly and within the Gedling district and try again.', {
+      return new Response('The street name value did not return any bin collection data. Please check the street name entered is valid and within the Gedling Borough Council district and try again.', {
         status: 404,
         headers: corsHeaders
       });
@@ -223,9 +189,9 @@ export default {
       'streetNameQuery': streetName,
       'refuseCollections': refuseCollectionData,
       'gardenWasteCollections': gardenWasteCollectionData,
-      'viewState': viewState || null,
-      'viewStateGenerator': viewStateGenerator || null,
-      'eventValidation': eventValidation || null
+      'viewState': searchPageFormData['__VIEWSTATE'] || null,
+      'viewStateGenerator': searchPageFormData['__VIEWSTATEGENERATOR'] || null,
+      'eventValidation': searchPageFormData['__EVENTVALIDATION'] || null
     }), { 
       headers: {
         'content-type': 'application/json;charset=UTF-8',
