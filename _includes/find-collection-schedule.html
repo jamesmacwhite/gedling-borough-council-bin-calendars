@@ -5,18 +5,19 @@
 {% endif %}
 
 <form id="collection-search">
-    <label for="street-name" class="form-label fw-bold">Enter your street name</label>
-    <input type="text" class="form-control" id="street-name" placeholder="Oxclose Lane" required>
-
-    <button id="collection-search-btn" type="submit" class="btn btn-primary mt-2 mb-3">Search</button>
+    
+    <div class="mb-4">
+        <label for="street-name" class="form-label fw-bold">Enter your street name</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="street-name" placeholder="Oxclose Lane" required>
+            <button id="collection-search-btn" type="submit" class="btn btn-primary">Search</button>  
+        </div>
+    </div>
 </form>
 
-<div role="region" aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none">
-    <div class="row row-cols-1 row-cols-md-2 g-4"></div>
-</div>
+<div role="region" aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none"></div>
 
 <script>
-
     let streetNameInput = document.getElementById('street-name');
 
     window.addEventListener('load', (event) => {
@@ -59,20 +60,27 @@
                 let gardenWasteCollections = data.gardenWasteCollections;
 
                 searchResult.innerHTML = '';
+                searchResult.scrollIntoView();
+
+                let streetQuery = data.streetNameQuery;
+                const streetTitle = document.createElement('p');
+                streetTitle.classList.add('fs-3')
+                streetTitle.innerHTML = `Bin collection results for: <strong>${streetQuery}</strong>`;
+                searchResult.append(streetTitle);
                 
                 const rowWrapper = document.createElement('div');
                 rowWrapper.classList.add('row', 'row-cols-1', 'row-cols-md-2', 'g-4');
                 searchResult.appendChild(rowWrapper);
 
                 const refuseCol = document.createElement('div');
-                refuseCol.classList.add('col', 'text-center');
+                refuseCol.classList.add('col');
                 rowWrapper.appendChild(refuseCol);
 
                 const gardenCol = document.createElement('div');
-                gardenCol.classList.add('col', 'text-center');
+                gardenCol.classList.add('col');
                 rowWrapper.appendChild(gardenCol);
 
-                refuseCol.innerHTML += `<p class="mb-0 fw-bold">Your refuse/recycling ${refuseCollections.length === 1 ? 'collection is' : 'collections are'}:</p>`;
+                refuseCol.innerHTML += `<p class="mb-0 fw-bold">Refuse/recycling ${refuseCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
 
                 refuseCollections.forEach(function(collection) {
                     refuseCol.innerHTML += `
@@ -86,7 +94,7 @@
                     </div>`
                 });
 
-                gardenCol.innerHTML += `<p class="mt-2 mb-0 fw-bold">Your garden waste ${gardenWasteCollections.length === 1 ? 'collection is' : 'collections are'}:</p>`;
+                gardenCol.innerHTML += `<p class="mt-2 mb-0 fw-bold">Garden waste ${gardenWasteCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
 
                 gardenWasteCollections.forEach(function(collection) {
                     gardenCol.innerHTML += `
