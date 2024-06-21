@@ -14,7 +14,7 @@
 <div>
     <h1 class="h2">{{ page.title }}</h1>
 
-    <p>You can view the collection dates for the {{ page.title }} schedule below.</p>
+    <p>You can view the collection dates for the {{ page.title | remove: "Refuse/Recycling Collection: " | remove: "Garden Waste Collection: "}} schedule below.</p>
 
     <div class="bg-light p-3 mb-4 border border-1">
         <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
