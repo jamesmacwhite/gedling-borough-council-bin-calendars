@@ -31,7 +31,7 @@
                 if (!response.ok) {
 
                     if (response.status === 404) {
-                        throw new Error('The street name entered did not return any bin collection data. Please check the street name entered and try again.');
+                        throw new Error('The street name entered did not return any bin collection data. Please check the street name entered is valid, spelt correctly and within the Gedling area.');
                     }
 
                     if (response.status === 500) { 

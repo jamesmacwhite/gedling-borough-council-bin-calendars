@@ -2,10 +2,10 @@ import { parse } from 'node-html-parser';
 
 export default {
 
-  async fetch(request) {
+  async fetch(request, env) {
 
-    const refuseCollectionJsonKeys = ['Location', 'Area', 'Calendar URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name'];
-    const gardenWasteCollectionJsonKeys = ['Location', 'Numbers', 'Area', 'Calendar URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name'];
+    const refuseCollectionJsonKeys = ['Location', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
+    const gardenWasteCollectionJsonKeys = ['Location', 'Numbers', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
     const gedlingAppDomainUrl = 'https://apps.gedling.gov.uk';
     const refuseSearchUrl = `${gedlingAppDomainUrl}/refuse/search.aspx`;
     
@@ -26,6 +26,20 @@ export default {
 
     function formatGardenCalendarPDFUrl(path) {
       return `${gedlingAppDomainUrl}/${path.replace('../', '')}`;
+    }
+
+    function formatCollectionUrl(slug, $isGardenBinType = false) {
+
+      let pathName = null;
+
+      if ($isGardenBinType) {
+        pathName = 'garden';
+      }
+      else {
+        pathName = 'refuse';
+      }
+
+       return new URL(`collections/${pathName}/${slug}`, env.BASE_URL);
     }
 
     function formatCollectionName(url) {
@@ -131,8 +145,11 @@ export default {
 
       });
 
-      rowData.push(getCollectionIdentifier(subscribeUrl));
+      let identifier = getCollectionIdentifier(subscribeUrl);
+
+      rowData.push(getCollectionIdentifier(identifier));
       rowData.push(formatCollectionName(subscribeUrl));
+      rowData.push(formatCollectionUrl(identifier));
 
       const rowObject = {};
 
@@ -165,8 +182,12 @@ export default {
 
       });
 
-      rowData.push(getCollectionIdentifier(subscribeUrl));
+      let identifier = getCollectionIdentifier(subscribeUrl);
+
+      rowData.push(getCollectionIdentifier(identifier));
       rowData.push(formatCollectionName(subscribeUrl));
+      rowData.push(formatCollectionUrl(identifier, true));
+
 
       const rowObject = {};
 
