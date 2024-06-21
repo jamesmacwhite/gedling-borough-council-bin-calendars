@@ -8,24 +8,35 @@
     <label for="street-name" class="form-label fw-bold">Enter your street name</label>
     <input type="text" class="form-control" id="street-name" placeholder="Oxclose Lane" required>
 
-    <button type="submit" class="btn btn-primary mt-2 mb-3">Search</button>
+    <button id="collection-search-btn" type="submit" class="btn btn-primary mt-2 mb-3">Search</button>
 </form>
 
-<div aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none">
+<div role="region" aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none">
     <div class="row row-cols-1 row-cols-md-2 g-4"></div>
 </div>
 
 <script>
+
+    let streetNameInput = document.getElementById('street-name');
+
+    window.addEventListener('load', (event) => {
+        let url = new URL(window.location.href);
+        let searchParam = url.searchParams.get('streetName');
+
+        if (searchParam) {
+            streetNameInput.value = searchParam;
+            document.getElementById('collection-search-btn').click();
+        }
+    });
+
     let form = document.querySelector('form#collection-search');
     let searchResult = document.querySelector('.collection-search-result');
 
     form.addEventListener('submit', event => {
         event.preventDefault();
-
-        let streetName = document.querySelector('#street-name');
         searchResult.classList.remove('d-none');
 
-        fetch(`{{ apiUrl }}${streetName.value}`)
+        fetch(`{{ apiUrl }}${streetNameInput.value}`)
             .then((response) => {
 
                 if (!response.ok) {
@@ -54,11 +65,11 @@
                 searchResult.appendChild(rowWrapper);
 
                 const refuseCol = document.createElement('div');
-                refuseCol.classList.add('col');
+                refuseCol.classList.add('col', 'text-center');
                 rowWrapper.appendChild(refuseCol);
 
                 const gardenCol = document.createElement('div');
-                gardenCol.classList.add('col');
+                gardenCol.classList.add('col', 'text-center');
                 rowWrapper.appendChild(gardenCol);
 
                 refuseCol.innerHTML += `<p class="mb-0 fw-bold">Your refuse/recycling ${refuseCollections.length === 1 ? 'collection is' : 'collections are'}:</p>`;

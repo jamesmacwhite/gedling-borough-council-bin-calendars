@@ -22,7 +22,10 @@
 
         <label for="ical-url" class="visually-hidden">iCal URL</label>
         <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
-        <p id="ical-url-copy-result" class="d-none mt-1 mb-0"></p>
+
+        <div role="region" aria-live="polite" id="ical-url-copy-result" class="d-none mt-1 mb-0">
+            
+        </div>
 
         <div class="d-grid d-md-flex gap-2 mt-2">
             <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
