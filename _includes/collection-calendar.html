@@ -123,15 +123,15 @@
     </div>
 
     <script>
-        var collectionMonths = document.querySelectorAll('[data-collection-month-start]');
+        let collectionMonths = document.querySelectorAll('[data-collection-month-start]');
 
         collectionMonths.forEach(function(el) {
-            var collectionMonthStart = el.getAttribute('data-collection-month-start');
-            var dateNow = new Date().getTime();
+            let collectionMonthStart = el.getAttribute('data-collection-month-start');
+            let dateNow = new Date().getTime();
 
             if (collectionMonthStart) {
-                var monthStart = new Date(collectionMonthStart);
-                var monthEnd = new Date(monthStart);
+                let monthStart = new Date(collectionMonthStart);
+                let monthEnd = new Date(monthStart);
                 monthEnd.setMonth(monthStart.getMonth() + 1);
 
                 // If the whole month has passed, set opacity on the main column
@@ -141,12 +141,12 @@
                 else {
                     // Check for any collection dates that may be in the past during the month
                     Array.from(el.children).forEach(function(childEl) {
-                        var collectionBinDate = childEl.getAttribute('data-bin-collection-date');
+                        let collectionBinDate = childEl.getAttribute('data-bin-collection-date');
 
                         if (collectionBinDate) {
-                            var collectionDate = new Date(collectionBinDate);
-                            var collectionEndDate = new Date(collectionDate);
-                            // Add 12 hours to collection date for midday
+                            let collectionDate = new Date(collectionBinDate);
+                            let collectionEndDate = new Date(collectionDate);
+                            // Add 12 hours to collection date for midday to be the cut off
                             collectionEndDate.setHours(collectionDate.getHours() + 12);
 
                             // Check for any past collections within the month
