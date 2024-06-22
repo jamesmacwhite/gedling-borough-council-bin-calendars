@@ -9,7 +9,7 @@
     <div class="mb-4">
         <label for="street-name" class="form-label fw-bold">Enter your street name</label>
         <div class="input-group">
-            <input type="text" class="form-control p-3" id="street-name" placeholder="Example street: Oxclose Lane" required pattern="[A-Za-z\s]+" title="Please enter only a street name with alphanumeric characters/spaces, no house numbers or other address details.">
+            <input type="text" class="form-control p-3" id="street-name" minlength="5" placeholder="Example street: Oxclose Lane" required pattern="[A-Za-z\s]+" title="Please enter only a street name with alphanumeric characters/spaces, no house numbers or other address details.">
             <button id="collection-search-btn" type="submit" class="btn btn-primary">
                 Search
             </button>  
@@ -126,6 +126,7 @@
                 });
             })
             .catch((error) => {
+                searchResult.classList.remove('d-none');
                 searchResult.innerHTML = `<p class="text-danger fw-bold mb-0">${error}</p>`
                 console.error("Error fetching data:", error);
             });

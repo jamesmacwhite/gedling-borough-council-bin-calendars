@@ -4,6 +4,13 @@ export default {
 
   async fetch(request, env) {
 
+    if (request.method !== 'GET') {
+      return new Response('This worker only supports GET requests', {
+        status: 400,
+        headers: corsHeaders
+      })
+    }
+
     const refuseCollectionJsonKeys = ['Location', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
     const gardenWasteCollectionJsonKeys = ['Location', 'Numbers', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
     const gedlingAppDomainUrl = 'https://apps.gedling.gov.uk';
@@ -65,19 +72,26 @@ export default {
       'Access-Control-Allow-Methods': 'GET',
     };
 
-    const url = new URL(request.url);
+    const url = new URL(request.url);``
     const streetName = url.searchParams.get('streetName');
-
-    if (request.method !== 'GET') {
-      return new Response('This worker only supports GET requests', {
-        status: 400,
-        headers: corsHeaders
-      })
-    }
 
     if (!streetName) {
       return new Response('Missing street name parameter', { 
         status: 400, 
+        headers: corsHeaders
+      });
+    }
+
+    if (streetName.length < 5) {
+      return new Response('Street name query should be 5 or more characters.', {
+        status: 400,
+        headers: corsHeaders
+      });
+    }
+
+    if (streetName.match(/\d+/)) {
+      return new Response('For more accurate results, please enter only street name values, no property numbers or other address information.', {
+        status: 400,
         headers: corsHeaders
       });
     }
