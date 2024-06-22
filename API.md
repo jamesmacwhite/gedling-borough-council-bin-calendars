@@ -1,24 +1,24 @@
 # API
 
-To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return data in a JSON format.
+To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return the data in a JSON format.
 
 The API is powered by a Cloudflare Worker and the source code for this worker is available at [worker.js](worker.js).
 
-This worker will make search queries and scrape the results to return the data back in a JSON format. The official Gedling search tool offers no direct API, which is why DOM/HTML scraping is used. The Gedling apps domain site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be captured and passed in the request to be valid
+This worker will make search queries and scrape the results to return the data back in a JSON format. The official Gedling search tool offers no direct API, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
 
-Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare worker blocked.
+Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare Worker blocked.
 
 ## Using the API
 
 The API accepts GET requests only and requires the URL query parameter `streetName`.
 
-An example GET request
+An example GET request:
 
 ```
 https://api.gbcbincalendars.co.uk/?streetName=Westdale%20Lane
 ```
 
-Which return the JSON response of:
+Which will return the JSON response of:
 
 ```json
 {
@@ -139,6 +139,8 @@ Which return the JSON response of:
 ```
 
 A street name that does not provide any data from Gedling Borough Council search response returns a 404 response.
+
+The origin search data appears to support partial matches on the "Location" and "No's" (Numbers) columns, this can lead to paginated responses, which this API currently doesn't handle, due to using JavaScript postbacks. It is therefore recommended to use more specific street search queries, ideally full street name values like "Oxclose Lane".
 
 ## Running the API locally
 
