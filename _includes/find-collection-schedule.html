@@ -9,8 +9,10 @@
     <div class="mb-4">
         <label for="street-name" class="form-label fw-bold">Enter your street name</label>
         <div class="input-group">
-            <input type="text" class="form-control" id="street-name" placeholder="Oxclose Lane" required>
-            <button id="collection-search-btn" type="submit" class="btn btn-primary">Search</button>  
+            <input type="text" class="form-control p-3" id="street-name" placeholder="Example street: Oxclose Lane" required>
+            <button id="collection-search-btn" type="submit" class="btn btn-primary">
+                Search
+            </button>  
         </div>
     </div>
 </form>
@@ -80,7 +82,9 @@
                 gardenCol.classList.add('col');
                 rowWrapper.appendChild(gardenCol);
 
-                refuseCol.innerHTML += `<p class="mb-0 fw-bold">Refuse/recycling ${refuseCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
+                refuseCol.innerHTML += `
+                <i class="bi-trash-fill fs-1" aria-hidden="true"></i> <i class="bi-recycle fs-1 text-success" aria-hidden="true"></i>
+                <p class="mb-0 fw-bold">Refuse/recycling ${refuseCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
 
                 refuseCollections.forEach(function(collection) {
                     refuseCol.innerHTML += `
@@ -94,7 +98,10 @@
                     </div>`
                 });
 
-                gardenCol.innerHTML += `<p class="mt-2 mb-0 fw-bold">Garden waste ${gardenWasteCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
+                gardenCol.innerHTML += `
+                <i class="bi-flower3 fs-1" aria-hidden="true"></i>
+                <p class="mb-0 fw-bold">Garden waste ${gardenWasteCollections.length === 1 ? 'collection' : 'collections' }:</p>
+                `;
 
                 gardenWasteCollections.forEach(function(collection) {
                     gardenCol.innerHTML += `
