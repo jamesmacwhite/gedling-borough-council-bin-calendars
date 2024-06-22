@@ -1,4 +1,7 @@
 {% assign dataId = page.name | replace: "-", "_" | remove: '.html' %}
+{% assign pageTitle = page.title | remove: "Refuse/Recycling Collection: " | remove: "Garden Waste Collection: " %}
+{% assign pageTitleParts = pageTitle | split: " " %}
+{% assign binType = page.title | split: ':' %}
 
 {% if page.url contains 'garden' %}
     {% assign isGardenCollection = true %}
@@ -15,7 +18,7 @@
 <div>
     <h1 class="h2">{{ page.title }}</h1>
 
-    <p>You can view the collection dates for the {{ page.title | remove: "Refuse/Recycling Collection: " | remove: "Garden Waste Collection: "}} schedule below.</p>
+    <p>You can view the collection dates for the {{ pageTitle }} schedule below.</p>
 
     <div class="bg-light p-3 mb-4 border border-1">
         <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
@@ -42,6 +45,13 @@
 
             icalUrl.select();
             icalUrl.setSelectionRange(0, icalUrl.value.length);
+
+            window.dataLayer.push({
+                'event': 'bin_collection_calendar_subscribe',
+                'bin_type': '{{ binType[0] | remove: ":" }}s',
+                'bin_weekday':  '{{ pageTitleParts[0] }}',
+                'bin_schedule': '{{ pageTitleParts[1] }}'
+            });
 
             navigator.clipboard.writeText(icalUrl.value).then(() => {
                 icalCopyMessage.textContent = 'iCal URL has been copied to the clipboard!';
