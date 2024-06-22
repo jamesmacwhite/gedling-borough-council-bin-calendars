@@ -25,6 +25,14 @@ jetpack.copy(bootstrapIconFonts, './assets/fonts', { overwrite: true });
 jetpack.cwd(icaljsDest).remove();
 jetpack.cwd(jsonDest).remove();
 
+// Assign a specific key for the calendar summary values for a consistent identifier
+const collectionKey = {
+    "Black Bin Day": "black-bin",
+    "Green Bin Day": "green-bin",
+    "Green Bin + Glass Box Day": "green-glass-bin",
+    "Garden Waste Collection": "garden-bin",
+};
+
 // Process each ical file to convert to JSON format
 calendars.forEach(function(filepath) {
 
@@ -34,15 +42,6 @@ calendars.forEach(function(filepath) {
     const icalExpander = new IcalExpander({ ics, maxIterations: 50 });
     const events = icalExpander.all();
     const filename = `${path.parse(filepath).name}.json`;
-
-    // Assign a specific key for the calendar summary values for a consistent identifier
-    const collectionKey = {
-        "Black Bin Day": "black-bin",
-        "Green Bin Day": "green-bin",
-        "Green Bin + Glass Box Day": "green-glass-bin",
-        "Garden Waste Collection": "garden-bin",
-    };
-
     const jcalData = icalJs.parse(ics);
     const comp = new icalJs.Component(jcalData);
     const fileProperties = jetpack.inspect(`./${filepath}`, { times: true });
