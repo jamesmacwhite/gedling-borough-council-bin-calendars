@@ -9,7 +9,7 @@
     <div class="mb-4">
         <label for="street-name" class="form-label fw-bold">Enter your street name</label>
         <div class="input-group">
-            <input type="text" class="form-control p-3" id="street-name" placeholder="Example street: Oxclose Lane" required>
+            <input type="text" class="form-control p-3" id="street-name" placeholder="Example street: Oxclose Lane" required pattern="[A-Za-z\s]+" title="Please enter only a street name with alphanumeric characters/spaces, no house numbers or other address details.">
             <button id="collection-search-btn" type="submit" class="btn btn-primary">
                 Search
             </button>  
@@ -20,7 +20,7 @@
 <div role="region" aria-live="polite" class="collection-search-result bg-light mb-4 p-3 border border-1 mb-3 d-none"></div>
 
 <script>
-    let streetNameInput = document.getElementById('street-name');
+    let streetNameInput = document.querySelector('#street-name');
 
     window.addEventListener('load', (event) => {
         let url = new URL(window.location.href);
@@ -37,7 +37,6 @@
 
     form.addEventListener('submit', event => {
         event.preventDefault();
-        searchResult.classList.remove('d-none');
 
         fetch(`{{ apiUrl }}${streetNameInput.value}`)
             .then((response) => {
@@ -62,7 +61,6 @@
                 let gardenWasteCollections = data.gardenWasteCollections;
 
                 searchResult.innerHTML = '';
-                searchResult.scrollIntoView();
 
                 let streetQuery = data.streetNameQuery;
                 const streetTitle = document.createElement('p');
@@ -114,6 +112,9 @@
                         <p class="mb-0">${collection['Location']}, ${collection['Numbers'] !== null ? collection['Numbers'] + ',' : ''} ${collection['Area']}</p>
                     </div>`
                 });
+
+                searchResult.classList.remove('d-none');
+                searchResult.scrollIntoView();
 
                 window.dataLayer.push({
                     'event': 'binCollectionSearch',
