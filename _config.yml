@@ -7,8 +7,10 @@ plugins:
   - jekyll-sitemap
 
 exclude: 
+  - API.md
   - build.js
   - CNAME
+  - Gedling Borough Council Bin Collection API.postman_collection.json
   - Gemfile
   - Gemfile.lock
   - LICENSE
