@@ -1,14 +1,15 @@
 {% assign dataId = page.name | replace: "-", "_" | remove: '.html' %}
 {% assign pageTitle = page.title | remove: "Refuse/Recycling Collection: " | remove: "Garden Waste Collection: " %}
 {% assign pageTitleParts = pageTitle | split: " " %}
-{% assign binType = page.title | split: ':' %}
 
 {% if page.url contains 'garden' %}
     {% assign isGardenCollection = true %}
+    {% assign binType = "Refuse/Recycling Collections" %}
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_garden_bin_schedule" %}
 {% else %}
-    {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
     {% assign isGardenCollection = false %}
+    {% assign binType = "Garden Waste Collections" %}
+    {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
 {% endif %}
 
 {% assign jsonData = site.data.icaljs[dataKey].collectionDates %}
@@ -48,7 +49,7 @@
 
             window.dataLayer.push({
                 'event': 'bin_collection_calendar_subscribe',
-                'bin_type': '{{ binType[0] | remove: ":" }}s',
+                'bin_type': '{{ binType }}',
                 'bin_weekday':  '{{ pageTitleParts[0] }}',
                 'bin_schedule': '{{ pageTitleParts[1] }}'
             });
