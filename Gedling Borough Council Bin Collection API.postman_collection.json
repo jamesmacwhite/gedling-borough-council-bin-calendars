@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "0c28e17d-ad50-4bb8-8648-05ea1fc0afd6",
+		"name": "Gedling Borough Council Bin Collection API",
+		"description": "An API for searching bin collections by street name for Gedling Borough Council.\n\nThis API supports GET requests only and requires the URL parameter `streetName` on any request.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4209319"
+	},
+	"item": [
+		{
+			"name": "Get Street Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}?streetName=example street name",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"query": [
+						{
+							"key": "streetName",
+							"value": "example street name"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Oxclose Lane",
+					"originalRequest": {
+						"method": "GET",
+						"header": []
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Westdale Lane",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?streetName=example street name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "streetName",
+									"value": "example street name"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Breck Hill Road",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?streetName=Breck Hill Road",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "streetName",
+									"value": "Breck Hill Road"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiBaseUrl",
+			"value": "https://api.gbcbincalendars.co.uk",
+			"type": "string"
+		}
+	]
+}

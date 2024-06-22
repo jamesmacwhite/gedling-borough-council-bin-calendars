@@ -1,18 +1,18 @@
 # API
 
-To provide dynamic bin collection search an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return data in a JSON format.
+To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return data in a JSON format.
 
 The API is powered by a Cloudflare Worker and the source code for this worker is available at [worker.js](worker.js).
 
-This worker will make search queries and scrape the result to return the data back in a JSON format. The official Gedling search tool offers no direct API, which is why DOM/HTML scraping is used. The app uses ASP.NET and must scrape a valid __VIEWSTATE and __EVENTVALIDATION value in order to send a valid POST request to perform an automatic search.
+This worker will make search queries and scrape the results to return the data back in a JSON format. The official Gedling search tool offers no direct API, which is why DOM/HTML scraping is used. The Gedling apps domain site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be captured and passed in the request to be valid
 
-Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, however please be respectful and do not hammer their website.
+Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare worker blocked.
 
 ## Using the API
 
-The API accepts GET requests only and one URL query parameter `streetName`.
+The API accepts GET requests only and requires the URL query parameter `streetName`.
 
-An example API request
+An example GET request
 
 ```
 https://api.gbcbincalendars.co.uk/?streetName=Westdale%20Lane
@@ -132,13 +132,13 @@ Which return the JSON response of:
             "Calendar URL": "https://www.gbcbincalendars.co.uk/collections/garden/monday-f"
         }
     ],
-    "viewState": "BoUWZWXLhOABD91N0+kFrAULOqXSFYpCaYoMHsy/HD0ljRHYWSlPLsa7dfELo/T49vCoweSpt4F42L/YSOxJ7cMv6xu7PPsfUpuQa14V1XR9z2om5YVZhXBWKJws7wflHlVPaINCy5YGSVdd9gQUj3nX7yuIYCOzlxK+ftDzw3xdEwHPiZ1uEmJdvaUqHAUj/jd7AuewZyMbJPJlSkdUgj7majXBtpQuZKSYFe7zg2Gj05AlmgniGQvchPW/wSd3jXip/a6SB45i2YTzZVVfiQ==",
-    "viewStateGenerator": "3260408D",
-    "eventValidation": "3gyF/28TK1dWTcKbBL3FKFoCv8Yg5AUqCmqdNKD0ceroifDJ+QIJHwBzyN/FOhOj9Ew1wPZV/+sluiOPfXiLuAvL5cWmx18AUbWmR4ZyFlFiKUVLhkYMLuB0URTviImyjtyj0MVU/wQIffS8DIK20Q=="
+    "viewState": "...",
+    "viewStateGenerator": "...",
+    "eventValidation": "..."
 }
 ```
 
-A street name that does not provide any data from Gedling Borough Council returns a 404 response.
+A street name that does not provide any data from Gedling Borough Council search response returns a 404 response.
 
 ## Running the API locally
 
@@ -148,5 +148,5 @@ You can locally run the API through wrangler.
 npx wrangler dev
 ```
 
-This will run the API on `http://localhost:8787`.
+This will run the API on `http://localhost:8787`. The `BASE_URL` variable is set to `http://localhost:4000` the default port when using `jekyll serve`, so the API responds to the local environment and not live.
 
