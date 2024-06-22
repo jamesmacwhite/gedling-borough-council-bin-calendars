@@ -107,6 +107,11 @@
                         <p class="mb-0">${collection['Location']}, ${collection['Numbers'] !== null ? collection['Numbers'] + ',' : ''} ${collection['Area']}</p>
                     </div>`
                 });
+
+                window.dataLayer.push({
+                    'event': 'binCollectionSearch',
+                    'streetQuery': streetNameInput.value
+                });
             })
             .catch((error) => {
                 searchResult.innerHTML = `<p class="text-danger fw-bold mb-0">${error}</p>`
