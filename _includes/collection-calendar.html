@@ -82,7 +82,7 @@
                 <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
                 <ol class="list-unstyled">
                     {% for item in month.items %}
-                        <li data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" {%- if item.isChangedCollection %} class="text-danger fw-bold"{% endif %}>
+                        <li data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" {%- if item.isChangedCollection %} class="text-danger fw-bold"{% endif %}>
                             {{ item.collectionDate | date: "%A %-d %B" }}
                             {% if item.isChangedCollection %}
                                 (Changed Collection)
@@ -104,7 +104,7 @@
                 <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
 
                 {% for item in month.items %}
-                    <div data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 bg-{{ item.type }} fw-bold">
+                    <div data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 bg-{{ item.type }} fw-bold">
                         {{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}
                     </div>
                 {% endfor %}
@@ -115,7 +115,7 @@
     <div class="refuse-collection-key my-4" aria-hidden="true">
         <h4 class="text-muted h6 fw-bold text-uppercase">Calendar key</h4>
 
-        <div class="d-md-flex">
+        <div class="d-lg-flex">
             <div class="me-md-3">
                 <i class="bi bi-square-fill text-black-bin"></i>
                 <span class="ms-1">General Waste</span>
@@ -131,6 +131,11 @@
                 <span class="ms-1">Recycling &amp; Glass</span>
             </div>
 
+            <div class="me-md-3">
+                <i class="bi bi-square text-black"></i>
+                <span class="ms-1">Next/Upcoming Collection</span>
+            </div>
+
             <div>
                 <i class="bi bi-square text-danger"></i>
                 <span class="ms-1">Changed Collection</span>
@@ -140,19 +145,41 @@
 {% endif %}
 
 <script>
+    let dateNow = new Date().getTime();
     let collectionMonths = document.querySelectorAll('.col');
 
+    // Find all in the future collections marking the nearest one that's upcoming
+    let upcomingCollections = Array.from(document.querySelectorAll('[data-bin-collection-date]'))
+        .filter(node => {
+            let upcomingDate = new Date(node.getAttribute('data-bin-collection-date'));
+            upcomingDate.setHours(upcomingDate.getHours() + 12);
+
+            if (upcomingDate >= dateNow) {
+                return node;
+            }
+        });
+
+    if (upcomingCollections) {
+        let upcomingCollection = upcomingCollections[0];
+
+        if (upcomingCollection.getAttribute('data-bin-type') !== 'garden-bin') {
+            upcomingCollection.classList.add('border', 'border-3', 'border-black');
+        }
+        else {
+            upcomingCollection.classList.add('fw-bold')
+        }
+    }
+
     collectionMonths.forEach(function(el) {
-        let dateNow = new Date().getTime();
         let collectionFirst = new Date(el.getAttribute('data-collection-first'));
         let collectionLast = new Date(el.getAttribute('data-collection-last'));
 
-        // Check if last collection date in the month has passed
+        // Check if last collection date in the month has passed and mark the whole month
         if (dateNow > collectionLast) {
             el.classList.add('opacity-75');
         }
         else {
-            // Check for any collection dates that are in the past during the month
+            // Check for any collection dates that are in the past for the current month
             let collectionDates = el.querySelectorAll('[data-bin-collection-date]');
 
             collectionDates.forEach(function(el) {

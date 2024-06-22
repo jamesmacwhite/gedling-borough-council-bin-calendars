@@ -29,8 +29,7 @@
 
                             <script>
                                 document.querySelector('button#{{ subscribeId }}').addEventListener('click', async () => {
-
-                                    // Tracking for iCal URL/subscribe
+                                    
                                     window.dataLayer.push({
                                         'event': 'bin_collection_calendar_subscribe',
                                         'bin_type': '{{ type.name }}',
