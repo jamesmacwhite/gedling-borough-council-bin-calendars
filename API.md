@@ -145,8 +145,8 @@ A street name that does not provide any data from Gedling Borough Council return
 You can locally run the API through wrangler.
 
 ```
-npx wranger dev
+npx wrangler dev
 ```
 
-This will run the API on `http://localhost:8787.
+This will run the API on `http://localhost:8787`.
 
