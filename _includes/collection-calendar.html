@@ -16,62 +16,60 @@
 {% assign jsonUrl = "/json/" | append: dataKey | append: ".json" | absolute_url %}
 {% assign icalUrl = "/ical/" | append: dataKey | append: ".ics" | absolute_url %}
 
-<div>
-    <h1 class="h2">{{ page.title }}</h1>
+<h1 class="h2">{{ page.title }}</h1>
 
-    <p>You can view the collection dates for the {{ pageTitle }} schedule below.</p>
+<p>You can view the collection dates for the {{ pageTitle }} schedule below.</p>
 
-    <div class="bg-light p-3 mb-4 border border-1">
-        <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
+<div class="bg-light p-3 mb-4 border border-1">
+    <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
 
-        <label for="ical-url" class="visually-hidden">iCal URL</label>
-        <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
+    <label for="ical-url" class="visually-hidden">iCal URL</label>
+    <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
 
-        <div role="region" aria-live="polite" id="ical-url-copy-result" class="d-none mt-1 mb-0">
+    <div role="region" aria-live="polite" id="ical-url-copy-result" class="d-none mt-1 mb-0">
 
-        </div>
-
-        <div class="d-grid d-md-flex gap-2 mt-2">
-            <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
-            <a href="{{ icalUrl }}" class="btn btn-gedling-red" download>Download calendar</a>
-            <a href="{{ jsonUrl }}" class="btn btn-success">View as JSON</a>
-        </div>
     </div>
 
-    <script>
-        const copyIcalBtn = document.querySelector('#copy-ical-url-btn');
-        copyIcalBtn.addEventListener('click', function() {
-            let icalUrl = document.getElementById("ical-url");
-            let icalCopyMessage = document.getElementById("ical-url-copy-result");
-
-            icalUrl.select();
-            icalUrl.setSelectionRange(0, icalUrl.value.length);
-
-            window.dataLayer.push({
-                'event': 'bin_collection_calendar_subscribe',
-                'bin_type': '{{ binType }}',
-                'bin_weekday':  '{{ pageTitleParts[0] }}',
-                'bin_schedule': '{{ pageTitleParts[1] }}'
-            });
-
-            navigator.clipboard.writeText(icalUrl.value).then(() => {
-                icalCopyMessage.textContent = 'iCal URL has been copied to the clipboard!';
-                icalCopyMessage.classList.add('text-success');
-                icalCopyMessage.classList.remove('d-none');
-            }, () => {
-                icalCopyMessage.classList.remove('d-none');
-                icalCopyMessage.classList.add('text-danger');
-                icalCopyMessage.textContent = 'iCal URL could not be copied to clipboard, please manually copy the URL.';
-            });
-
-            setTimeout(function() {
-                icalCopyMessage.classList.add('d-none');
-                icalCopyMessage.classList.remove('text-success', 'text-danger');
-            }, 3000);
-
-        });
-    </script>
+    <div class="d-grid d-md-flex gap-2 mt-2">
+        <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
+        <a href="{{ icalUrl }}" class="btn btn-gedling-red" download>Download calendar</a>
+        <a href="{{ jsonUrl }}" class="btn btn-success">View as JSON</a>
+    </div>
 </div>
+
+<script>
+    const copyIcalBtn = document.querySelector('#copy-ical-url-btn');
+    copyIcalBtn.addEventListener('click', function() {
+        let icalUrl = document.getElementById("ical-url");
+        let icalCopyMessage = document.getElementById("ical-url-copy-result");
+
+        icalUrl.select();
+        icalUrl.setSelectionRange(0, icalUrl.value.length);
+
+        window.dataLayer.push({
+            'event': 'bin_collection_calendar_subscribe',
+            'bin_type': '{{ binType }}',
+            'bin_weekday': '{{ pageTitleParts[0] }}',
+            'bin_schedule': '{{ pageTitleParts[1] }}'
+        });
+
+        navigator.clipboard.writeText(icalUrl.value).then(() => {
+            icalCopyMessage.textContent = 'iCal URL has been copied to the clipboard!';
+            icalCopyMessage.classList.add('text-success');
+            icalCopyMessage.classList.remove('d-none');
+        }, () => {
+            icalCopyMessage.classList.remove('d-none');
+            icalCopyMessage.classList.add('text-danger');
+            icalCopyMessage.textContent = 'iCal URL could not be copied to clipboard, please manually copy the URL.';
+        });
+
+        setTimeout(function() {
+            icalCopyMessage.classList.add('d-none');
+            icalCopyMessage.classList.remove('text-success', 'text-danger');
+        }, 3000);
+
+    });
+</script>
 
 {% assign months = jsonData | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
 

@@ -21,6 +21,10 @@
 
 <script>
     let streetNameInput = document.querySelector('#street-name');
+    let currentDate = new Date();
+    let currentMonth = currentDate.toLocaleString('default', { month: 'long'});
+    let currentYear = currentDate.getFullYear();
+    let anchorFragment = `#${currentMonth}-${currentYear}`.toLowerCase();
 
     window.addEventListener('load', (event) => {
         let url = new URL(window.location.href);
@@ -88,7 +92,7 @@
                     refuseCol.innerHTML += `
                     <div class="refuse-collection-result">
                         <p class="fs-3 mb-0">
-                            <a href="/collections/refuse/${collection['Schedule Identifier']}">
+                            <a href="/collections/refuse/${collection['Schedule Identifier']}${anchorFragment}">
                                 ${collection['Schedule Name']}
                             </a>
                         </p>
@@ -105,7 +109,7 @@
                     gardenCol.innerHTML += `
                     <div class="garden-waste-collection-result">
                         <p class="fs-3 mb-0">
-                            <a href="/collections/garden/${collection['Schedule Identifier']}">
+                            <a href="/collections/garden/${collection['Schedule Identifier']}${anchorFragment}">
                                 ${collection['Schedule Name']}
                             </a>
                         </p>
