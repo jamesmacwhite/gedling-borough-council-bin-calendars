@@ -104,7 +104,7 @@
                 <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
 
                 {% for item in month.items %}
-                    <div data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 bg-{{ item.type }} fw-bold">
+                    <div data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} fw-bold">
                         {{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}
                     </div>
                 {% endfor %}
