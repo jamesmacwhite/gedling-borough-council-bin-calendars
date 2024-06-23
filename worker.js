@@ -4,6 +4,11 @@ export default {
 
   async fetch(request, env) {
 
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+    };
+
     if (request.method !== 'GET') {
       return new Response('This worker only supports GET requests', {
         status: 400,
@@ -66,11 +71,6 @@ export default {
       let schedule = urlParsed[1].toUpperCase();
       return `${weekDay} ${schedule}`;
     }
-
-    const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET',
-    };
 
     const url = new URL(request.url);``
     const streetName = url.searchParams.get('streetName');
