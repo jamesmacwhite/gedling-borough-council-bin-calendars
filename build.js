@@ -42,11 +42,14 @@ calendars.forEach(function(filepath) {
     const jcalData = icalJs.parse(ics);
     const comp = new icalJs.Component(jcalData);
     const fileProperties = jetpack.inspect(`./${filepath}`, { times: true });
+    const jsonPath = `${jsonDest}/${filename}`;
 
     // Create JSON header
     const jsonData = {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
+        "icalPath": '/' + filepath,
+        "jsonPath": jsonPath.substring(1),
         "lastModified": fileProperties.modifyTime,
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
         "collectionDates": []
@@ -81,7 +84,7 @@ calendars.forEach(function(filepath) {
     jsonData['collectionDates'] = allEvents;
 
     // Write to JSON folder for public API
-    jetpack.write(`${jsonDest}/${filename}`, jsonData);
+    jetpack.write(jsonPath, jsonData);
     console.log(`Output ${filename} to JSON directory.`);
 
     // Write to _data folder for internal use for schedule listing template
