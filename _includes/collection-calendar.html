@@ -177,7 +177,7 @@
 
         // Check if last collection date in the month has passed and mark the whole month
         if (dateNow > collectionLast) {
-            el.classList.add('opacity-75');
+            el.classList.add('opacity-90');
         }
         else {
             // Check for any collection dates that are in the past for the current month
@@ -193,7 +193,7 @@
                     collectionEndDate.setHours(collectionDate.getHours() + 12);
 
                     if (dateNow >= collectionEndDate) {
-                        el.classList.add('opacity-75');
+                        el.classList.add('opacity-90');
                     }
                 }
             });
