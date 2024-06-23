@@ -80,12 +80,13 @@ calendars.forEach(function(filepath) {
     const allEvents = [].concat(mappedEvents, mappedOccurrences)
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
-    // Workaround for same date appearing as both single and occurence after parsing
+    // Workaround for same date appearing as both single and occurrence after parsing
+    // May be a bug with ical-expander, needs investigating
     jsonData['collectionDates'] = _.unique(allEvents, 'collectionDate');
 
     // Write to JSON folder for public API
     jetpack.write(`${jsonDest}/${filename}`, jsonData);
-    console.log(`Output ${filename} to JSON directory.`)
+    console.log(`Output ${filename} to JSON directory.`);
 
     // Write to _data folder for internal use for schedule listing template
     jetpack.write(`${icaljsDest}/${filename}`, jsonData);
