@@ -1,16 +1,26 @@
 # API
 
-To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return the data in a JSON format.
+To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return the data as JSON.
 
 The API is powered by a Cloudflare Worker and the source code for this worker is available at [worker.js](worker.js).
 
-This worker will make search queries and scrape the results to return the data back in a JSON format. The official Gedling search tool offers no direct API, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
+This worker will make search queries and scrape the results to return the data formatted as JSON. The origin data behind the search is not published as open data, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
 
 Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare Worker blocked.
 
 ## Using the API
 
 The API accepts GET requests only and requires the URL query parameter `streetName`.
+
+The following additional validation requirements are defined for the query parameter value provided:
+
+* A street name value must be provided
+* Any value must be 5 or more characters
+* The value must not start with a number
+
+The reason for these additional validations are because the Gedling search app does partial matching on the data within the "Location" and "No's" (Numbers) columns in the database behind it. This can lead to larger paginated results with very vague search queries like "1", which this API does not currently handle. I may loosen this requirement in the future if I implement a way to process paginated responses reliably both from the Worker and front end.
+
+For now, for best usage and meaningful search results, make sure street name queries are full street names e.g. "Westdale Lane" or partial but with enough context like "Westdale"
 
 An example GET request:
 
@@ -139,8 +149,6 @@ Which will return the JSON response of:
 ```
 
 A street name that does not provide any data from Gedling Borough Council search response returns a 404 response.
-
-The origin search data appears to support partial matches on the "Location" and "No's" (Numbers) columns, this can lead to paginated responses, which this API currently doesn't handle, due to using JavaScript postbacks. It is therefore recommended to use more specific street search queries, ideally full street name values like "Oxclose Lane".
 
 ## Running the API locally
 
