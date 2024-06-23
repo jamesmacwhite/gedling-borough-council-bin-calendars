@@ -15,13 +15,13 @@ layout: default
             {% for weekday in collections.collections %}
                 <div class="col">
                     <h2 class="h3">{{ weekday[0] }}</h2>
-                    <ul>
+                    <ol class="list-unstyled">
                         {% for collection in weekday[1] %}
                             <li>
                                 <a href="{{ collection.permalink | absolute_url }}">{{ collection.name }} Garden Waste Collection Calendar</a>
                             </li>
                         {% endfor %}
-                    </ul>
+                    </ol>
                 </div>
             {% endfor %}
         {% endif %}
