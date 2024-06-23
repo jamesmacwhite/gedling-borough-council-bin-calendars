@@ -1,5 +1,7 @@
 BEGIN:VCALENDAR
 PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN
+X-WR-CALNAME:Gedling Borough Council Garden Waste Collection Service 2024/25 Monday A
+X-WR-CALDESC:https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20A-2024.pdf
 VERSION:2.0
 BEGIN:VEVENT
 CREATED:20240525T234307Z
