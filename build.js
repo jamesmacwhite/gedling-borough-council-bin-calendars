@@ -7,19 +7,18 @@ const { exit } = require('process');
 const calendars = jetpack.find("ical", { matching: "*.ics" });
 const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
-const bootstrapJsBundle = './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
-const bootstrapIconFonts = './node_modules/bootstrap-icons/font/fonts';
 
-if (!jetpack.exists(bootstrapJsBundle) || !jetpack.exists(bootstrapIconFonts)) {
-    console.error('Missing node_module dependency. Could not complete build.');
-    process.exit(1);
-}
+console.log("Copying Bootstrap JS bundle and fonts for build.")
 
-console.log('Copying Bootstrap JS bundle from node_modules...');
-jetpack.copy(bootstrapJsBundle, './assets/js/bootstrap.bundle.min.js', { overwrite: true });
-
-console.log('Copying bootstrap web font files...');
-jetpack.copy(bootstrapIconFonts, './assets/fonts', { overwrite: true });
+// Bootstrap JS and fonts
+jetpack.copy('./node_modules/bootstrap/dist/js', './assets/js', { 
+    matching: 'bootstrap.bundle.min.js*', 
+    overwrite: true 
+});
+jetpack.copy('./node_modules/bootstrap-icons/font/fonts', './assets/fonts', { 
+    matching: ['*.woff', '*.woff2'],
+    overwrite: true
+});
 
 // Remove json folder if exists
 jetpack.cwd(icaljsDest).remove();
