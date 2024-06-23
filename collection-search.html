@@ -1,19 +1,19 @@
 ---
 title: Refuse Collection Days Search
-description: "Find your refuse/recycling or garden waste collection calendar with this search tool."
+description: "Find your refuse/recycling or garden waste collection calendar by searching your street name."
 layout: default
 ---
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>Gedling Borough Council has 20 different refuse/waste collections and 10 garden waste collections. Depending on the area within the Gedling district, a specific weekday and schedule name is assigned. Using this search tool, you can find the specific collection information for bin collections.</p>
+<p>Gedling Borough Council has a total of 20 different refuse/recycling collections and 10 garden waste collections. Depending on the area within the Gedling district, a specific weekday and schedule name is assigned. Using this search tool, you can find the specific your specific bin collections schedule.</p>
 
-<p class="fw-bold text-danger">You must enter a street name that is within the Gedling local authority. No additional information such as property numbers or postcode should be entered.</p>
+<p class="fw-bold text-muted">For the most relevant search results, enter a street name that is within the Gedling local authority. Avoid entering other data such as property numbers with your search.</p>
 
 {% include find-collection-schedule.html %}
 
-<p>Some street name queries will return multiple collections, due to being on an area boundary. When multiple results are returned, the area and in some cases property numbers are shown to help identify the correct collection. This additional data is provided by Gedling Borough Council.</p>
+<p>Some street name queries will return multiple collection results, this is due to being on an area boundary. When multiple results are returned, the area and in some cases property numbers displayed below the collection name to help identify the correct collection in these instances. This additional data is provided by Gedling Borough Council.</p>
 
-<h2 class="h3">About the search data</h2>
+<h2 class="h3">About this data</h2>
 
-<p>This search tool uses data from the <a href="{{ site.gedlingRefuseSearchUrl }}">Gedling Borough Council refuse collection days search</a>. The search result format provided by apps.gedling.gov.uk does not directly provide the collection weekday or schedule name but this search tool scrapes the data and formats the information in a more readable format that's easier to understand and links directly to the correct calendar information.</p>
+<p>This search tool uses data from the <a href="{{ site.gedlingRefuseSearchUrl }}">Gedling Borough Council refuse collection days search</a>. The search result format provided by apps.gedling.gov.uk does not directly provide the collection weekday or schedule name but this search tool scrapes the data and formats the information in a more readable format that's easier to understand and links directly to the correct calendar information on this website. You can find more information <a href="https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/blob/main/API.md" target="_blank">about the API behind this search</a> from the main repository.</p>

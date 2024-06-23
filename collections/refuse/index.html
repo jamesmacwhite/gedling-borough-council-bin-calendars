@@ -7,22 +7,26 @@ layout: default
 
 <h2 class="mb-3">{{ page.title }}</h2>
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-    {% for collections in site.data.calendars.bin_collections %}
-        {% if collections.name == 'Refuse/Recycling Collections' %}
-            {% for weekday in collections.collections %}
-                <div class="col">
-                    <h3>{{ weekday[0] }}</h3>
+{% assign refuseCollections = site.data.calendars.bin_collections[0] %}
 
-                    <ul>
-                        {% for collection in weekday[1] %}
-                            <li>
-                                <a href="{{ collection.permalink | absolute_url }}">{{ collection.name }} Bin Collection Calendar</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-        {% endif %}
+{{ refuseCollections.description|markdownify }}
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    {% for collection in refuseCollections.collections %}
+        <div class="col">
+            {% assign weekday = collection[0] %}
+            <h3>{{ weekday }}</h3>
+
+            <ol class="list-unstyled">
+                {% for calendar in collection[1] %}
+                    <li>
+                        <a href="{{ calendar.permalink | absolute_url }}">
+                            <span class="visually-hidden">{{ weekday }}</span>
+                            {{ calendar.name }} Bin Collection Calendar
+                        </a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
     {% endfor %}
 </div>

@@ -18,17 +18,13 @@
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>You can view the collection dates for the {{ pageTitle }} schedule below.</p>
+<p>You can view the collection dates for the {{ pageTitle }} schedule below. You can download or subscribe to the calendar through the iCal URL. Alternatively you can bookmark this page to view the calendar dates at any time.</p>
 
 <div class="bg-light p-3 mb-4 border border-1">
     <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
 
     <label for="ical-url" class="visually-hidden">iCal URL</label>
     <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
-
-    <div role="region" aria-live="polite" id="ical-url-copy-result" class="d-none mt-1 mb-0">
-
-    </div>
 
     <div class="d-grid d-md-flex gap-2 mt-2">
         <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
@@ -41,7 +37,6 @@
     const copyIcalBtn = document.querySelector('#copy-ical-url-btn');
     copyIcalBtn.addEventListener('click', function() {
         let icalUrl = document.getElementById("ical-url");
-        let icalCopyMessage = document.getElementById("ical-url-copy-result");
 
         icalUrl.select();
         icalUrl.setSelectionRange(0, icalUrl.value.length);
@@ -53,20 +48,13 @@
             'bin_schedule': '{{ pageTitleParts[1] }}'
         });
 
-        navigator.clipboard.writeText(icalUrl.value).then(() => {
-            icalCopyMessage.textContent = 'iCal URL has been copied to the clipboard!';
-            icalCopyMessage.classList.add('text-success');
-            icalCopyMessage.classList.remove('d-none');
-        }, () => {
-            icalCopyMessage.classList.remove('d-none');
-            icalCopyMessage.classList.add('text-danger');
-            icalCopyMessage.textContent = 'iCal URL could not be copied to clipboard, please manually copy the URL.';
-        });
-
-        setTimeout(function() {
-            icalCopyMessage.classList.add('d-none');
-            icalCopyMessage.classList.remove('text-success', 'text-danger');
-        }, 3000);
+        navigator.clipboard.writeText(icalUrl.value)
+            .then(() => {
+                let toast = new bootstrap.Toast(document.querySelector('.toast'));
+                toast.show();
+            }, (error) => {
+                console.error(error.name, error.message);
+            });
 
     });
 </script>
@@ -144,6 +132,20 @@
     </div>
 {% endif %}
 
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Calendar URL copied!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                The calendar URL for the {{ pageTitle }} bin collection schedule was copied to your clipboard.
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     let dateNow = new Date().getTime();
     let collectionMonths = document.querySelectorAll('.col');
@@ -166,7 +168,7 @@
             upcomingCollection.classList.add('border', 'border-3', 'border-black');
         }
         else {
-            upcomingCollection.classList.add('fw-bold')
+            upcomingCollection.classList.add('fw-bold');
         }
     }
 

@@ -5,7 +5,7 @@ breadcrumb: Garden
 layout: default
 ---
 
-<h2 class="mb-3">{{ page.title }}</h2>
+<h1 class="h2 mb-3">{{ page.title }}</h1>
 
 <p>The garden waste collection service runs every year from the start of April to the end of March the following year (there are no collections in January and February).</p>
 
@@ -14,7 +14,7 @@ layout: default
         {% if collections.name == 'Garden Waste Collections' %}
             {% for weekday in collections.collections %}
                 <div class="col">
-                    <h3>{{ weekday[0] }}</h3>
+                    <h2 class="h3">{{ weekday[0] }}</h2>
                     <ul>
                         {% for collection in weekday[1] %}
                             <li>

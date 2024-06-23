@@ -30,6 +30,12 @@ $custom-colors: (
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
 $link-color: #0367FC;
+$input-placeholder-color: $gray-600;
+
+$breadcrumb-divider: quote(">");
+
+$toast-background-color: white;
+$body-bg: white;
 
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
@@ -48,6 +54,11 @@ $link-color: #0367FC;
 @import "bootstrap/scss/forms";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
+
+
+html {
+    background: $gray-100;
+}
 
 .bg-green-glass-bin {
     background-color: $glass-bin;

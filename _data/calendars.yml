@@ -1,7 +1,9 @@
 bin_collections:
   - name: "Refuse/Recycling Collections"
     id: "refuse"
-    description: "There are a total of 20 different bin collection schedules, 4 schedules per weekday which are labelled (G1 - G4)."
+    description: | 
+      <p>There are a total of 20 different refuse collection schedules, 4 schedules per weekday which are labelled (G1 - G4). These include the Black Bin, Green Bin and Glass Box collections. If you are unsure about which weekday or collection is correct for your area, use the <a href="/collection-search">street name search</a>.</p>
+      <p>When collection days occur on national holidays a changed collection date is indicated.</p>
     collections:
       Monday:
           -
