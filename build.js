@@ -2,8 +2,6 @@
 
 const path = require('path');
 const jetpack = require("fs-jetpack");
-const _ = require('underscore');
-const { exit } = require('process');
 const calendars = jetpack.find("ical", { matching: "*.ics" });
 const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
@@ -80,9 +78,7 @@ calendars.forEach(function(filepath) {
     const allEvents = [].concat(mappedEvents, mappedOccurrences)
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
-    // Workaround for same date appearing as both single and occurrence after parsing
-    // May be a bug with ical-expander, needs investigating
-    jsonData['collectionDates'] = _.unique(allEvents, 'collectionDate');
+    jsonData['collectionDates'] = allEvents;
 
     // Write to JSON folder for public API
     jetpack.write(`${jsonDest}/${filename}`, jsonData);
