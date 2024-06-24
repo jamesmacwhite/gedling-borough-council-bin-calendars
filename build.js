@@ -50,6 +50,7 @@ calendars.forEach(function(filepath) {
         "name": comp.getFirstPropertyValue('x-wr-calname'),
         "icalPath": '/' + filepath,
         "jsonPath": jsonPath.substring(1),
+        "lastGenerated": new Date().toJSON(),
         "lastModified": fileProperties.modifyTime,
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
         "collectionDates": []
