@@ -48,8 +48,8 @@ calendars.forEach(function(filepath) {
     const jsonData = {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
-        "icalPath": '/' + filepath,
-        "jsonPath": jsonPath.substring(1),
+        "icalPath": filepath,
+        "jsonPath": jsonPath.substring(2),
         "lastGenerated": new Date().toJSON(),
         "lastModified": fileProperties.modifyTime,
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
