@@ -72,11 +72,11 @@ export default {
       return `${weekDay} ${schedule}`;
     }
 
-    const url = new URL(request.url);``
+    const url = new URL(request.url);
     const streetName = url.searchParams.get('streetName');
 
     if (!streetName) {
-      return new Response('Missing street name parameter', { 
+      return new Response('Missing street name parameter.', { 
         status: 400, 
         headers: corsHeaders
       });

@@ -9,6 +9,7 @@ on:
     paths-ignore:
       - '.dev.vars'
       - '.editorconfig'
+      - '.github/workflows/cloudflare-worker-deploy.yml'
       - '.gitignore'
       - '.prettierrc'
       - '.vscode/**'
