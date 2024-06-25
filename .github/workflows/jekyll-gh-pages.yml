@@ -4,7 +4,22 @@ name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches:
+      - main
+    paths-ignore:
+      - '.dev.vars'
+      - '.editorconfig'
+      - '.gitignore'
+      - '.prettierrc'
+      - '.vscode/**'
+      - '.wrangler/**'
+      - 'API.md'
+      - 'Gedling Borough Council Bin Collection API.postman_collection.json'
+      - 'LICENSE'
+      - 'README.md'
+      - 'USAGE.md'
+      - 'wrangler.toml'
+      - 'worker.js'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,7 +58,7 @@ jobs:
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
