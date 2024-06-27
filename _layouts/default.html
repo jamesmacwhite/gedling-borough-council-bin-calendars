@@ -52,13 +52,12 @@
         {% include header-minimal.html %}
       {% endif %}
 
-      <main id="content" class="mt-3">
-        <div class="container">
+      <main>
+        {% if isHome != true %}
+          {% include breadcrumbs.html %}
+        {% endif %}
 
-          {% if isHome != true %}
-            {% include breadcrumbs.html %}
-          {% endif %}
-
+        <div id="content" class="container mt-3">
           {{ content }}
         </div>
       </main>
