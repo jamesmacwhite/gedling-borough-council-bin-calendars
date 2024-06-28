@@ -175,6 +175,9 @@
         let collectionFirst = new Date(el.getAttribute('data-collection-first'));
         let collectionLast = new Date(el.getAttribute('data-collection-last'));
 
+        // Add 12 hours to set to last collection in the month to be the cut off
+        collectionLast.setHours(collectionLast.getHours() + 12);
+
         // Check if last collection date in the month has passed and mark the whole month
         if (dateNow > collectionLast) {
             el.classList.add('opacity-90');
