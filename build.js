@@ -62,7 +62,7 @@ calendars.forEach(function(filepath) {
     }
 
     function formatAlternativeName(name) {
-        return name.replace('Day', '').replace('(Changed Collection)', '').trim();
+        return name.replace('Day', '').replace('(Changed Collection)', '').replace('Garden Waste Collection', 'Garden Bin').trim();
     }
 
     function isChangedCollection(eventTitle) {
