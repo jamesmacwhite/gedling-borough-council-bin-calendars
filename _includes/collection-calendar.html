@@ -60,12 +60,19 @@
 
 {% assign months = jsonData.collectionDates | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
 
+{% assign lastCollectionDate = months.last.items.last.collectionDate %}
+<div calendar-last-collection-date="{{ lastCollectionDate | date: '%F' }}" class="alert alert-primary d-flex align-items-center mb-4 calendar-update-alert d-none" role="alert">
+    <i class="bi bi-info-circle-fill me-2 fs-4" aria-hidden="true"></i>
+    <div>
+        This calendar is due to be updated soon for the next year. When Gedling Borough Council publishes the new calendars, the information will be updated after the last collection date: <strong>{{ lastCollectionDate | date: '%-d %B %Y' }}</strong>.
+    </div>
+</div>
+
 {% if isGardenCollection %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
 
         {% for month in months %}
-            {% assign lastCollectionIndex = month.items.size | minus: 1 %}
-            <div class="col" data-collection-first="{{ month.items[0].collectionDate | date: '%F'  }}" data-collection-last="{{ month.items[lastCollectionIndex].collectionDate | date: '%F' }}">
+            <div class="col" data-collection-first="{{ month.items.first.collectionDate | date: '%F' }}" data-collection-last="{{ month.items.last.collectionDate | date: '%F' }}">
                 <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
                 <ol class="list-unstyled">
                     {% for item in month.items %}
@@ -86,8 +93,7 @@
 {% else %}
     <div class="row row-cols-1 row-cols-sm-2 g-4">
         {% for month in months %}
-            {% assign lastCollectionIndex = month.items.size | minus: 1 %}
-            <div class="col" data-collection-first="{{ month.items[0].collectionDate | date: '%F'  }}" data-collection-last="{{ month.items[lastCollectionIndex].collectionDate | date: '%F' }}">
+            <div class="col" data-collection-first="{{ month.items.first.collectionDate | date: '%F'  }}" data-collection-last="{{ month.items.last.collectionDate | date: '%F' }}">
                 <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
 
                 {% for item in month.items %}
@@ -98,6 +104,8 @@
             </div>
         {% endfor %}
     </div>
+
+    <p class="fw-bold fs-5 mt-3 text-gedling-red">Don’t forget to put your bin and glass box out by 6am.</p>
 
     <div class="refuse-collection-key my-4" aria-hidden="true">
         <h4 class="text-muted h6 fw-bold text-uppercase">Calendar key</h4>
@@ -146,7 +154,21 @@
 </div>
 
 <script>
-    let dateNow = new Date().getTime();
+    let dateNow = new Date();
+    let dateNowTime = dateNow.getTime();
+    let calendarUpdateAlert = document.querySelector('.calendar-update-alert');
+
+    // If the calendar is coming to an end, display the alert
+    if (calendarUpdateAlert) {
+        let lastCalendarCollectionDate = new Date(calendarUpdateAlert.getAttribute('calendar-last-collection-date'));
+
+        if (dateNow.getMonth() === lastCalendarCollectionDate.getMonth() && 
+            dateNow.getFullYear() === lastCalendarCollectionDate.getFullYear() || 
+            dateNowTime >= lastCalendarCollectionDate) {
+            calendarUpdateAlert.classList.remove('d-none');
+        }
+    }
+
     let collectionMonths = document.querySelectorAll('.col');
 
     // Find all in the future collections marking the nearest one that's upcoming
@@ -155,7 +177,7 @@
             let upcomingDate = new Date(node.getAttribute('data-bin-collection-date'));
             upcomingDate.setHours(upcomingDate.getHours() + 12);
 
-            if (upcomingDate >= dateNow) {
+            if (upcomingDate >= dateNowTime) {
                 return node;
             }
         });
@@ -179,7 +201,7 @@
         collectionLast.setHours(collectionLast.getHours() + 12);
 
         // Check if last collection date in the month has passed and mark the whole month
-        if (dateNow > collectionLast) {
+        if (dateNowTime > collectionLast) {
             el.classList.add('opacity-90');
         }
         else {
@@ -195,7 +217,7 @@
                     // Add 12 hours to collection date for midday to be the cut off
                     collectionEndDate.setHours(collectionDate.getHours() + 12);
 
-                    if (dateNow >= collectionEndDate) {
+                    if (dateNowTime >= collectionEndDate) {
                         el.classList.add('opacity-90');
                     }
                 }
