@@ -6,23 +6,23 @@ The API is powered by a Cloudflare Worker and the source code for this worker is
 
 This worker will make search queries and scrape the results to return the data formatted as JSON. The origin data behind the search is not published as open data, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
 
-Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare Worker blocked.
+Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues/limitations, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare Worker blocked.
 
 ## Using the API
 
 The API accepts GET requests only and requires the URL query parameter `streetName`.
 
-The following additional validation requirements are defined for the query parameter value provided:
+The following additional validation requirements are defined for the street name query parameter value provided:
 
 * A street name value must be provided
 * Any value must be 5 or more characters
 * The value must not start with a number
 
-The reason for these additional validations are because the Gedling search app does partial matching on the data within the "Location" and "No's" (Numbers) columns in the database behind it. This can lead to larger paginated results with very vague search queries like "1", which this API does not currently handle. I may loosen this requirement in the future if I implement a way to process paginated responses reliably both from the Worker and front end.
+The reason for these additional validation rules is due to the Gedling refuse search site does partial matching on the data within the "Location" and "No's" (Numbers) columns in the database behind it. This can lead very large paginated results with vague search queries like `1` or `A`, which this API does not currently handle. I may loosen this requirement in the future if I implement a way to process paginated responses reliably both from the Worker and front end.
 
-For now, for best usage and meaningful search results, make sure street name queries are full street names e.g. "Westdale Lane" or partial but with enough context like "Westdale"
+For best usage and meaningful search results, make sure street name queries are full street names e.g. "Westdale Lane" or partial but with enough context like "Westdale".
 
-An example GET request:
+An example GET request with `Westdale Lane` used as the street query:
 
 ```
 https://api.gbcbincalendars.co.uk/?streetName=Westdale%20Lane
@@ -148,15 +148,41 @@ Which will return the JSON response of:
 }
 ```
 
-A street name that does not provide any data from Gedling Borough Council search response returns a 404 response.
+A street name query that does not provide any data from the Gedling Borough Council search response returns a 404 response, with a specific message stating this.
+
+A known quirk for certain street name queries such as `Beswick Close` leads to a scenario where there no data returned for refuse/recycling, but will return data for garden waste. This scenario will not return a 404, but means the `refuseCollections` key will be an empty array.
+
+```json
+{
+    "streetNameQuery": "Beswick Close",
+    "refuseCollections": [],
+    "gardenWasteCollections": [
+        {
+            "Location": "Beswick Close",
+            "Numbers": null,
+            "Area": "Stoke Bardolph",
+            "Calendar PDF URL": "https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2024.pdf",
+            "Email Subscribe URL": "https://pages.comms.gedling.gov.uk/pages/friday-j",
+            "Schedule Identifier": "friday-j",
+            "Schedule Name": "Friday J",
+            "Calendar URL": "http://localhost:4000/collections/garden/friday-j"
+        }
+    ],
+    "viewState": "...",
+    "viewStateGenerator": "...",
+    "eventValidation": "..."
+}
+```
+
+For handling this, you should always ensure the `refuseCollections` and `gardenWasteCollections` keys length is > 0.
 
 ## Running the API locally
 
-You can locally run the API through wrangler.
+You can locally run the Cloudflare Worker which the API uses through wrangler.
 
 ```
 npx wrangler dev
 ```
 
-This will run the API on `http://localhost:8787`. The `BASE_URL` variable is set to `http://localhost:4000` the default port when using `jekyll serve`, so the API responds to the local environment and not live.
+This will run the worker/API on `http://localhost:8787`. The `BASE_URL` variable is set to `http://localhost:4000` the default port when using `jekyll serve`, so the API responds to the local environment and not live.
 
