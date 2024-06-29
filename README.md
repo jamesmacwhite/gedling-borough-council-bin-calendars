@@ -106,12 +106,21 @@ These files are the original source of data for the calendars produced.
 
 ## How are these calendars generated?
 
-The original printed calendars are human translated into a recurring calendar events, with the exception of changed collection days which are then one-off instances. Each calendar is exported in the iCal format and hosted in this repository, the HTML and JSON formats are generated from the iCal data.
+The original printed calendars are human translated into a recurring calendar events using RRULE, with the exception of changed collection days which are created as one-off VEVENT instances. Each calendar is exported in the iCal format and is the primary source data.
+
+Using the excellent [ical.js](https://github.com/kewisch/ical.js) and wrapper library [ical-expander](https://www.npmjs.com/package/ical-expander). The iCal data is expanded to have all instances of collection dates represented in JSON. These are automatically built on any update to the iCal data.
 
 ## Disclaimer
 
 The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible.
 
-Any bin day collection schedule may be subject to change by Gedling Borough Council at any time. While this is unlikely, it is possible.
+The following human checks are performed when reviewing/cross-checking calendar data to try and mitigate this:
+
+1. The HTML calendar output is compared against the original PDF document for each schedule. 
+2. The weekday should be consistent on each collection date (with the exception of changed collection dates)
+3. A month should have a minimum of 4 collection dates (in some cases it can be 5).
+4. The collection dates should follow an alternating schedule.
+
+Any bin day collection schedule is also subject to change by Gedling Borough Council at any time. While this is unlikely, it is possible.
 
 If you spot an error or notice something wrong, please let me know.
