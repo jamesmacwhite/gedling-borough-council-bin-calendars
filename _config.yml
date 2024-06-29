@@ -7,6 +7,9 @@ timezone: Europe/London
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
 
 exclude: 
   - API.md

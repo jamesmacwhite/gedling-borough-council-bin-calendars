@@ -11,36 +11,32 @@ layout: default
 
 <p>The JSON schema is relatively simple. Each JSON endpoint provides a header with various meta information for reference purposes. The <code>lastModified</code> key is tied to the iCal data source, whereas the <code>lastGenerated</code> key is when the JSON data was last built.</p>
 
-<pre>
-    <code>
-        {
-            "filename": "gedling_borough_council_friday_g4_bin_schedule.json",
-            "name": "Gedling Borough Council Bin Day 2023/24 Friday G4",
-            "icalPath": "ical/gedling_borough_council_friday_g4_bin_schedule.ics",
-            "jsonPath": "json/gedling_borough_council_friday_g4_bin_schedule.json",
-            "lastGenerated": "2024-06-29T18:45:14.023Z",
-            "lastModified": "2024-06-17T14:12:39.206Z",
-            "description": "https://apps.gedling.gov.uk/refuse/data/FridayG4-2024.pdf",
-            "collectionDates": [
-                ...
-            ]
-        }
-    </code>
-</pre>
+{% highlight json %}
+{
+    "filename": "gedling_borough_council_friday_g4_bin_schedule.json",
+    "name": "Gedling Borough Council Bin Day 2023/24 Friday G4",
+    "icalPath": "ical/gedling_borough_council_friday_g4_bin_schedule.ics",
+    "jsonPath": "json/gedling_borough_council_friday_g4_bin_schedule.json",
+    "lastGenerated": "2024-06-29T18:45:14.023Z",
+    "lastModified": "2024-06-17T14:12:39.206Z",
+    "description": "https://apps.gedling.gov.uk/refuse/data/FridayG4-2024.pdf",
+    "collectionDates": [
+        ...
+    ]
+}
+{% endhighlight %}
 
 <p>The <code>collectionDates</code> key contains all the collection dates from the original calendar source, with all occurrence expanded. An example of a specific collection date:</p>
 
-<pre>
-    <code>
-    {
-        "name": "Black Bin Day (Changed Collection)",
-        "alternativeName": "Black Bin",
-        "type": "black-bin",
-        "collectionDate": "2023-12-16",
-        "isChangedCollection": true
-    }
-    </code>
-</pre>
+{% highlight json %}
+{
+    "name": "Black Bin Day (Changed Collection)",
+    "alternativeName": "Black Bin",
+    "type": "black-bin",
+    "collectionDate": "2023-12-16",
+    "isChangedCollection": true
+}
+{% endhighlight %}
 
 <p>The collection item provides the following keys:</p>
 
