@@ -18,8 +18,8 @@ export default {
 
     const refuseCollectionJsonKeys = ['Location', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
     const gardenWasteCollectionJsonKeys = ['Location', 'Numbers', 'Area', 'Calendar PDF URL', 'Email Subscribe URL', 'Schedule Identifier', 'Schedule Name', 'Calendar URL'];
-    const gedlingAppDomainUrl = 'https://apps.gedling.gov.uk';
-    const refuseSearchUrl = `${gedlingAppDomainUrl}/refuse/search.aspx`;
+    const gedlingAppsUrl = env.GEDLING_APPS_URL;
+    const refuseSearchUrl = new URL('refuse/search.aspx', gedlingAppsUrl);
     
     let refuseCollectionData = [];
     let gardenWasteCollectionData = [];
@@ -33,11 +33,11 @@ export default {
     }
 
     function formatRefuseCalendarPDFUrl(path) {
-      return `${gedlingAppDomainUrl}/refuse/${path}`;
+      return new URL(`/refuse/${path}`, gedlingAppsUrl);
     }
 
     function formatGardenCalendarPDFUrl(path) {
-      return `${gedlingAppDomainUrl}/${path.replace('../', '')}`;
+      return new URL(path, gedlingAppsUrl);
     }
 
     function formatCollectionUrl(slug, $isGardenBinType = false) {
