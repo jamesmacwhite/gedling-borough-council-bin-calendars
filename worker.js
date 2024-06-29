@@ -137,84 +137,90 @@ export default {
     let refuseData = parse(searchRequestResults).querySelectorAll('table#ctl00_MainContent_streetgridview tbody tr');
     let gardenWasteData = parse(searchRequestResults).querySelectorAll('table#ctl00_MainContent_gardenGridView tbody tr');
 
-    let subscribeUrl = '';
+    if (refuseData.length > 0) {
+      let refuseSubscribeUrl = null;
 
-    refuseData.forEach((row) => {
-      const cells = row.removeWhitespace().querySelectorAll('td');
-      const rowData = cells.map(function(cell) {
-        if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
-          let href = cell.querySelector('a').getAttribute('href');
+      refuseData.forEach((row) => {
+        const cells = row.removeWhitespace().querySelectorAll('td');
+        const rowData = cells.map(function(cell) {
+          if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
+            let href = cell.querySelector('a').getAttribute('href');
 
-          if (cell.text === 'Download Calendar') {
-              return formatRefuseCalendarPDFUrl(href);
+            if (cell.text === 'Download Calendar') {
+                return formatRefuseCalendarPDFUrl(href);
+            }
+
+            if (cell.text === 'Subscribe') {
+              refuseSubscribeUrl = href;
+              return href;
+            }
           }
 
-          if (cell.text === 'Subscribe') {
-            subscribeUrl = href;
-            return href;
-          }
+          return cell.text;
+
+        });
+
+        let identifier = getCollectionIdentifier(refuseSubscribeUrl);
+
+        rowData.push(getCollectionIdentifier(identifier));
+        rowData.push(formatCollectionName(refuseSubscribeUrl));
+        rowData.push(formatCollectionUrl(identifier));
+
+        const rowObject = {};
+
+        for (const [key, value] of refuseCollectionJsonKeys.entries()) {
+          rowObject[value] = rowData[key];
         }
 
-        return cell.text;
+        refuseCollectionData.push(rowObject);
 
       });
+    }
 
-      let identifier = getCollectionIdentifier(subscribeUrl);
+    if (gardenWasteData.length > 0) {
+      let gardenSubscribeUrl = null;
 
-      rowData.push(getCollectionIdentifier(identifier));
-      rowData.push(formatCollectionName(subscribeUrl));
-      rowData.push(formatCollectionUrl(identifier));
+      gardenWasteData.forEach((row) => {
 
-      const rowObject = {};
+        const cells = row.removeWhitespace().querySelectorAll('td');
+        const rowData = cells.map(function(cell, index) {
+          if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
+            let href = cell.querySelector('a').getAttribute('href');
 
-      for (const [key, value] of refuseCollectionJsonKeys.entries()) {
-        rowObject[value] = rowData[key];
-      }
+            if (cell.text === 'Download Calendar') {
+                return formatGardenCalendarPDFUrl(href);
+            }
 
-      refuseCollectionData.push(rowObject);
-
-    });
-
-    gardenWasteData.forEach((row) => {
-
-      const cells = row.removeWhitespace().querySelectorAll('td');
-      const rowData = cells.map(function(cell, index) {
-        if (cell.text === 'Download Calendar' || cell.text === 'Subscribe') {
-          let href = cell.querySelector('a').getAttribute('href');
-
-          if (cell.text === 'Download Calendar') {
-              return formatGardenCalendarPDFUrl(href);
+            if (cell.text === 'Subscribe') {
+              gardenSubscribeUrl = href;
+              return href;
+            }
           }
 
-          if (cell.text === 'Subscribe') {
-            subscribeUrl = href;
-            return href;
-          }
+          return cell.text || null;
+
+        });
+
+        let identifier = getCollectionIdentifier(gardenSubscribeUrl);
+
+        rowData.push(getCollectionIdentifier(identifier));
+        rowData.push(formatCollectionName(gardenSubscribeUrl));
+        rowData.push(formatCollectionUrl(identifier, true));
+
+
+        const rowObject = {};
+
+        for (const [key, value] of gardenWasteCollectionJsonKeys.entries()) {
+          rowObject[value] = rowData[key];
         }
 
-        return cell.text || null;
+        gardenWasteCollectionData.push(rowObject);
 
       });
-
-      let identifier = getCollectionIdentifier(subscribeUrl);
-
-      rowData.push(getCollectionIdentifier(identifier));
-      rowData.push(formatCollectionName(subscribeUrl));
-      rowData.push(formatCollectionUrl(identifier, true));
-
-
-      const rowObject = {};
-
-      for (const [key, value] of gardenWasteCollectionJsonKeys.entries()) {
-        rowObject[value] = rowData[key];
-      }
-
-      gardenWasteCollectionData.push(rowObject);
-
-    });
+    }
 
     if (refuseCollectionData.length === 0 && gardenWasteCollectionData.length === 0) {
-      return new Response('The street name value did not return any bin collection data. Please check the street name entered is valid and within the Gedling Borough Council district and try again.', {
+      return new Response('The street name query did not return any bin collection data. Please check the street name entered is valid and within the Gedling Borough Council district and try again.', {
         status: 404,
         headers: corsHeaders
       });
@@ -224,7 +230,7 @@ export default {
       'streetNameQuery': streetName,
       'refuseCollections': refuseCollectionData,
       'gardenWasteCollections': gardenWasteCollectionData,
-      'viewState': searchPageFormData['__VIEWSTATE'] || null,
+      'viewState': searchPageFormData['__VIEWSTATE'],
       'viewStateGenerator': searchPageFormData['__VIEWSTATEGENERATOR'] || null,
       'eventValidation': searchPageFormData['__EVENTVALIDATION'] || null
     }), { 

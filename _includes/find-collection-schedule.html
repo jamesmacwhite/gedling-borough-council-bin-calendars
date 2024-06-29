@@ -88,34 +88,45 @@
                 <i class="bi bi-trash-fill fs-1" aria-hidden="true"></i> <i class="bi-recycle fs-1 text-success" aria-hidden="true"></i>
                 <p class="mb-0 fw-bold">Refuse/recycling ${refuseCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
 
-                refuseCollections.forEach(function(collection) {
-                    refuseCol.innerHTML += `
-                    <div class="refuse-collection-result">
-                        <p class="fs-3 mb-0">
-                            <a href="/collections/refuse/${collection['Schedule Identifier']}${anchorFragment}">
-                                ${collection['Schedule Name']}
-                            </a>
-                        </p>
-                        <p class="mb-0">${collection['Location']}, ${collection['Area']}</p>
-                    </div>`
-                });
+                if (refuseCollections.length > 0) {
+                    refuseCollections.forEach(function(collection) {
+                        refuseCol.innerHTML += `
+                        <div class="refuse-collection-result">
+                            <p class="fs-3 mb-0">
+                                <a href="/collections/refuse/${collection['Schedule Identifier']}${anchorFragment}">
+                                    ${collection['Schedule Name']}
+                                </a>
+                            </p>
+                            <p class="mb-0 small">${collection['Location']}, ${collection['Area']}</p>
+                        </div>`
+                    });
+                }
+                else {
+                    refuseCol.innerHTML += `<p class="text-danger fw-bold w-75">No refuse collections were returned from Gedling Borough Council data.</p>`;
+                }
 
                 gardenCol.innerHTML += `
                 <i class="bi bi-flower3 fs-1" aria-hidden="true"></i>
                 <p class="mb-0 fw-bold">Garden waste ${gardenWasteCollections.length === 1 ? 'collection' : 'collections' }:</p>
                 `;
 
-                gardenWasteCollections.forEach(function(collection) {
-                    gardenCol.innerHTML += `
-                    <div class="garden-waste-collection-result">
-                        <p class="fs-3 mb-0">
-                            <a href="/collections/garden/${collection['Schedule Identifier']}${anchorFragment}">
-                                ${collection['Schedule Name']}
-                            </a>
-                        </p>
-                        <p class="mb-0">${collection['Location']}, ${collection['Numbers'] !== null ? collection['Numbers'] + ',' : ''} ${collection['Area']}</p>
-                    </div>`
-                });
+                if (gardenWasteCollections.length > 0) {
+
+                    gardenWasteCollections.forEach(function(collection) {
+                        gardenCol.innerHTML += `
+                        <div class="garden-waste-collection-result">
+                            <p class="fs-3 mb-0">
+                                <a href="/collections/garden/${collection['Schedule Identifier']}${anchorFragment}">
+                                    ${collection['Schedule Name']}
+                                </a>
+                            </p>
+                            <p class="mb-0 small">${collection['Location']}, ${collection['Numbers'] !== null ? collection['Numbers'] + ',' : ''} ${collection['Area']}</p>
+                        </div>`
+                    });
+                }
+                else {
+                    refuseCol.innerHTML += `<p class="text-danger fw-bold w-75">No garden waste collections were returned from Gedling Borough Council data.</p>`;
+                }
 
                 searchResult.classList.remove('d-none');
                 searchResult.scrollIntoView();
