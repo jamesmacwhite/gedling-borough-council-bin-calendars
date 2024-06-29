@@ -1,7 +1,7 @@
 ---
 ---
 {
-    "name": "{{ site.name }}",
+    "name": "{{ site.title }}",
     "icons": [
         {
             "src": "{{ '/android-chrome-192x192.png' | absolute_url }}",
