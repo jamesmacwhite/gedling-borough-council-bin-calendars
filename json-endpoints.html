@@ -1,0 +1,74 @@
+---
+title: Using bin collection data as JSON
+layout: default
+---
+
+<h1 class="h2">{{ page.title }}</h1>
+
+<p>The original purpose of this project was to provide Gedling Borough Council bin collection data in iCal format, but JSON is also another well used and portable format which other applications can use.</p>
+
+<p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="</a>">ical.js library</a>, every time a build occurs, the JSON data is generated from the original iCal source data.</p>
+
+<p>The JSON schema is relatively simple. Each JSON endpoint provides a header with various meta information for reference purposes. The <code>lastModified</code> key is tied to the iCal data source, whereas the <code>lastGenerated</code> key is when the JSON data was last built.</p>
+
+<pre>
+    <code>
+        {
+            "filename": "gedling_borough_council_friday_g4_bin_schedule.json",
+            "name": "Gedling Borough Council Bin Day 2023/24 Friday G4",
+            "icalPath": "ical/gedling_borough_council_friday_g4_bin_schedule.ics",
+            "jsonPath": "json/gedling_borough_council_friday_g4_bin_schedule.json",
+            "lastGenerated": "2024-06-29T18:45:14.023Z",
+            "lastModified": "2024-06-17T14:12:39.206Z",
+            "description": "https://apps.gedling.gov.uk/refuse/data/FridayG4-2024.pdf",
+            "collectionDates": [
+                ...
+            ]
+        }
+    </code>
+</pre>
+
+<p>The <code>collectionDates</code> key contains all the collection dates from the original calendar source, with all occurrence expanded. An example of a specific collection date:</p>
+
+<pre>
+    <code>
+    {
+        "name": "Black Bin Day (Changed Collection)",
+        "alternativeName": "Black Bin",
+        "type": "black-bin",
+        "collectionDate": "2023-12-16",
+        "isChangedCollection": true
+    }
+    </code>
+</pre>
+
+<p>The collection item provides the following keys:</p>
+
+<ul>
+    <li><code>name</code> - Original calendar event title</li>
+    <li><code>alternativeName</code> - Modified event title for other uses such as shorter title or other software.</li>
+    <li><code>type</code> - A fixed key value for use in other contexts</li>
+    <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>
+    <li><code>isChangedCollection</code> - A boolean to denote if the collection date is outside of the usual sequence.</li>
+</ul>
+
+<h2 class="h3 mt-4">JSON endpoints</h2>
+
+<p>All the live JSON endpoints are available below. The URL paths for these endpoints can be used in other software without restrictions.</p>
+
+<div class="row row-cols-1 row-cols-sm-2 g-4">
+    {% for type in site.data.calendars.bin_collections %}
+        <div class="col">
+            <h3 class="h4 mb-3">{{ type.name }}</h3>
+            {% for weekday in type.collections %}
+                <ol class="list-unstyled">
+                    {% for collection in weekday[1] %}
+                        <li>
+                            <a href="{{ collection.json | absolute_url }}">{{ weekday[0] }} {{ collection.name }} Calendar JSON</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

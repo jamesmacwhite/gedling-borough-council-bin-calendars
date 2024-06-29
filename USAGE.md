@@ -64,7 +64,7 @@ The JSON data generated for each bin collection calendar by this site is used in
 
 Using the [ical.js library](https://github.com/kewisch/ical.js) all calendars are also available as JSON endpoints, published under: `https://www.gbcbincalendars.co.uk/json/`, with the filename being the same as ical path with the exception of being `.json` instead of `.ical`. E.g. `https://www.gbcbincalendars.co.uk/json/gedling_borough_council_wednesday_g2_bin_schedule.json`.
 
-The HTML calendars are derived from the same JSON data.
+The HTML calendars are derived from the same JSON data. You can find more documentation about the [JSON endpoints on the website](https://www.gbcbincalendars.co.uk/json-endpoints).
 
 ## Bin collection API
 
