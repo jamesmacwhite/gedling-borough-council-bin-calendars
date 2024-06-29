@@ -1,0 +1,10 @@
+---
+---
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+<ShortName>{{ site.title }}</ShortName>
+<Description>Search Gedling Borough Council bin collections</Description>
+<InputEncoding>UTF-8</InputEncoding>
+<Image width="32" height="32" type="image/png">{{ 'favicon-32x32.png' | absolute_url }}</Image>
+<Url type="text/html" method="get" template="{{ '/collection-search?streetName=' | absolute_url }}{% raw %}{searchTerms}{% endraw %}"/>
+<moz:SearchForm>{{ '/collection-search' | absolute_url }}</moz:SearchForm>
+</OpenSearchDescription>
