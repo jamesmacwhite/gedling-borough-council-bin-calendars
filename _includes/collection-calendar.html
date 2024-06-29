@@ -28,6 +28,7 @@
     <div class="d-grid d-md-flex gap-2 mt-2">
         <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
         <a href="{{ icalUrl }}" class="btn btn-gedling-red" download>Download calendar</a>
+        <a href="{{ 'https://pages.comms.gedling.gov.uk/pages/' | append: dataId | replace: '_', '-' }}" class="btn btn-dark">Email alerts</a>
         <a href="{{ jsonData.jsonPath | absolute_url }}" class="btn btn-success">View as JSON</a>
     </div>
 </div>
