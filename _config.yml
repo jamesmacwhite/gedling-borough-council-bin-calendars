@@ -3,6 +3,7 @@ url: "https://www.gbcbincalendars.co.uk"
 title: "Gedling Borough Council Refuse Collection Calendars"
 permalink: /:title
 lang: en-GB
+timezone: Europe/London
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
