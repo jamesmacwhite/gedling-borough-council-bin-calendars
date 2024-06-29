@@ -61,12 +61,17 @@ calendars.forEach(function(filepath) {
         return collectionKey[keyParsed] || 'Unknown';
     }
 
+    function formatAlternativeName(name) {
+        return name.replace('Day', '').replace('(Changed Collection)', '').trim();
+    }
+
     function isChangedCollection(eventTitle) {
         return eventTitle.toLowerCase().includes('changed collection');
     }
 
     const mappedEvents = events.events.map(e => ({ 
         name: e.summary,
+        alternativeName: formatAlternativeName(e.summary),
         type: getBinType(e.summary),
         collectionDate: e.startDate.toString(),
         isChangedCollection: isChangedCollection(e.summary)
@@ -74,6 +79,7 @@ calendars.forEach(function(filepath) {
 
     const mappedOccurrences = events.occurrences.map(o => ({
         name: o.item.summary,
+        alternativeName: formatAlternativeName(o.item.summary),
         type: getBinType(o.item.summary),
         collectionDate: o.startDate.toString(),
         isChangedCollection: isChangedCollection(o.item.summary)
