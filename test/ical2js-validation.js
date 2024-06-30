@@ -42,12 +42,14 @@ describe('ical2js calendar validation', function() {
   jsonData.forEach((calendar) => {
 
     let expectedCollectionsMin = 52;
+    let expectedCollectionsMax = expectedCollectionsMin + 1;
     let collectionDates = calendar.collectionDates;
     let calendarType = calendar.collectionType;
 
     // Set the minimum collection to lower as garden bin has less collections
     if (calendarType === 'Garden') {
       expectedCollectionsMin = 21;
+      expectedCollectionsMax = expectedCollectionsMin;
     }
 
     // Check for calendar name value
@@ -57,13 +59,18 @@ describe('ical2js calendar validation', function() {
 
     // Check for calendar description value
     it(`${calendar.filename} description is not null`, function() {
-      assert.isNotNull(calendar.description, 'Calendar is missing description value');
+      assert.isNotNull(calendar.description, 'Calendar is missing description value.');
     });
 
-    // Check the total amount of collection dates meets the expected minimum
+    // Check the total amount of collection dates does not exceed the expected minimum
     it(`${calendar.filename} total ${calendarType.toLowerCase()} collection dates matches minimum expected count`, function() {
       assert.isAtLeast(calendar.totalCollections, expectedCollectionsMin, 'Total collection dates is lower than the expected minimum.');
     });
+
+    // Check the total amoint of collections dates does not exceed the expected maxiumum
+    it(`${calendar.filename} total ${calendarType.toLowerCase()} collection dates does not exceed maximum`, function() {
+      assert.isAtMost(calendar.totalCollections, expectedCollectionsMax, 'Total collection dates exceeds expected count.');
+    })
 
     // Validate collection dates
     describe(`${calendar.filename} collection dates validation`, function() {
