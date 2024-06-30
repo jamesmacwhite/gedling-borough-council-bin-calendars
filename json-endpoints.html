@@ -41,7 +41,7 @@ layout: default
 <p>The collection item provides the following keys:</p>
 
 <ul>
-    <li><code>name</code> - Original iCal event title</li>
+    <li><code>name</code> - Original iCal event title.</li>
     <li><code>alternativeName</code> - Modified event title for other uses such as a shorter title.</li>
     <li><code>type</code> - A fixed key value for use in other contexts.</li>
     <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>
@@ -52,19 +52,18 @@ layout: default
 
 <p>All the live JSON endpoints are available below. The URL paths for these endpoints can be used in other software without restrictions.</p>
 
-<div class="row row-cols-1 row-cols-sm-2 g-4">
-    {% for type in site.data.calendars.bin_collections %}
-        <div class="col">
-            <h3 class="h4 mb-3">{{ type.name }}</h3>
-            {% for weekday in type.collections %}
-                <ol class="list-unstyled">
-                    {% for collection in weekday[1] %}
-                        <li>
-                            <a href="{{ collection.json | absolute_url }}">{{ weekday[0] }} {{ collection.name }} Calendar JSON</a>
-                        </li>
-                    {% endfor %}
-                </ol>
-            {% endfor %}
-        </div>
-    {% endfor %}
-</div>
+{% for type in site.data.calendars.bin_collections %}
+    <div class="{% if forloop.last %}mb-0{% else %}mb-5{% endif %}">
+        <h3 class="h4 mb-3">{{ type.name }}</h3>
+        {% for weekday in type.collections %}
+            {%- for collection in weekday[1] -%}
+                <div class="mb-4">
+                    <span class="fw-bold d-block mb-2">{{ weekday[0] }} {{ collection.name }} Calendar JSON URL:</span>
+                    {%- highlight html -%}
+                        {{- collection.json | absolute_url -}}
+                    {%- endhighlight -%}
+                </div>
+            {%- endfor -%}
+        {% endfor %}
+    </div>
+{% endfor %}

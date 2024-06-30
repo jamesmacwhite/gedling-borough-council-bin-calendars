@@ -235,7 +235,7 @@ export default {
       'eventValidation': searchPageFormData['__EVENTVALIDATION'] || null
     }), { 
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        'content-type': 'application/json; charset=UTF-8',
         ...corsHeaders
       } 
     });
