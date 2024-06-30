@@ -6,3 +6,41 @@ pre {
 .highlight {
     padding: 0.8rem;
 }
+
+.header-full {
+    background: url(../images/gedling-country-park.jpg) no-repeat center black;
+    background-size: cover;
+}
+
+.development {
+    &:before {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+        padding: 0.25rem 0.5rem;
+        background: rgba(0,0,0,0.75);
+        color: #fff;
+        content: 'xs';
+
+        @include media-breakpoint-up(sm) { 
+            content: 'sm'; 
+        }
+
+        @include media-breakpoint-up(md) { 
+            content: 'md'; 
+        }
+
+        @include media-breakpoint-up(lg) { 
+            content: 'lg'; 
+        }
+
+        @include media-breakpoint-up(xl) {
+            content: 'xl'; 
+        }
+
+        @include media-breakpoint-up(xxl) { 
+            content: 'xxl'; 
+        }
+    }
+}
