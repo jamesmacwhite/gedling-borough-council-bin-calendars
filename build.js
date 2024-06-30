@@ -85,9 +85,16 @@ calendars.forEach(function(filepath) {
         return eventTitle.toLowerCase().includes('changed collection');
     }
 
+    function getWeekdayFromDate(date) {
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return daysOfWeek[new Date(date).getDay()];
+    }
+
     const mappedEvents = events.events.map(e => ({ 
         name: e.summary,
         alternativeName: formatAlternativeName(e.summary),
+        weekday: getWeekdayFromDate(e.startDate),
+        isOccurrence: false,
         type: getBinType(e.summary),
         collectionDate: e.startDate.toString(),
         isChangedCollection: isChangedCollection(e.summary)
@@ -96,6 +103,8 @@ calendars.forEach(function(filepath) {
     const mappedOccurrences = events.occurrences.map(o => ({
         name: o.item.summary,
         alternativeName: formatAlternativeName(o.item.summary),
+        weekday: getWeekdayFromDate(o.item.startDate),
+        isOccurrence: true,
         type: getBinType(o.item.summary),
         collectionDate: o.startDate.toString(),
         isChangedCollection: isChangedCollection(o.item.summary)

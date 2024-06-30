@@ -50,6 +50,8 @@ layout: default
 {
     "name": "Black Bin Day (Changed Collection)",
     "alternativeName": "Black Bin",
+    "weekday": "Friday",
+    "isOccurrence": true,
     "type": "black-bin",
     "collectionDate": "2023-12-16",
     "isChangedCollection": true
@@ -61,6 +63,8 @@ layout: default
 <ul>
     <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
     <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value.</li>
+    <li><code>weekday</code> - The weekday of the collection date.</li>
+    <li><code>isOccurrence</code> - A boolean to indicate if the collection date is part of a occurrence rule or not.</li>
     <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
     <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>
     <li><code>isChangedCollection</code> - A boolean to denote if the collection date is outside of the usual sequence.</li>
