@@ -38,9 +38,10 @@ describe('JSON files output check', function() {
 });
 
 // Validate the data present in each calendar
-describe('ical2js calendar validation', function() {
+describe('JSON calendar validation', function() {
   jsonData.forEach((calendar) => {
 
+    let totalCalendarCollections = calendar.totalCollections;
     let expectedCollectionsMin = 52;
     let expectedCollectionsMax = expectedCollectionsMin + 1;
     let collectionDates = calendar.collectionDates;
@@ -64,13 +65,13 @@ describe('ical2js calendar validation', function() {
 
     // Check the total amount of collection dates does not exceed the expected minimum
     it(`${calendar.filename} total ${calendarType.toLowerCase()} collection dates matches minimum expected count`, function() {
-      assert.isAtLeast(calendar.totalCollections, expectedCollectionsMin, 'Total collection dates is lower than the expected minimum.');
+      assert.isAtLeast(totalCalendarCollections, expectedCollectionsMin, 'Total collection dates is lower than the expected minimum.');
     });
 
-    // Check the total amoint of collections dates does not exceed the expected maxiumum
+    // Check the total amoint of collections dates does not exceed the expected maximum
     it(`${calendar.filename} total ${calendarType.toLowerCase()} collection dates does not exceed maximum`, function() {
-      assert.isAtMost(calendar.totalCollections, expectedCollectionsMax, 'Total collection dates exceeds expected count.');
-    })
+      assert.isAtMost(totalCalendarCollections, expectedCollectionsMax, 'Total collection dates exceeds expected count.');
+    });
 
     // Validate collection dates
     describe(`${calendar.filename} collection dates validation`, function() {
@@ -78,7 +79,7 @@ describe('ical2js calendar validation', function() {
         // Check summary value to ensure consistency
         it(`${calendar.filename} check ${item.collectionDate} name is valid`, function() {
           assert.include(validSummaryTitles, item.name, 'An invalid summary value has been used.');
-        })
+        });
 
         // Check any changed collection is a single occurrence, not part of a repeating schedule
         it(`${calendar.filename} check ${item.collectionDate} for occurrence mismatch`, function() {
