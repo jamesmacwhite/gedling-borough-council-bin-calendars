@@ -36,7 +36,7 @@ calendars.forEach(function(filepath) {
     const icalJs = require('ical.js');
     const IcalExpander = require('ical-expander');
     const ics = jetpack.read(filepath);
-    const icalExpander = new IcalExpander({ ics, maxIterations: 50 });
+    const icalExpander = new IcalExpander({ ics, maxIterations: 55 });
     const events = icalExpander.all();
     const filename = `${path.parse(filepath).name}.json`;
     const jcalData = icalJs.parse(ics);
@@ -48,11 +48,12 @@ calendars.forEach(function(filepath) {
     const jsonData = {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
+        "description": comp.getFirstPropertyValue('x-wr-caldesc'),
         "icalPath": filepath,
         "jsonPath": jsonPath.substring(2),
         "lastGenerated": new Date().toJSON(),
         "lastModified": fileProperties.modifyTime,
-        "description": comp.getFirstPropertyValue('x-wr-caldesc'),
+        "totalCollections": 0,
         "collectionDates": []
     };
 
@@ -88,6 +89,7 @@ calendars.forEach(function(filepath) {
     const allEvents = [].concat(mappedEvents, mappedOccurrences)
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
+    jsonData['totalCollections'] = allEvents.length;
     jsonData['collectionDates'] = allEvents;
 
     // Write to JSON folder for public API
