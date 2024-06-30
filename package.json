@@ -4,15 +4,19 @@
     "bootstrap-icons": "^1.11.3",
     "fs-jetpack": "^5.1.0",
     "ical-expander": "^3.1.0",
-    "node-html-parser": "^6.1.13"
+    "node-html-parser": "^6.1.13",
+    "save-dev": "^0.0.1-security"
   },
   "devDependencies": {
+    "chai": "^4.4.1",
+    "mocha": "^10.5.2",
     "wrangler": "^3.60.3"
   },
   "scripts": {
     "build": "node ./build.js",
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
-    "start": "wrangler dev"
+    "start": "wrangler dev",
+    "test": "mocha"
   }
 }

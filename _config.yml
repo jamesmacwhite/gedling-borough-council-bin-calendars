@@ -23,6 +23,7 @@ exclude:
   - package.json
   - package-lock.json
   - README.md
+  - test/
   - USAGE.md
   - worker.js
   - wrangler.toml

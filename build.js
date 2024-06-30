@@ -1,12 +1,12 @@
 'use strict';
 
 const path = require('path');
-const jetpack = require("fs-jetpack");
+const jetpack = require('fs-jetpack');
 const calendars = jetpack.find("ical", { matching: "*.ics" });
 const icaljsDest = './_data/icaljs';
 const jsonDest = './json';
 
-console.log("Copying Bootstrap JS bundle and fonts for build.")
+console.log("Copying Bootstrap JS bundle and fonts for build.");
 
 // Bootstrap JS and fonts
 jetpack.copy('./node_modules/bootstrap/dist/js', './assets/js', { 
@@ -49,6 +49,8 @@ calendars.forEach(function(filepath) {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
+        "collectionWeekday": getWeekdayFromFilename(filename),
+        "collectionType": filename.includes('garden') ? 'Garden' : 'Refuse',
         "icalPath": filepath,
         "jsonPath": jsonPath.substring(2),
         "lastGenerated": new Date().toJSON(),
@@ -56,6 +58,19 @@ calendars.forEach(function(filepath) {
         "totalCollections": 0,
         "collectionDates": []
     };
+
+    function getWeekdayFromFilename(filename) {
+        const weekdayRegex = /(monday|tuesday|wednesday|thursday|friday)/i;
+        const match = filename.match(weekdayRegex);
+
+        if (!match) {
+            return null;
+        }
+
+        let weekday = match[0];
+
+        return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+    }
 
     function getBinType(key) {
         var keyParsed = key.replace('(Changed Collection)', '').trim();

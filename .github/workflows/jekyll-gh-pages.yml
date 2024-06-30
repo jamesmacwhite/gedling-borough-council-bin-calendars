@@ -53,6 +53,7 @@ jobs:
         uses: actions/setup-node@v4
       - run: npm i
       - run: npm run build
+      - run: npm run test
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
