@@ -25,7 +25,7 @@ $custom-colors: (
     "green-bin": $green-bin,
     "black-bin": #a7a9ac,
     "glass-bin": $glass-bin,
-    "garden-bin": #eee7d0
+    "garden-bin": #a0522d
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);

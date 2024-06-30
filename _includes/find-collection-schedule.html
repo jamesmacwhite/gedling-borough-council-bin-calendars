@@ -85,7 +85,8 @@
                 rowWrapper.appendChild(gardenCol);
 
                 refuseCol.innerHTML += `
-                <i class="bi bi-trash-fill fs-1" aria-hidden="true"></i> <i class="bi-recycle fs-1 text-success" aria-hidden="true"></i>
+                <i class="bi bi-trash-fill fs-1" aria-hidden="true"></i>
+                <i class="bi-recycle fs-1 text-success" aria-hidden="true"></i>
                 <p class="mb-0 fw-bold">Refuse/recycling ${refuseCollections.length === 1 ? 'collection' : 'collections' }:</p>`;
 
                 if (refuseCollections.length > 0) {
@@ -106,7 +107,8 @@
                 }
 
                 gardenCol.innerHTML += `
-                <i class="bi bi-flower3 fs-1" aria-hidden="true"></i>
+                <i class="bi bi-trash-fill fs-1 text-garden-bin" aria-hidden="true"></i>
+                <i class="bi bi-flower3 fs-1 text-warning" aria-hidden="true"></i>
                 <p class="mb-0 fw-bold">Garden waste ${gardenWasteCollections.length === 1 ? 'collection' : 'collections' }:</p>
                 `;
 
