@@ -6,11 +6,23 @@ layout: default
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>The original purpose of this project was to provide Gedling Borough Council bin collection data in iCal format, but JSON is also another well used and portable format which other applications can use.</p>
+<p>The original purpose of this project was to provide Gedling Borough Council bin collection data in iCalender format for importing or subscribing to, but JSON is also another well used and portable format which other applications can use.</p>
 
-<p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="</a>">ical.js library</a>, every time a build occurs, the JSON data is generated from the original iCal source data.</p>
+<p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="https://github.com/kewisch/ical.js">ical.js library</a>, every time a website deployment build occurs, the JSON data is generated from the original iCal source data.</p>
 
-<p>The JSON schema is relatively simple. Each JSON endpoint provides a header with various meta information for reference purposes. The <code>lastModified</code> key is tied to the iCal data source, whereas the <code>lastGenerated</code> key is when the JSON data was last built.</p>
+<p>The JSON schema is relatively simple. Each JSON endpoint provides a header with various meta information for reference purposes.</p>
+
+<ul>
+    <li><code>filename</code> - The JSON endpoint filename.</li>
+    <li><code>name</code> - This is the iCalendar name taken from <code>X-WR-CALNAME</code>.</li>
+    <li><code>description</code> - This is iCalendar description taken from <code>X-WR-CALDESC</code>.</li>
+    <li><code>icalPath</code> - The root relative iCal filepath.</li>
+    <li><code>jsonPath</code> - The root relative JSON filepath.</li>
+    <li><code>lastGenerated</code> - The last time the JSON data was generated from a deployment.</li>
+    <li><code>lastModified</code> - The last time the calendar data was modified, this is based on the modified date of the original iCal source.</li>
+    <li><code>totalCollections</code> - The total items within the <code>collectionDates</code>.</li>
+    <li><code>collectionDates</code> - The array containing all bin collection dates, with occurrences expanded to single events.</li>
+</ul>
 
 {% highlight json %}
 {
@@ -28,7 +40,7 @@ layout: default
 }
 {% endhighlight %}
 
-<p>The <code>collectionDates</code> key contains all the collection dates from the original calendar source, with all occurrence expanded. An example of a specific collection date:</p>
+<p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for repeated occurrences are expanded.</p>
 
 {% highlight json %}
 {
@@ -43,9 +55,9 @@ layout: default
 <p>The collection item provides the following keys:</p>
 
 <ul>
-    <li><code>name</code> - Original iCal event title.</li>
-    <li><code>alternativeName</code> - Modified event title for other uses such as a shorter title.</li>
-    <li><code>type</code> - A fixed key value for use in other contexts.</li>
+    <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
+    <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value.</li>
+    <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
     <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>
     <li><code>isChangedCollection</code> - A boolean to denote if the collection date is outside of the usual sequence.</li>
 </ul>
