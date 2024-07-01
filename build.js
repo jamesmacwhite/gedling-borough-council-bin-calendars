@@ -30,6 +30,33 @@ const collectionKey = {
     "Garden Waste Collection": "garden-bin",
 };
 
+function getWeekdayFromFilename(filename) {
+    const weekdayRegex = /(monday|tuesday|wednesday|thursday|friday)/i;
+    const match = filename.match(weekdayRegex);
+
+    if (!match) {
+        return null;
+    }
+
+    let weekday = match[0];
+
+    return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+}
+
+function getBinType(key) {
+    var keyParsed = key.replace('(Changed Collection)', '').trim();
+    return collectionKey[keyParsed] || 'Unknown';
+}
+
+function formatAlternativeName(name) {
+    return name.replace('Day', '').replace('(Changed Collection)', '').replace('Garden Waste Collection', 'Garden Bin').trim();
+}
+
+function getWeekdayFromDate(date) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return daysOfWeek[new Date(date).getDay()];
+}
+
 // Process each ical file to convert to JSON format
 calendars.forEach(function(filepath) {
 
@@ -59,37 +86,6 @@ calendars.forEach(function(filepath) {
         "collectionDates": []
     };
 
-    function getWeekdayFromFilename(filename) {
-        const weekdayRegex = /(monday|tuesday|wednesday|thursday|friday)/i;
-        const match = filename.match(weekdayRegex);
-
-        if (!match) {
-            return null;
-        }
-
-        let weekday = match[0];
-
-        return weekday.charAt(0).toUpperCase() + weekday.slice(1);
-    }
-
-    function getBinType(key) {
-        var keyParsed = key.replace('(Changed Collection)', '').trim();
-        return collectionKey[keyParsed] || 'Unknown';
-    }
-
-    function formatAlternativeName(name) {
-        return name.replace('Day', '').replace('(Changed Collection)', '').replace('Garden Waste Collection', 'Garden Bin').trim();
-    }
-
-    function isChangedCollection(eventTitle) {
-        return eventTitle.toLowerCase().includes('changed collection');
-    }
-
-    function getWeekdayFromDate(date) {
-        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        return daysOfWeek[new Date(date).getDay()];
-    }
-
     const mappedEvents = events.events.map(e => ({ 
         name: e.summary,
         alternativeName: formatAlternativeName(e.summary),
@@ -97,7 +93,7 @@ calendars.forEach(function(filepath) {
         isOccurrence: false,
         type: getBinType(e.summary),
         collectionDate: e.startDate.toString(),
-        isChangedCollection: isChangedCollection(e.summary)
+        isChangedCollection: true
     }));
 
     const mappedOccurrences = events.occurrences.map(o => ({
@@ -107,7 +103,7 @@ calendars.forEach(function(filepath) {
         isOccurrence: true,
         type: getBinType(o.item.summary),
         collectionDate: o.startDate.toString(),
-        isChangedCollection: isChangedCollection(o.item.summary)
+        isChangedCollection: false
     }));
 
     const allEvents = [].concat(mappedEvents, mappedOccurrences)
