@@ -16,7 +16,7 @@ layout: default
     <li><code>filename</code> - The JSON endpoint filename.</li>
     <li><code>name</code> - This is the iCalendar name taken from <code>X-WR-CALNAME</code>.</li>
     <li><code>description</code> - This is iCalendar description taken from <code>X-WR-CALDESC</code>.</li>
-    <li><code>collectionWeekday</code> - The normal weekday of the collection schedule.</li>
+    <li><code>collectionWeekday</code> - The assigned weekday of the collection schedule.</li>
     <li><code>collectionType</code> - The type of collection, this can be either <code>Refuse</code> or <code>Garden</code>.</li>
     <li><code>icalPath</code> - The root relative iCal filepath.</li>
     <li><code>jsonPath</code> - The root relative JSON filepath.</li>
@@ -46,14 +46,30 @@ layout: default
 
 <p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for repeated occurrences are expanded.</p>
 
+<p>An example collection under the normal schedule.</p>
+
 {% highlight json %}
 {
-    "name": "Black Bin Day (Changed Collection)",
+    "name": "Black Bin Day",
     "alternativeName": "Black Bin",
     "weekday": "Friday",
     "isOccurrence": true,
     "type": "black-bin",
-    "collectionDate": "2023-12-16",
+    "collectionDate": "2023-12-15",
+    "isChangedCollection": false
+}
+{% endhighlight %}
+
+<p>An example collection that is a one-off i.e. changed collection date due a national holiday.</p>
+
+{% highlight json %}
+{
+    "name": "Green Bin + Glass Box Day (Changed Collection)",
+    "alternativeName": "Green Bin + Glass Box",
+    "weekday": "Thursday",
+    "isOccurrence": false,
+    "type": "green-glass-bin",
+    "collectionDate": "2023-12-21",
     "isChangedCollection": true
 }
 {% endhighlight %}
@@ -63,7 +79,7 @@ layout: default
 <ul>
     <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
     <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value.</li>
-    <li><code>weekday</code> - The weekday of the collection date.</li>
+    <li><code>weekday</code> - The weekday of the collection date. If a changed collection the day will differ to the <code>collectionWeekday</code> value.</li>
     <li><code>isOccurrence</code> - A boolean to indicate if the collection date is part of a occurrence rule or not.</li>
     <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
     <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>
