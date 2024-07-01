@@ -112,7 +112,7 @@ calendars.forEach(function(filepath) {
 
     jsonData['totalCollections'] = allEvents.length;
     jsonData['totalChangedCollections'] = allEvents.filter(function(item){
-        return item.name.includes("Changed Collection");
+        return item.isChangedCollection;
     }).length;
 
     jsonData['collectionDates'] = allEvents;
