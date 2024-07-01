@@ -30,6 +30,8 @@ const collectionKey = {
     "Garden Waste Collection": "garden-bin",
 };
 
+const daysOfWeek = ['Sunday', "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
 function getWeekdayFromFilename(filename) {
     const weekdayRegex = /(monday|tuesday|wednesday|thursday|friday)/i;
     const match = filename.match(weekdayRegex);
@@ -53,8 +55,14 @@ function formatAlternativeName(name) {
 }
 
 function getWeekdayFromDate(date) {
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return daysOfWeek[new Date(date).getDay()];
+}
+
+function getNextWeekday(date, dayOfWeek) {
+    const currentDayOfWeek = date.getDay();
+    const daysUntilWeekday = (dayOfWeek + 7 - currentDayOfWeek) % 7;
+    date.setDate(date.getDate() + daysUntilWeekday);
+    return date;
 }
 
 // Process each ical file to convert to JSON format
@@ -70,13 +78,14 @@ calendars.forEach(function(filepath) {
     const comp = new icalJs.Component(jcalData);
     const fileProperties = jetpack.inspect(`./${filepath}`, { times: true });
     const jsonPath = `${jsonDest}/${filename}`;
+    const collectionWeekday = getWeekdayFromFilename(filename);
 
     // Create JSON header
     const jsonData = {
         "filename": filename,
         "name": comp.getFirstPropertyValue('x-wr-calname'),
         "description": comp.getFirstPropertyValue('x-wr-caldesc'),
-        "collectionWeekday": getWeekdayFromFilename(filename),
+        "collectionWeekday": collectionWeekday,
         "collectionType": filename.includes('garden') ? 'Garden' : 'Refuse',
         "icalPath": filepath,
         "jsonPath": jsonPath.substring(2),
@@ -84,6 +93,7 @@ calendars.forEach(function(filepath) {
         "lastModified": fileProperties.modifyTime,
         "totalCollections": 0,
         "totalChangedCollections": 0,
+        "revisedCollectionDates": [],
         "collectionDates": []
     };
 
@@ -111,9 +121,16 @@ calendars.forEach(function(filepath) {
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
     jsonData['totalCollections'] = allEvents.length;
-    jsonData['totalChangedCollections'] = allEvents.filter(function(item){
+
+    const allChangedCollections = allEvents.filter(function(item){
         return item.isChangedCollection;
-    }).length;
+    });
+
+    jsonData['totalChangedCollections'] = allChangedCollections.length;
+
+    jsonData['revisedCollectionDates'] = allChangedCollections.map(date => ({
+        [getNextWeekday(new Date(date.collectionDate), daysOfWeek.indexOf(collectionWeekday)).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'})]: date.collectionDate.toString()
+    }));
 
     jsonData['collectionDates'] = allEvents;
 

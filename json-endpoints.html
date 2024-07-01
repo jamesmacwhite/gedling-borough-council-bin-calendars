@@ -40,9 +40,20 @@ layout: default
     "lastModified": "2024-06-17T14:12:39.206Z",
     "totalCollections": 53,
     "totalChangedCollections": 1,
+    "revisedCollectionDates": [
+        ...
+    ],
     "collectionDates": [
         ...
     ]
+}
+{% endhighlight %}
+
+<p>The <code>revisedCollectionDates</code> key is an array map with the normal collection date as the key and the revised collection date as the value. This is calculated using a nearest weekday calculation relative to the <code>collectionWeekday</code> for the calendar.</p>
+
+{% highlight json %}
+{
+    "2023-12-22": "2023-12-21"
 }
 {% endhighlight %}
 
