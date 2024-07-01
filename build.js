@@ -49,7 +49,7 @@ function getBinType(key) {
 }
 
 function formatAlternativeName(name) {
-    return name.replace('Day', '').replace('(Changed Collection)', '').replace('Garden Waste Collection', 'Garden Bin').trim();
+    return name.replace(/Day|\(Changed Collection\)/gi, '').replace('Garden Waste Collection', 'Garden Bin').trim();
 }
 
 function getWeekdayFromDate(date) {
@@ -83,6 +83,7 @@ calendars.forEach(function(filepath) {
         "lastGenerated": new Date().toJSON(),
         "lastModified": fileProperties.modifyTime,
         "totalCollections": 0,
+        "totalChangedCollections": 0,
         "collectionDates": []
     };
 
@@ -110,6 +111,10 @@ calendars.forEach(function(filepath) {
         .sort((a,b) => new Date(a.collectionDate) - new Date(b.collectionDate));
 
     jsonData['totalCollections'] = allEvents.length;
+    jsonData['totalChangedCollections'] = allEvents.filter(function(item){
+        return item.name.includes("Changed Collection");
+    }).length;
+
     jsonData['collectionDates'] = allEvents;
 
     // Write to JSON folder for public API
