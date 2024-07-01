@@ -42,21 +42,18 @@ describe('JSON files output check', function() {
 describe('JSON calendar validation', function() {
   jsonData.forEach((calendar) => {
 
-    let totalCalendarCollections = calendar.totalCollections;
-    let expectedCollectionsMin = 52;
-    let expectedCollectionsMax = expectedCollectionsMin + 1;
-    let expectedCollectionsInMonthMin = 4;
-    let expectedCollectionsInMonthMax = expectedCollectionsInMonthMin + 1;
-    let collectionDates = calendar.collectionDates;
     let calendarType = calendar.collectionType;
-
-    // Set test values to be different for garden calendars
-    if (calendarType === 'Garden') {
-      expectedCollectionsMin = 21;
-      expectedCollectionsMax = expectedCollectionsMin;
-      expectedCollectionsInMonthMin = 1;
-      expectedCollectionsInMonthMax = expectedCollectionsInMonthMin + 2;
-    }
+    let isGardenCollectionType = calendarType === 'Garden';
+    // Total collection dates should always be 21 for garden bin but can be 52 or 53 for refuse
+    let expectedCollectionsMin = isGardenCollectionType ? 21 : 52;
+    // Maximum collection dates is always 21, but could be 53 for some collection calendars
+    let expectedCollectionsMax = isGardenCollectionType ? expectedCollectionsMin : expectedCollectionsMin + 1;
+    // Minimum collection dates in a month is 1 for garden bin but 4 for refuse
+    let expectedCollectionsInMonthMin = isGardenCollectionType ? 1 : 4;
+    // Maximum collection dates in a month is 3 for garden bin but 5 for refuse
+    let expectedCollectionsInMonthMax = isGardenCollectionType ? expectedCollectionsInMonthMin + 2 : expectedCollectionsInMonthMin + 1;
+    let collectionDates = calendar.collectionDates;
+    let totalCalendarCollections = calendar.totalCollections;
 
     // Check for calendar name value
     it(`${calendar.filename} name is not null`, function() {
