@@ -114,12 +114,7 @@ Using the excellent [ical.js](https://github.com/kewisch/ical.js) and wrapper li
 
 The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible.
 
-The following human checks are performed when reviewing/cross-checking calendar data to try and mitigate this:
-
-1. The HTML calendar output is compared against the original PDF document for each schedule. 
-2. The weekday should be consistent on each collection date (with the exception of changed collection dates)
-3. A month should have a minimum of 4 collection dates (in some cases it can be 5).
-4. The collection dates should follow an alternating schedule.
+A combination of human checks and [unit tests](test/json-calendar-validation.js) are performed when the iCalendar files are converted into JSON. These tests validate the calendar data by using various rules and known pattern/occurrence rules that should always be present, which aims to reduce the chance of errors.
 
 Any bin day collection schedule is also subject to change by Gedling Borough Council at any time. While this is unlikely, it is possible.
 
