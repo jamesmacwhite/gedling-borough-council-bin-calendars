@@ -72,29 +72,34 @@
 {% assign changedCollections = jsonData.revisedCollectionDates %}
 
     {% if changedCollections.size > 0 %}
-        <div class="changed-collection-dates mb-5">
+        <div class="changed-collection-dates pb-3 mb-5 border-1 border-bottom">
             <h2 class="h3">Changed collection dates</h2>
 
-            <p>The following table below shows any collection date which is revised due to being on a national holiday e.g. bank holiday.</p>
-
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Usual collection date</th>
-                        <th scope="col">Revised date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for dates in changedCollections %}
-                        <tr>
-                        {% for date in dates %}
-                            <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
-                            <td>{{ date[1] | date: "%A %-d %B %Y" }}</td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>This calendar has a total of <strong>{{ changedCollections.size }}</strong> collection date(s) in the schedule which have been changed to a revised day. This is often due to certain collection days occurring a national holiday e.g. bank holiday. This is denoted by the <em>Usual collection date</em> column showing what would be the usual collection day, followed by the revised collection date in the <em>revised date</em> column.</p>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Usual collection date</th>
+                                <th scope="col">Revised date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dates in changedCollections %}
+                                <tr>
+                                {% for date in dates %}
+                                    <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
+                                    <td class="fw-bold text-danger">{{ date[1] | date: "%A %-d %B %Y" }}</td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     {% endif %}
 
