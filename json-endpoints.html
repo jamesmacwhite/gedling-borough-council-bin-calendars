@@ -6,14 +6,14 @@ layout: default
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>The original purpose of this project was to provide Gedling Borough Council bin collection data in iCalender format for importing or subscribing to, but JSON is also another well used and portable format which other applications can use.</p>
+<p>The original idea behing this project was to provide Gedling Borough Council bin collection data in the iCalender format for importing or subscribing as calendar data, but JSON is also another well used and portable format which other applications can use.</p>
 
 <p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="https://github.com/kewisch/ical.js">ical.js library</a>, every time a website deployment build occurs, the JSON data is generated from the original iCal source data.</p>
 
-<p>The JSON schema is relatively simple. Each JSON endpoint provides a header with various meta information for unit tests and reference purposes.</p>
+<p>The JSON schema is described below. Each JSON endpoint provides a header with various meta information for unit tests and reference purposes.</p>
 
 <ul>
-    <li><code>filename</code> - The JSON endpoint filename.</li>
+    <li><code>filename</code> - The JSON endpoint filename, this is the original iCal filename, but with <code>.json</code>.</li>
     <li><code>name</code> - This is the iCalendar name taken from <code>X-WR-CALNAME</code>.</li>
     <li><code>description</code> - This is iCalendar description taken from <code>X-WR-CALDESC</code>.</li>
     <li><code>collectionWeekday</code> - The assigned weekday of the collection schedule.</li>
@@ -22,10 +22,13 @@ layout: default
     <li><code>jsonPath</code> - The root relative JSON filepath.</li>
     <li><code>lastGenerated</code> - The last time the JSON data was generated from a deployment.</li>
     <li><code>lastModified</code> - The last time the calendar data was modified, this is based on the modified date of the original iCal source.</li>
-    <li><code>totalCollections</code> - The total items within the <code>collectionDates</code>.</li>
+    <li><code>totalCollections</code> - The total items within the <code>collectionDates</code> key.</li>
     <li><code>totalChangedCollections</code> - The total of one-off changed collection dates that differ from the <code>collectionWeekday</code>.</li>
+    <li><code>revisedCollectionDates</code> - An array containing collection dates which have been changed as a map.</li>
     <li><code>collectionDates</code> - The array containing all bin collection dates, with occurrences expanded to single events.</li>
 </ul>
+
+<p>Example schema using the Friday G4 2023/24 calendar.</p>
 
 {% highlight json %}
 {
@@ -57,9 +60,9 @@ layout: default
 }
 {% endhighlight %}
 
-<p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for repeated occurrences are expanded.</p>
+<p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for multiple occurrences are expanded in full.</p>
 
-<p>An example collection under the normal schedule.</p>
+<p>An example collection item under the normal sequence schedule.</p>
 
 {% highlight json %}
 {
@@ -73,7 +76,7 @@ layout: default
 }
 {% endhighlight %}
 
-<p>An example collection that is a one-off i.e. changed collection date due a national holiday.</p>
+<p>An example collection item that is a one-off i.e. changed collection date due a national holiday.</p>
 
 {% highlight json %}
 {
@@ -92,7 +95,7 @@ layout: default
 <ul>
     <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
     <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value.</li>
-    <li><code>weekday</code> - The weekday of the collection date. If a changed collection the day will differ to the <code>collectionWeekday</code> value.</li>
+    <li><code>weekday</code> - The weekday of the collection date. If <code>isChangedCollection</code> is true the day will differ to the overall <code>collectionWeekday</code> calendar value.</li>
     <li><code>isOccurrence</code> - A boolean to indicate if the collection date is part of a occurrence rule or not.</li>
     <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
     <li><code>collectionDate</code> - The collection date formatted as Y-m-d.</li>

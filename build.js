@@ -46,7 +46,7 @@ function getWeekdayFromFilename(filename) {
 }
 
 function getBinType(key) {
-    var keyParsed = key.replace('(Changed Collection)', '').trim();
+    const keyParsed = key.replace('(Changed Collection)', '').trim();
     return collectionKey[keyParsed] || 'Unknown';
 }
 
