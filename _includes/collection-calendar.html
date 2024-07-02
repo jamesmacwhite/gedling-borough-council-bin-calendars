@@ -69,6 +69,35 @@
     </div>
 </div>
 
+{% assign changedCollections = jsonData.revisedCollectionDates %}
+
+    {% if changedCollections.size > 0 %}
+        <div class="changed-collection-dates mb-5">
+            <h2 class="h3">Changed collection dates</h2>
+
+            <p>The following table below shows any collection date which is revised due to being on a national holiday e.g. bank holiday.</p>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Usual collection date</th>
+                        <th scope="col">Revised date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dates in changedCollections %}
+                        <tr>
+                        {% for date in dates %}
+                            <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
+                            <td>{{ date[1] | date: "%A %-d %B %Y" }}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
 {% if isGardenCollection %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
 
@@ -92,6 +121,7 @@
     <p class="mt-2 mb-4 fw-bold text-danger">There are no collections in January and February.</p>
 
 {% else %}
+
     <div class="row row-cols-1 row-cols-sm-2 g-4">
         {% for month in months %}
             <div class="col" data-collection-first="{{ month.items.first.collectionDate | date: '%F'  }}" data-collection-last="{{ month.items.last.collectionDate | date: '%F' }}">
