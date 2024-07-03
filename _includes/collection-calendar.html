@@ -65,43 +65,43 @@
 <div calendar-last-collection-date="{{ lastCollectionDate | date: '%F' }}" class="alert alert-primary d-flex align-items-center mb-4 calendar-update-alert d-none" role="alert">
     <i class="bi bi-info-circle-fill me-2 fs-4" aria-hidden="true"></i>
     <div>
-        This calendar is due to be updated soon for the next year. When Gedling Borough Council publishes the new calendars, the information will be updated after the last collection date: <strong>{{ lastCollectionDate | date: '%-d %B %Y' }}</strong>.
+        This calendar is due to be updated soon for the next year cycle. When Gedling Borough Council publishes the new calendars, the information will be updated after the last collection date: <strong>{{ lastCollectionDate | date: '%-d %B %Y' }}</strong>.
     </div>
 </div>
 
 {% assign changedCollections = jsonData.revisedCollectionDates %}
 
-    {% if changedCollections.size > 0 %}
-        <div class="changed-collection-dates pb-3 mb-5 border-1 border-bottom">
-            <h2 class="h3">Changed collection dates</h2>
+{% if changedCollections.size > 0 %}
+    <div class="changed-collection-dates pb-3 mb-5 border-1 border-bottom">
+        <h2 class="h3">Changed collection dates</h2>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <p>This calendar has a total of <strong>{{ changedCollections.size }}</strong> collection date(s) in the schedule which have been changed to a revised day. This is often due to certain collection days occurring a national holiday e.g. bank holiday. This is denoted by the <em>Usual collection date</em> column showing what would be the usual collection day, followed by the revised collection date in the <em>revised date</em> column.</p>
-                </div>
-                <div class="col-md-6">
-                    <table class="table table-striped table-bordered table-sm">
-                        <thead>
+        <div class="row">
+            <div class="col-md-6">
+                <p>This calendar has a total of <strong>{{ changedCollections.size }}</strong> collection date(s) in the schedule which have been changed to a revised day. This is often due to certain collection days occurring on a national holiday e.g. bank holiday. This is denoted by the <em>Usual collection date</em> column indicating what would be the usual collection day, followed by the revised collection date in the <em>revised date</em> column.</p>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usual collection date</th>
+                            <th scope="col">Revised date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dates in changedCollections %}
                             <tr>
-                                <th scope="col">Usual collection date</th>
-                                <th scope="col">Revised date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for dates in changedCollections %}
-                                <tr>
-                                {% for date in dates %}
-                                    <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
-                                    <td class="fw-bold text-danger">{{ date[1] | date: "%A %-d %B %Y" }}</td>
-                                {% endfor %}
-                                </tr>
+                            {% for date in dates %}
+                                <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
+                                <td class="fw-bold text-danger">{{ date[1] | date: "%A %-d %B %Y" }}</td>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
 
 {% if isGardenCollection %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
