@@ -59,19 +59,14 @@ function getWeekdayFromDate(date) {
 }
 
 // TODO: Rewrite this entirely, but need it to work for now
-// No longer are changed collections consistency scheduled
+// No longer are changed collections always earlier now
 function getNextWeekday(date, dayOfWeek) {
     const currentDayOfWeek = date.getDay();
     const daysUntilWeekday = (dayOfWeek + 7 - currentDayOfWeek) % 7;
 
-    // Thursday and Friday go forward one day
-    if (dayOfWeek === 4 || dayOfWeek === 5) {
-        date.setDate(date.getDate() - 1);
-        return date;
-    }
-
-    // Wednesday goes forward for 1st January 2025
-    if (dayOfWeek === 3 && date.getDate() === 2) {
+    // Wednesday 1st January 2025 is one day after
+    // Thursday and Friday changed collections are one day after
+    if (dayOfWeek === 4 || dayOfWeek === 5 || dayOfWeek === 3 && date.getDate() === 2) {
         date.setDate(date.getDate() - 1);
         return date;
     }
