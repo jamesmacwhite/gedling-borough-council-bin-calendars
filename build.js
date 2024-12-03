@@ -61,7 +61,15 @@ function getWeekdayFromDate(date) {
 function getNextWeekday(date, dayOfWeek) {
     const currentDayOfWeek = date.getDay();
     const daysUntilWeekday = (dayOfWeek + 7 - currentDayOfWeek) % 7;
+
+    // TODO: Make this more flexible, but Friday is broken currently!
+    if (dayOfWeek === 4 || dayOfWeek === 5) {
+        date.setDate(date.getDate() - 1);
+        return date;
+    }
+
     date.setDate(date.getDate() + daysUntilWeekday);
+
     return date;
 }
 
