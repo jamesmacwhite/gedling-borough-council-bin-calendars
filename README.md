@@ -82,10 +82,10 @@ Replace `[DAY]`, `[CODE]` and `[YEAR]` with relevant data.
 https://apps.gedling.gov.uk/refuse/data/[DAY][CODE]-[YEAR].pdf
 ```
 
-An example file stored on this server for the Monday G2 2024 (2023/24) calendar:
+An example file stored on this server for the Monday G2 2024 (2024/25) calendar:
 
 ```
-https://apps.gedling.gov.uk/refuse/data/MondayG2-2024.pdf
+https://apps.gedling.gov.uk/refuse/data/MondayG2-2025.pdf
 ```
 
 ### Garden waste collection PDFs
