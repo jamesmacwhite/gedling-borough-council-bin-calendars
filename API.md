@@ -18,7 +18,7 @@ The following additional validation requirements are defined for the street name
 * Any value must be 5 or more characters
 * The value must not start with a number
 
-The reason for these additional validation rules is due to the Gedling refuse search site does partial matching on the data within the "Location" and "No's" (Numbers) columns in the database behind it. This can lead very large paginated results with vague search queries like `1` or `A`, which this API does not currently handle. I may loosen this requirement in the future if I implement a way to process paginated responses reliably both from the Worker and front end.
+The reason for these additional validation rules is due to the Gedling refuse search site doing very wide partial matching on the data within the "Location" and "No's" (Numbers) columns in the database behind it. This can lead very large paginated results with vague search queries like `1` or `A`, which this API does not currently handle. I may loosen this requirement in the future if I implement a way to process paginated responses reliably both from the Worker and front end.
 
 For best usage and meaningful search results, make sure street name queries are full street names e.g. "Westdale Lane" or partial but with enough context like "Westdale".
 
@@ -150,31 +150,9 @@ Which will return the JSON response of:
 
 A street name query that does not provide any data from the Gedling Borough Council search response returns a 404 response, with a specific message stating this.
 
-A known quirk for certain street name queries such as `Beswick Close` leads to a scenario where there no data returned for refuse/recycling, but will return data for garden waste. This scenario will not return a 404, but means the `refuseCollections` key will be an empty array.
+A known quirk observed for certain street name queries leads to a scenario where there no data is returned for refuse/recycling, but will return data for garden waste or possibly the reverse. This scenario will not return a 404, but means either the `refuseCollections` key or `gardenWasteCollections` will be an empty array given no results were returned for that collection.
 
-```json
-{
-    "streetNameQuery": "Beswick Close",
-    "refuseCollections": [],
-    "gardenWasteCollections": [
-        {
-            "Location": "Beswick Close",
-            "Numbers": null,
-            "Area": "Stoke Bardolph",
-            "Calendar PDF URL": "https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2024.pdf",
-            "Email Subscribe URL": "https://pages.comms.gedling.gov.uk/pages/friday-j",
-            "Schedule Identifier": "friday-j",
-            "Schedule Name": "Friday J",
-            "Calendar URL": "http://localhost:4000/collections/garden/friday-j"
-        }
-    ],
-    "viewState": "...",
-    "viewStateGenerator": "...",
-    "eventValidation": "..."
-}
-```
-
-For handling this, you should always ensure the `refuseCollections` and `gardenWasteCollections` keys length is > 0.
+If using the API response data, you should always ensure the `refuseCollections` and `gardenWasteCollections` keys length is not an empty array.
 
 ## Running the API locally
 
