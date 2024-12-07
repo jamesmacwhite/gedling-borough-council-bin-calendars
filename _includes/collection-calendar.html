@@ -71,7 +71,7 @@
 
 {% assign changedCollections = jsonData.revisedCollectionDates %}
 
-{% if changedCollections.size > 0 %}
+{% if changedCollections.size > 0 and isGardenCollection == false %}
     {% if changedCollections.size == 1 %}
         {% assign datesPlural = 'collection date' %}
     {% else %}

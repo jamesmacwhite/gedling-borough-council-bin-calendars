@@ -58,21 +58,18 @@ function getWeekdayFromDate(date) {
     return daysOfWeek[new Date(date).getDay()];
 }
 
-// TODO: Rewrite this entirely, but need it to work for now
-// No longer are changed collections always earlier now
-function getNextWeekday(date, dayOfWeek) {
-    const currentDayOfWeek = date.getDay();
-    const daysUntilWeekday = (dayOfWeek + 7 - currentDayOfWeek) % 7;
+function getUsualCollectionDate(date, normalCollectionDay) {
+    const revisedCollectionDay = date.getDay();
+    const distance = (revisedCollectionDay - normalCollectionDay + 7) % 7;
 
-    // Wednesday 1st January 2025 is one day after
-    // Thursday and Friday changed collections are one day after
-    if (dayOfWeek === 4 || dayOfWeek === 5 || dayOfWeek === 3 && date.getDate() === 2) {
-        date.setDate(date.getDate() - 1);
+    // If the revised date is one day after the usual collection date
+    if (distance === 1) {
+        date.setDate(date.getDate() - distance);
         return date;
     }
 
-    date.setDate(date.getDate() + daysUntilWeekday);
-
+    // Revised date is before the usual collection date
+    date.setDate(date.getDate() + (normalCollectionDay + 7 - revisedCollectionDay) % 7);
     return date;
 }
 
@@ -140,7 +137,13 @@ calendars.forEach(function(filepath) {
     jsonData['totalChangedCollections'] = allChangedCollections.length;
 
     jsonData['revisedCollectionDates'] = allChangedCollections.map(date => ({
-        [getNextWeekday(new Date(date.collectionDate), daysOfWeek.indexOf(collectionWeekday)).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'})]: date.collectionDate.toString()
+        [
+            getUsualCollectionDate(
+                new Date(date.collectionDate), 
+                daysOfWeek.indexOf(collectionWeekday)
+            ).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'})
+        ]
+        : date.collectionDate.toString()
     }));
 
     jsonData['collectionDates'] = allEvents;
