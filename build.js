@@ -42,16 +42,25 @@ function getWeekdayFromFilename(filename) {
 
     let weekday = match[0];
 
-    return weekday.charAt(0).toUpperCase() + weekday.slice(1);
+    return weekday
+            .charAt(0)
+            .toUpperCase() + weekday.slice(1);
 }
 
 function getBinType(key) {
-    const keyParsed = key.replace('(Changed Collection)', '').trim();
+
+    const keyParsed = key
+                        .replace('(Changed Collection)', '')
+                        .trim();
+
     return collectionKey[keyParsed] || 'Unknown';
 }
 
 function formatAlternativeName(name) {
-    return name.replace(/Day|\(Changed Collection\)/gi, '').replace('Garden Waste Collection', 'Garden Bin').trim();
+    return name
+            .replace(/Day|\(Changed Collection\)/gi, '')
+            .replace('Garden Waste Collection', 'Garden Bin')
+            .trim();
 }
 
 function getWeekdayFromDate(date) {
