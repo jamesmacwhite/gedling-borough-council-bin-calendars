@@ -6,11 +6,11 @@ layout: default
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>The original idea behing this project was to provide Gedling Borough Council bin collection data in the iCalender format for importing or subscribing as calendar data, but JSON is also another well used and portable format which other applications can use.</p>
+<p>The original idea behing this project was to provide Gedling Borough Council bin collection data in the iCalender format for importing or subscribing as calendar data. JSON is also another well used and portable format which other applications can use which this project supports.</p>
 
 <p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="https://github.com/kewisch/ical.js">ical.js library</a>, every time a website deployment build occurs, the JSON data is generated from the original iCal source data.</p>
 
-<p>The JSON schema is described below. Each JSON endpoint provides a header with various meta information for unit tests and reference purposes.</p>
+<p>The JSON schema is described below. Each JSON endpoint provides a header with various meta information for unit tests and reference purposes. The main data most applications will be interested in is the <code>collectionDates</code> key</p>
 
 <ul>
     <li><code>filename</code> - The JSON endpoint filename, this is the original iCal filename, but with <code>.json</code>.</li>
@@ -60,9 +60,9 @@ layout: default
 }
 {% endhighlight %}
 
-<p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for multiple occurrences are expanded in full.</p>
+<p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for repeating occurrences are expanded in full.</p>
 
-<p>An example collection item under the normal sequence schedule.</p>
+<p>An example collection item under an regular occurrence schedule:</p>
 
 {% highlight json %}
 {
@@ -76,7 +76,7 @@ layout: default
 }
 {% endhighlight %}
 
-<p>An example collection item that is a one-off i.e. changed collection date due a national holiday.</p>
+<p>An example collection item that is a one-off i.e. changed collection date due to a national holiday:</p>
 
 {% highlight json %}
 {
@@ -94,7 +94,7 @@ layout: default
 
 <ul>
     <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
-    <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value.</li>
+    <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value for use by other systems if required.</li>
     <li><code>weekday</code> - The weekday of the collection date. If <code>isChangedCollection</code> is true the day will differ to the overall <code>collectionWeekday</code> calendar value.</li>
     <li><code>isOccurrence</code> - A boolean to indicate if the collection date is part of a occurrence rule or not.</li>
     <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
@@ -104,7 +104,7 @@ layout: default
 
 <h2 class="h3 mt-4">JSON endpoints</h2>
 
-<p>All the live JSON endpoints are available below. The URL paths for these endpoints can be used in other software without restrictions.</p>
+<p>All the live JSON endpoints are available below. The URL paths for these endpoints can be used in other software without any imposed restrictions or limitations.</p>
 
 {% for type in site.data.calendars.bin_collections %}
     <div class="{% if forloop.last %}mb-0{% else %}mb-5{% endif %}">
