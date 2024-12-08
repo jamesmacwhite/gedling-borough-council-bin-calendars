@@ -13,6 +13,7 @@ jetpack.copy('./node_modules/bootstrap/dist/js', './assets/js', {
     matching: 'bootstrap.bundle.min.js*', 
     overwrite: true 
 });
+
 jetpack.copy('./node_modules/bootstrap-icons/font/fonts', './assets/fonts', { 
     matching: ['*.woff', '*.woff2'],
     overwrite: true
@@ -30,10 +31,17 @@ const collectionKey = {
     "Garden Waste Collection": "garden-bin",
 };
 
-const daysOfWeek = ['Sunday', "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+// Store weekdays in an array to use the index value
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+/**
+ * Get the weekday from the calendar filename
+ * and capitalise the first letter of the value
+ * @param {string} filename Calendar filename 
+ * @return {string} The weekday value with the first character capitalised.
+ */
 function getWeekdayFromFilename(filename) {
-    const weekdayRegex = /(monday|tuesday|wednesday|thursday|friday)/i;
+    const weekdayRegex = /(Monday|Tuesday|Wednesday|Thursday|Friday)/i;
     const match = filename.match(weekdayRegex);
 
     if (!match) {
@@ -42,20 +50,23 @@ function getWeekdayFromFilename(filename) {
 
     let weekday = match[0];
 
-    return weekday
-            .charAt(0)
-            .toUpperCase() + weekday.slice(1);
+    return weekday.replace(/^\w/, c => c.toUpperCase());
 }
 
+/**
+ * Map calender VEVENT title to bin type value
+ * @param {string} key Calendar event title
+ * @return {string} The matched value, return "Unknown" if not matched for unit tests
+ */
 function getBinType(key) {
-
-    const keyParsed = key
-                        .replace('(Changed Collection)', '')
-                        .trim();
-
-    return collectionKey[keyParsed] || 'Unknown';
+    return collectionKey[key.replace('(Changed Collection)', '').trim()] || 'Unknown';
 }
 
+/**
+ * Modify the original VEVENT title value for other purposes
+ * @param {string} name Calendar VEVENT title
+ * @return {string} The modified title value
+ */
 function formatAlternativeName(name) {
     return name
             .replace(/Day|\(Changed Collection\)/gi, '')
@@ -63,10 +74,22 @@ function formatAlternativeName(name) {
             .trim();
 }
 
+/**
+ * Determine the weekday of a collection date
+ * @param {Date} date Collection date
+ * @return {string} The weekday value from the daysOfWeek index
+ */
 function getWeekdayFromDate(date) {
     return daysOfWeek[new Date(date).getDay()];
 }
 
+/**
+ * The usual collection date calculation
+ * To map changed collection dates to their original scheduled
+ * @param {Date} date The revised collection date from the calendar
+ * @param {number} normalCollectionDay The normal collection day index
+ * @return {Date} The usual collection date
+ */
 function getUsualCollectionDate(date, normalCollectionDay) {
     const revisedCollectionDay = date.getDay();
     const distance = (revisedCollectionDay - normalCollectionDay + 7) % 7;
