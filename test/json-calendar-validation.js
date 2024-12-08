@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const fs = require('fs');
+const jetpack = require('fs-jetpack');
 const jsonFolder = './json';
 const assert = require('chai').assert;
 
@@ -21,13 +22,22 @@ let jsonData = [];
 
 describe('Directory test', function() {
   it('Check to see if JSON folder exists', function() {
-    assert.isOk(fs.existsSync(jsonFolder));
+    assert.isOk(jetpack.exists(jsonFolder));
   });
 });
 
 // Get all JSON data to validate
 fs.readdirSync(jsonFolder).forEach(file => {
-    let jsonFile = JSON.parse(fs.readFileSync(`${jsonFolder}/${file}`));
+    const filepath = `${jsonFolder}/${file}`;
+    const size = jetpack.inspect(filepath).size / 1024;
+
+    describe('JSON filesize', function() {
+      it(`Check filesize of ${file} is below 14 KB`, function() {
+        assert.isAtMost(parseFloat(size.toFixed(2)), 14, 'JSON filesize exceeds 14 KB.');
+      });
+    });
+
+    let jsonFile = jetpack.read(filepath, 'json');
     jsonData.push(jsonFile);
 });
 
