@@ -152,7 +152,7 @@ A street name query that does not provide any data from the Gedling Borough Coun
 
 A known quirk observed for certain street name queries leads to a scenario where there no data is returned for refuse/recycling, but will return data for garden waste or possibly the reverse. This scenario will not return a 404, but means either the `refuseCollections` key or `gardenWasteCollections` will be an empty array given no results were returned for that collection.
 
-If using the API response data, you should always ensure the `refuseCollections` and `gardenWasteCollections` keys length is not an empty array.
+If using the API response data, you should always ensure the `refuseCollections` or `gardenWasteCollections` is not an empty array.
 
 ## Running the API locally
 

@@ -8,7 +8,7 @@ All calendars are [available to be viewed as HTML](https://www.gbcbincalendars.c
 
 ## Importing to a calendar
 
-You can import any calendar as static or subscribe using the iCal URL, an example for the Wednesday G2 bin collection:
+You can import any calendar as static or subscribe using the iCal URL for a dynamic endpoint, an example for the Wednesday G2 bin collection:
 
 ```
 https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_wednesday_g2_bin_schedule.ics
@@ -24,7 +24,7 @@ Using the [ical.js library](https://github.com/kewisch/ical.js) all calendars ar
 
 The HTML calendars are derived from the same JSON data. You can find further [documentation about the JSON endpoints](https://www.gbcbincalendars.co.uk/json-endpoints) on the GitHub pages site.
 
-## HomeAssistant: Waste Collection Schedule integration
+## HomeAssistant: HACS Waste Collection Schedule integration
 
 The [Waste Collection Schedule](https://github.com/mampfes/hacs_waste_collection_schedule) integration supports iCalendar without requiring any custom parser and provides both a sensor and calendar entity for use in HomeAssistant.
 
@@ -60,15 +60,17 @@ waste_collection_schedule:
         url: https://www.gbcbincalendars.co.uk/ical/gedling_borough_council_tuesday_b_garden_bin_schedule.ics
 ```
 
+The HACS Waste Collection Schedule integration also supports parsing another widely used project [UK Bin Collection Data (UKBCD)](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ukbcd.md). This project is supported as data sources for both.
+
 ## HomeAssistant: UKBinCollectionData (UKBCD)
 
 The [UK Bin Collection Data](https://github.com/robbrad/UKBinCollectionData) project aims to create a way of providing bin collection data in JSON format from UK councils which have no direct API to do so.
 
-The JSON APIs provided for each bin collection calendar by this project is used in the UKBCD project for the [GedlingBoroughCouncil.py parser](https://github.com/robbrad/UKBinCollectionData/blob/master/uk_bin_collection/uk_bin_collection/councils/GedlingBoroughCouncil.py) which resolves the issue of having to manually define each collection date as static values.
+The JSON API data provided for each bin collection calendar by this project is directly used for the [GedlingBoroughCouncil.py parser](https://github.com/robbrad/UKBinCollectionData/blob/master/uk_bin_collection/uk_bin_collection/councils/GedlingBoroughCouncil.py).
 
-## Bin collection street search API
+## Open Bin collection street search API
 
-Using a Cloudflare Worker, an API is available at api.gbcbincalendars.co.uk which provides bin collection search, using street name values. The source of this data is from [Gedling Borough Council directly](https://apps.gedling.gov.uk/refuse/search.aspx). This is the official data source from Gedling, however it lacks any form of API/endpoint. The Cloudflare worker performs searches and scrapes the results to return as JSON. You can read more about this on the [API docs](API.md).
+Using a Cloudflare Worker, an API is available at api.gbcbincalendars.co.uk which provides bin collection search, using street name values. The source of this data is from [Gedling Borough Council directly](https://apps.gedling.gov.uk/refuse/search.aspx). This is the only official data source from Gedling, however it lacks any form of usable API/endpoint. The Cloudflare worker performs searches and scrapes the results to return as JSON. You can read more about this on the [API docs](API.md).
 
 ## Other
 
