@@ -54,7 +54,7 @@ function getWeekdayFromFilename(filename) {
 }
 
 /**
- * Map calender VEVENT title to bin type value
+ * Map calender VEVENT summary to bin type value
  * @param {string} key Calendar event title
  * @return {string} The matched value, return "Unknown" if not matched for unit tests
  */
@@ -63,7 +63,7 @@ function getBinType(key) {
 }
 
 /**
- * Modify the original VEVENT title value for other purposes
+ * Modify the original VEVENT summary value for other purposes
  * @param {string} name Calendar VEVENT title
  * @return {string} The modified title value
  */

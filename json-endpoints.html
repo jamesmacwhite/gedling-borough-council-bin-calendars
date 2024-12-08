@@ -106,13 +106,13 @@ layout: default
   }
 {% endhighlight %}
 
-<p>Note: A change from 2023/24 is the revised collection date can be the following day, rather than being being one or more days before the collection date. For Wednesday, Thursday and Friday schedules some revised dates are the next day after the original collection date.</p>
+<p><b>Note:</b> A change from 2023/24 is the revised collection date can be the following day, rather than being being one or more days before the usual collection date. For Wednesday, Thursday and Friday schedules some revised dates are the next day after the original collection date.</p>
 
-<p>The collection item provides the following keys:</p>
+<p>A collection item provides the following keys:</p>
 
 <ul>
     <li><code>name</code> - Original iCal VEVENT <code>SUMMARY</code> value.</li>
-    <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value for use by other systems if required.</li>
+    <li><code>alternativeName</code> - Modified VEVENT <code>SUMMARY</code> value. E.g. shorter value for use by other applications if required.</li>
     <li><code>weekday</code> - The weekday of the collection date. If <code>isChangedCollection</code> is true the day will differ to the overall <code>collectionWeekday</code> calendar value.</li>
     <li><code>isOccurrence</code> - A boolean to indicate if the collection date is part of a occurrence rule or not.</li>
     <li><code>type</code> - A consistent type value for referencing in other contexts.</li>
