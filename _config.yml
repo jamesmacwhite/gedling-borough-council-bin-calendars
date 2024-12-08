@@ -15,6 +15,7 @@ exclude:
   - API.md
   - build.js
   - CNAME
+  - .dev.vars
   - Gedling Borough Council Bin Collection API.postman_collection.json
   - Gemfile
   - Gemfile.lock
