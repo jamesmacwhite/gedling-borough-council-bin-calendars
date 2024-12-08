@@ -139,21 +139,27 @@ calendars.forEach(function(filepath) {
 
     jsonData['totalCollections'] = allEvents.length;
 
-    const allChangedCollections = allEvents.filter(function(item){
+    const allChangedCollections = allEvents.filter(function(item) {
         return item.isChangedCollection;
     });
 
     jsonData['totalChangedCollections'] = allChangedCollections.length;
 
-    jsonData['revisedCollectionDates'] = allChangedCollections.map(date => ({
-        [
-            getUsualCollectionDate(
-                new Date(date.collectionDate), 
-                daysOfWeek.indexOf(collectionWeekday)
-            ).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'})
-        ]
-        : date.collectionDate.toString()
-    }));
+    jsonData['revisedCollectionDates'] = allChangedCollections.map(item => {
+        const collectionDate = item.collectionDate.toString();
+        const revisedCollectionDate = getUsualCollectionDate(
+            new Date(item.collectionDate), 
+            daysOfWeek.indexOf(collectionWeekday)
+        ).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'});
+
+        if (item.type !== 'garden-bin') {
+            return { 
+                [revisedCollectionDate] : collectionDate
+            };
+        }
+
+        return collectionDate;
+    });
 
     jsonData['collectionDates'] = allEvents;
 

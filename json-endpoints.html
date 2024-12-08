@@ -28,21 +28,21 @@ layout: default
     <li><code>collectionDates</code> - The array containing all bin collection dates, with occurrences expanded to single events.</li>
 </ul>
 
-<p>Example schema using the Friday G4 2023/24 calendar.</p>
+<p>Example schema using the Friday G4 2024/25 calendar.</p>
 
 {% highlight json %}
 {
     "filename": "gedling_borough_council_friday_g4_bin_schedule.json",
-    "name": "Gedling Borough Council Bin Day 2023/24 Friday G4",
-    "description": "https://apps.gedling.gov.uk/refuse/data/FridayG4-2024.pdf",
+    "name": "Gedling Borough Council Bin Day 2024/25 Friday G4",
+    "description": "https://apps.gedling.gov.uk/refuse/data/FridayG4-2025.pdf",
     "collectionWeekday": "Friday",
     "collectionType": "Refuse",
     "icalPath": "ical/gedling_borough_council_friday_g4_bin_schedule.ics",
     "jsonPath": "json/gedling_borough_council_friday_g4_bin_schedule.json",
-    "lastGenerated": "2024-06-29T18:45:14.023Z",
-    "lastModified": "2024-06-17T14:12:39.206Z",
-    "totalCollections": 53,
-    "totalChangedCollections": 1,
+    "lastGenerated": "2024-12-08T02:31:31.886Z",
+    "lastModified": "2024-12-03T20:16:15.895Z",
+    "totalCollections": 52,
+    "totalChangedCollections": 2,
     "revisedCollectionDates": [
         ...
     ],
@@ -52,12 +52,28 @@ layout: default
 }
 {% endhighlight %}
 
-<p>The <code>revisedCollectionDates</code> key is an array map with the normal collection date as the key and the revised collection date as the value. This is calculated using a nearest weekday calculation relative to the <code>collectionWeekday</code> for the calendar.</p>
+<p>The <code>revisedCollectionDates</code> key is an array that contains any date which is a singular/one-off occurrence.</p>
+
+<p>For refuse collections, this is an array map between the usual collection date as a key and revised date as the value:</p>
 
 {% highlight json %}
-{
-    "2023-12-22": "2023-12-21"
-}
+"revisedCollectionDates": [
+    {
+      "2024-12-27": "2024-12-28"
+    },
+    {
+      "2025-01-03": "2025-01-04"
+    }
+]
+{% endhighlight %}
+
+<p>For garden waste collections, a flat array of the list of the dates which are different from the usual weekday value is used:</p>
+
+{% highlight json %}
+"revisedCollectionDates": [
+    "2024-03-30",
+    "2024-05-25"
+]
 {% endhighlight %}
 
 <p>The <code>collectionDates</code> key contains all the VEVENT data from the original calendar source. Any VEVENT that uses RRULE for repeating occurrences are expanded in full.</p>
@@ -71,24 +87,26 @@ layout: default
     "weekday": "Friday",
     "isOccurrence": true,
     "type": "black-bin",
-    "collectionDate": "2023-12-15",
+    "collectionDate": "2024-12-13",
     "isChangedCollection": false
-}
+  }
 {% endhighlight %}
 
 <p>An example collection item that is a one-off i.e. changed collection date due to a national holiday:</p>
 
 {% highlight json %}
 {
-    "name": "Green Bin + Glass Box Day (Changed Collection)",
-    "alternativeName": "Green Bin + Glass Box",
-    "weekday": "Thursday",
+    "name": "Green Bin Day (Changed Collection)",
+    "alternativeName": "Green Bin",
+    "weekday": "Saturday",
     "isOccurrence": false,
-    "type": "green-glass-bin",
-    "collectionDate": "2023-12-21",
+    "type": "green-bin",
+    "collectionDate": "2025-01-04",
     "isChangedCollection": true
-}
+  }
 {% endhighlight %}
+
+<p>Note: A change from 2023/24 is the revised collection date can be the following day, rather than being being one or more days before the collection date. For Wednesday, Thursday and Friday schedules some revised dates are the next day after the original collection date.</p>
 
 <p>The collection item provides the following keys:</p>
 
