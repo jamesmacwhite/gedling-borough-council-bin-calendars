@@ -1,16 +1,16 @@
 # API
 
-To provide a dynamic bin collection search on the GitHub pages site an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return the data as JSON.
+To provide a dynamic bin collection search an API exists at api.gbcbincalendars.co.uk, which is designed to proxy requests to the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) and return the data as JSON.
 
 The API is powered by a Cloudflare Worker and the source code for this worker is available at [worker.js](worker.js).
 
 This worker will make search queries and scrape the results to return the data formatted as JSON. The origin data behind the search is not published as open data, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
 
-Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues/limitations, however please be respectful and do not hammer their website through this API, as it could get the Cloudflare Worker blocked.
+Gedling Borough Council do not appear to have any rate limiting or bot protection on this tool, which fortunately for this API, removes most typical scraping issues/limitations, however please be respectful and do not hammer the apps.gedling.gov.uk site through this API, as it could get the Cloudflare Worker blocked.
 
 ## Using the API
 
-The API accepts GET requests only and requires the URL query parameter `streetName`.
+The API accepts GET requests only and requires the URL query parameter `streetName` for any requests.
 
 The following additional validation requirements are defined for the street name query parameter value provided:
 
@@ -156,7 +156,7 @@ If using the API response data, you should always ensure the `refuseCollections`
 
 ## Running the API locally
 
-You can locally run the Cloudflare Worker which the API uses through wrangler.
+You can locally run the Cloudflare Worker through wrangler.
 
 ```
 npx wrangler dev
