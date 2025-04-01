@@ -96,10 +96,10 @@ Replace the `[LETTER]` and `[YEAR]` for garden waste collection.
 https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20[LETTER]-[YEAR].pdf
 ```
 
-An example file stored on this server for the Friday J 2024/25 garden waste collection calendar:
+An example file stored on this server for the Friday J 2025/26 garden waste collection calendar:
 
 ```
-https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2024.pdf
+https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2025.pdf
 ```
 
 These files are the original source of data for the calendars produced.
