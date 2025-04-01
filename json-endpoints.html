@@ -15,16 +15,16 @@ layout: default
 <ul>
     <li><code>filename</code> - The JSON endpoint filename, this is the original iCal filename, but with <code>.json</code>.</li>
     <li><code>name</code> - This is the iCalendar name taken from <code>X-WR-CALNAME</code>.</li>
-    <li><code>description</code> - This is iCalendar description taken from <code>X-WR-CALDESC</code>.</li>
+    <li><code>description</code> - This is the iCalendar description taken from <code>X-WR-CALDESC</code>.</li>
     <li><code>collectionWeekday</code> - The assigned weekday of the collection schedule.</li>
     <li><code>collectionType</code> - The type of collection, this can be either <code>Refuse</code> or <code>Garden</code>.</li>
     <li><code>icalPath</code> - The root relative iCal filepath.</li>
     <li><code>jsonPath</code> - The root relative JSON filepath.</li>
-    <li><code>lastGenerated</code> - The last time the JSON data was generated from a deployment.</li>
-    <li><code>lastModified</code> - The last time the calendar data was modified, this is based on the modified date of the original iCal source.</li>
+    <li><code>lastGenerated</code> - The last time the JSON data was generated from a build/deployment.</li>
+    <li><code>lastModified</code> - The last time the calendar data was modified, this is based on the modified date of the original iCalendar source data.</li>
     <li><code>totalCollections</code> - The total items within the <code>collectionDates</code> key.</li>
     <li><code>totalChangedCollections</code> - The total of one-off changed collection dates that differ from the <code>collectionWeekday</code>.</li>
-    <li><code>revisedCollectionDates</code> - An array containing collection dates which have been changed as a map.</li>
+    <li><code>revisedCollectionDates</code> - An array containing collection dates which are revised from the normal schedule.</li>
     <li><code>collectionDates</code> - The array containing all bin collection dates, with occurrences expanded to single events.</li>
 </ul>
 
