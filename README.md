@@ -4,9 +4,9 @@
 
 As a resident within the Gedling district in Nottingham, I like to have the bin collection day in my calendar which can be used by multiple devices as well for home automation. 
 
-It is somewhat frustrating that [Gedling Borough Council](https://www.gedling.gov.uk/) does not provide either a iCal calendar or API to view the bin schedule dates in full that can be parsed easily. Instead they offer either a PDF (which is horrible for accessibility) or the option to subscribe to email alerts which notifies you the day before but no way to have the entire schedule in a usable open format.
-
 For a few years now I had always created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I started this project with the original intention of providing all the bin collections in the iCal format, this then expanded to going further by providing HTML for better accessibility as well as JSON for other software to leverage a consistent API for using the data too.
+
+More recently Gedling Borough Council implemented a new bin collection day search and calendar tool which replaced the previous horrible PDFs, however it lacks any proper API to obtain the data for programmatic usage. The new search is based around street address, but requires a specific address value per search.
 
 ## Gedling bin collection schedules
 

@@ -29,6 +29,7 @@ const collectionKey = {
     "Green Bin Day": "green-bin",
     "Green Bin + Glass Box Day": "green-glass-bin",
     "Garden Waste Collection": "garden-bin",
+    "Glass Box Day": "glass-box"
 };
 
 // Store weekdays in an array to use the index value

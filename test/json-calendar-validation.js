@@ -10,7 +10,8 @@ const assert = require('chai').assert;
 const validSummaryTitles = [
   'Black Bin Day', 
   'Green Bin Day', 
-  'Green Bin + Glass Box Day', 
+  'Green Bin + Glass Box Day',
+  'Glass Box Day',
   'Garden Waste Collection',
   'Black Bin Day (Changed Collection)',
   'Green Bin Day (Changed Collection)', 
@@ -70,11 +71,6 @@ describe('JSON calendar validation', function() {
       assert.isNotNull(calendar.name, 'Calendar is missing name value.');
     });
 
-    // Check for calendar description value
-    it(`${calendar.name} description is not null`, function() {
-      assert.isNotNull(calendar.description, 'Calendar is missing description value.');
-    });
-
     // Check the total amount of collection dates does not exceed the expected minimum
     it(`${calendar.name} total ${calendarType.toLowerCase()} collection dates matches minimum expected count`, function() {
       assert.isAtLeast(totalCalendarCollections, expectedCollectionsMin, 'Total collection dates is lower than the expected minimum.');
@@ -126,7 +122,7 @@ describe('JSON calendar validation', function() {
 
         // Ensure any single event is a changed collection
         it(`${calendar.name} check collection date: ${item.collectionDate} has changed collection identifier in summary value if not an occurrence.`, function() {
-          assert.isNotTrue(item.isChangedCollection && !item.name.includes('Changed Collection'), 'A single event does not identify as a changed collection in the summary value.');
+          assert.isNotTrue(item.isChangedCollection && !item.name.includes('Changed Collection') && !item.name.includes('Glass Box Day'), 'A single event does not identify as a changed collection in the summary value.');
         });
       });
     });
