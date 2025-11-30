@@ -6,7 +6,7 @@ As a resident within the Gedling district in Nottingham, I like to have the bin 
 
 For a few years now I had always created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I started this project with the original intention of providing all the bin collections in the iCal format, this then expanded to going further by providing HTML for better accessibility as well as JSON for other software to leverage a consistent API for using the data too.
 
-More recently Gedling Borough Council implemented a new bin collection day search and calendar tool which replaced the previous horrible PDFs, however it lacks any proper API to obtain the data for programmatic usage. The new search is based around street address, but requires a specific address value per search.
+More recently Gedling Borough Council implemented a [new bin collection day search and calendar tool](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which replaced the previously horrible PDFs, however it lacks any proper API to obtain the data for programmatic usage. The new search is based around street address, but requires a specific address value per search.
 
 ## Gedling bin collection schedules
 
@@ -14,9 +14,13 @@ If you are a new resident or are unsure of how the bin schedules work, they are 
 
 ### Finding your bin collection schedule
 
-Gedling Borough Council has a search tool to provide either a PDF or email subscribe URL for you bin collection, however this project provides an [alternative API/search tool](https://www.gbcbincalendars.co.uk/collection-search) which takes the Gedling Borough Council data and formats the origin data into a improved data structure providing clearer information. You can enter your street name and it will provide the correct calendar link directly.
+Gedling Borough Council has a newer search tool available on the [bin collections page](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which uses an address search to select a specific full address with postcode.
 
-### Refuse/recycling
+The legacy [refuse collection days](https://apps.gedling.gov.uk/refuse/search.aspx) search exists which maps street addresses to the specific schedule name e.g. Monday G1. This project was originally designed around this model, as it was how the PDF calendars were structured. The legacy search is likely to be removed in the future and the specific schedule name is no longer displayed in the newer data.
+
+I am reviewing if I can update this project to use the newer search tool and possibly generate the JSON data from more automated data sources.
+
+### Refuse/recycling/glass
 
 There are a total of 20 bin schedules provided by Gedling Borough Council (who knew there were that many?!). The bin schedules Gedling Borough Council operate are labelled G1 - G4 and occur Monday to Friday (under normal collection days). Depending on where you are in the Gedling Borough area, you will have a bin day schedule on a specific weekday labelled as G1, G2, G3 or G4.
 
@@ -27,6 +31,31 @@ There are a total of 20 bin schedules provided by Gedling Borough Council (who k
 * Glass Bin - Every 4 weeks
 
 The Green bin collection is combined with the glass bin collection and occurs on same day, although any glass recycling is collected separately.
+
+Since 2025/26 it is no longer possible to directly see the specific schedule name for your address. Using the 2024/25 dataset from the legacy refuse search tool, the following address lookups are samples to map against.
+
+| Schedule name  | Sample address search |
+|----------------|-----------------------|
+| Monday G1      | Broad Valley Drive    |
+| Monday G2      | Roundwood Road        |
+| Monday G3      | Newman Road           |
+| Monday G4      | Oakwood Drive         |
+| Tuesday G1     | Valetta Road          |
+| Tuesday G2     | Acton Road            |
+| Tuesday G3     | Sunbury Gardens       |
+| Tuesday G4     | Ballantrae Close      |
+| Wednesday G1   | Weaverthorpe Road     |
+| Wednesday G2   | Charnwood Lane        |
+| Wednesday G3   | Woodthorpe Avenue     |
+| Wednesday G4   | Blenheim Avenue       |
+| Thursday G1    | Beaumaris Drive       |
+| Thursday G2    | Mays Close            |
+| Thursday G3    | Martins Hill          |
+| Thursday G4    | Cromford Avenue       |
+| Friday G1      | Midland Road          |
+| Friday G2      | Nether Pasture        |	
+| Friday G3      | Adbolton Avenue       |
+| Friday G4      | Acorn Drive           |
 
 ### Garden waste collection schedule
 
@@ -54,6 +83,7 @@ The iCalendar files are named in the format of:
 * Black Bin Day (also known as grey bin) - For general/domestic waste collection.
 * Green Bin Day - Recycling collection.
 * Green Bin + Glass Box Day - Recycling and glass collection.
+* Glass Boxy Day - Glass collection only.
 * Garden Waste Collection - Extra garden waste collection service.
 
 When a collection day falls on a national holiday i.e. Bank holiday, the revised date is added as a single occurrence with (Changed Collection) in the title to denote this.
@@ -68,9 +98,9 @@ This repository hosts all the calendars within the `ical` folder. For easier vis
 
 The calendar files are updated yearly overwriting the previous year, this is to maintain a consistent URL path for other software and a dynamic iCal subscribe URL.
 
-## Original calendar sources
+## PDF calendar sources (legacy)
 
-Gedling Borough Council produces the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability. These are also available to be viewed as a PDF but this format is not very accessible. The location where these documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below. I don't believe there's a specific page that provides all of the PDF files in a single place, but with some file path snooping reveals the following naming convention to find them.
+Gedling Borough Council used to produce the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability and since 2025/26 no longer creates the PDFs at all. The location where older documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below.
 
 If you wanted to view the original source documents, you can find all of the PDF files following the instructions below.
 
@@ -102,11 +132,9 @@ An example file stored on this server for the Friday J 2025/26 garden waste coll
 https://apps.gedling.gov.uk/GDW/Rounds/data/Garden%20Waste%20J-2025.pdf
 ```
 
-These files are the original source of data for the calendars produced.
-
 ## How are these calendars generated?
 
-The original printed calendars are human translated into a recurring calendar events using RRULE, with the exception of changed collection days which are created as one-off VEVENT instances. Each calendar is exported in the iCal format and is the primary source data.
+The calendar data from Gedling is translated into a recurring calendar events using RRULE, with the exception of changed collection days which are created as one-off VEVENT instances. Each calendar is exported in the iCal format and is the primary source data.
 
 Using the excellent [ical.js](https://github.com/kewisch/ical.js) and wrapper library [ical-expander](https://www.npmjs.com/package/ical-expander). The iCal data is expanded to have all instances of collection dates represented in JSON. These are automatically built on any update to the iCal data.
 
