@@ -69,6 +69,19 @@ For garden waste collection, this is labelled as A - J with each letter being as
 * Thursday - D or I
 * Friday - E or J
 
+| Schedule name  | Sample address search |
+|----------------|-----------------------|
+| Monday A       | Broad Valley Drive    |
+| Tuesday B      | Valetta Road          |
+| Wednesday C    | Oakwood Drive         | 
+| Thursday D     | Roundwood Road        |
+| Friday E       | Nether Pasture        |
+| Monday F       | Cromford Avenue       | 
+| Tuesday G      | Midland Road          |
+| Wednesday H    | Newman Road           |
+| Thursday I     | Acorn Drive           |
+| Friday J       | Woodside Road         |
+
 Once you know your specific schedule, you can [find all calendars](https://www.gbcbincalendars.co.uk) available in HTML, iCal and JSON.
 
 ## Calendars
