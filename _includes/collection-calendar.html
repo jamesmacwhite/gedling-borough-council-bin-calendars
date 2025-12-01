@@ -19,17 +19,16 @@
 
 <p>You can view the collection dates for the {{ pageTitle }} schedule below. You can download or subscribe to the calendar through the iCal URL. Alternatively you can bookmark this page to view the calendar dates at any time.</p>
 
-<div class="bg-light p-3 mb-4 border border-1">
-    <p class="fw-bold mb-2">To subscribe to this calendar use the following iCal URL:</p>
+<div class="bg-gedling-red p-3 mb-4 border border-1 border-gedling-red-light rounded-3">
+    <p class="fw-bold mb-2 text-white">To subscribe to this calendar use the following iCal URL:</p>
 
     <label for="ical-url" class="visually-hidden">iCal URL</label>
     <input class="form-control w-100" type="text" id="ical-url" value="{{ icalUrl }}" readonly>
 
     <div class="d-grid d-md-flex gap-2 mt-2">
         <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
-        <a href="{{ icalUrl }}" class="btn btn-gedling-red" download>Download calendar</a>
+        <a href="{{ icalUrl }}" class="btn btn-light" download>Download calendar (.ics)</a>
         <a href="{{ 'https://pages.comms.gedling.gov.uk/pages/' | append: dataId | replace: '_', '-' }}" class="btn btn-dark">Email alerts</a>
-        <a href="{{ jsonData.jsonPath | absolute_url }}" class="btn btn-success">View as JSON</a>
     </div>
 </div>
 
