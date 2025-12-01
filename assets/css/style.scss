@@ -13,6 +13,7 @@ $bootstrap-icons-font-src: url("../fonts/bootstrap-icons.woff2") format("woff2")
 
 $font-family-sans-serif: Inter, Arial, sans-serif;
 $headings-font-weight: bold;
+$gedling-red: #AA273E;
 
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/variables-dark";
@@ -21,7 +22,7 @@ $green-bin: #6eb43f;
 $glass-bin: #00aeef;
 
 $custom-colors: (
-    "gedling-red": #AA273E,
+    "gedling-red":$gedling-red,
     "green-bin": $green-bin,
     "black-bin": #a7a9ac,
     "glass-box": $glass-bin,
@@ -47,7 +48,8 @@ $utilities: (
   )
 );
 
-$link-color: #0367FC;
+$link-color: $gedling-red;
+$link-hover-color: darken($link-color, 15%);
 $input-placeholder-color: $gray-600;
 
 $breadcrumb-divider: quote(">");
