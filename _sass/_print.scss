@@ -1,0 +1,40 @@
+@media print {
+
+    .development {
+        &:before {
+            display: none !important;
+        }
+    }
+
+    #calendar-key,
+    #breadcrumb,
+    #view-calendars-btn,
+    #subscribe-to-calendar {
+        display: none !important;
+    }
+
+    .col {
+        opacity: 1 !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+    }
+
+    .schedule-item {
+        opacity: 1 !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background-image: none !important;
+        background-color: transparent !important;
+    }
+
+    [data-is-changed-collection="true"] {
+        color: $danger;
+    }
+
+    footer {
+        background-color: transparent !important;
+    }
+}

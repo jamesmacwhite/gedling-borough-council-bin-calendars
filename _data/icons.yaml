@@ -1,0 +1,7 @@
+black-bin: trash-fill
+green-bin: recycle
+green-glass-bin: 
+  - recycle
+  - box-fill
+glass-box: box-fill
+garden-bin: flower
