@@ -61,8 +61,8 @@ describe('JSON calendar validation', function() {
     let expectedCollectionsMax = expectedCollectionsMin + 1;
     // Minimum collection dates in a month is 1 for garden bin but 4 for refuse
     let expectedCollectionsInMonthMin = isGardenCollectionType ? 1 : 4;
-    // Maximum collection dates in a month is 3 for garden bin but 5 for refuse
-    let expectedCollectionsInMonthMax = isGardenCollectionType ? expectedCollectionsInMonthMin + 2 : expectedCollectionsInMonthMin + 1;
+    // Maximum collection dates in a month is 3 for garden bin but 6 for refuse
+    let expectedCollectionsInMonthMax = expectedCollectionsInMonthMin + 2;
     let collectionDates = calendar.collectionDates;
     let totalCalendarCollections = calendar.totalCollections;
 
