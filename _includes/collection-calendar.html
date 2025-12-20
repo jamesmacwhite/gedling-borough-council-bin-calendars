@@ -140,13 +140,13 @@
     
                 {% for item in month.items %}
                     <div data-is-changed-collection="{{ item.isChangedCollection ? 'true' : 'false' }}" data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} fw-bold position-relative schedule-item">
-                        <p class="d-inline-block mb-0">
+                        <p class="d-inline mb-0">
                             {% include ordinal-date.html collectionDate=item.collectionDate %}
                             <span class="d-print-none">- {{ item.name }}</span>
                         </p>
 
                         {% for icon in iconMap[item.type] %}
-                            <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
+                            <i class="bi bi-{{ icon }} d-inline" aria-hidden="true"></i>
                         {% endfor %}
                     </div>
                 {% endfor %}
