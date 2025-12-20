@@ -17,7 +17,7 @@
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>You can view the collection dates for the {{ pageTitle }} schedule below. You can download or subscribe to the calendar through the iCal URL. Alternatively you can bookmark this page to view the calendar dates at any time.</p>
+<p class="d-print-none">You can view the collection dates for the {{ pageTitle }} schedule below. You can download or subscribe to the calendar through the iCal URL. Alternatively you can bookmark this page to view the calendar dates at any time.</p>
 
 <div id="subscribe-to-calendar" class="bg-gedling-red p-3 mb-4 border border-1 border-gedling-red-light rounded-3 d-print-none">
     <p class="fw-bold mb-2 text-white">To subscribe to this calendar use the following iCal URL:</p>
@@ -76,7 +76,7 @@
     {% else %}
         {% assign datesPlural = 'collection dates which have been changed' %}
     {% endif %}
-    <div class="changed-collection-dates pb-3 mb-5 border-1 border-bottom">
+    <div class="d-print-none changed-collection-dates pb-3 mb-5 border-1 border-bottom">
         <h2 class="h3">Changed collection dates</h2>
 
         <div class="row">
@@ -133,15 +133,18 @@
 
 {% else %}
 
-    <div class="row row-cols-1 row-cols-sm-2 g-4">
+    <div id="refuse-schedule-container" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         {% for month in months %}
             <div class="col" data-collection-first="{{ month.items.first.collectionDate | date: '%F'  }}" data-collection-last="{{ month.items.last.collectionDate | date: '%F' }}">
-                <h2 class="h3" id="{{ month.name | slugify }}">{{ month.name }}</h2>
-
+                <h2 class="h3 schedule-title" id="{{ month.name | slugify }}">{{ month.name }}</h2>
     
                 {% for item in month.items %}
                     <div data-is-changed-collection="{{ item.isChangedCollection ? 'true' : 'false' }}" data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} fw-bold position-relative schedule-item">
-                        <span>{{ item.collectionDate | date: "%A %-d %B" }} - {{ item.name }}</span>
+                        <p class="d-inline-block mb-0">
+                            {% include ordinal-date.html collectionDate=item.collectionDate %}
+                            <span class="d-print-none">- {{ item.name }}</span>
+                        </p>
+
                         {% for icon in iconMap[item.type] %}
                             <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
                         {% endfor %}
@@ -152,6 +155,23 @@
     </div>
 
     <p class="fw-bold fs-5 mt-3 text-gedling-red">Don’t forget to put your bin and glass box out by 6am.</p>
+
+    <div class="d-print-block d-none border border-1 p-2 rounded mb-3">
+        <div class="d-flex gap-5 justify-content-center fw-bold">
+            <div>
+                <i class="bi bi-trash-fill text-gedling-red"></i>
+                General Waste
+            </div>
+            <div>
+                <i class="bi bi-box-fill text-primary"></i>
+                Glass
+            </div>
+            <div>
+                <i class="bi bi-recycle text-success"></i>
+                Recycling
+            </div>
+        </div>
+    </div>
 
     <div class="refuse-collection-key my-4 d-print-none" aria-hidden="true" id="calendar-key">
         <h4 class="text-muted h6 fw-bold text-uppercase">Calendar key</h4>

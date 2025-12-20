@@ -22,6 +22,16 @@
         max-width: 100% !important;
     }
 
+    #refuse-schedule-container {
+        .col {
+            width: 33.33333333% !important;
+        }
+    }
+
+    .schedule-title {
+        font-size: 1rem !important;
+    }
+
     .schedule-item {
         opacity: 1 !important;
         border: none !important;
@@ -29,6 +39,10 @@
         margin: 0 !important;
         background-image: none !important;
         background-color: transparent !important;
+
+        p {
+            font-size: 0.9rem !important;
+        }
     }
 
     [data-is-changed-collection="true"] {
