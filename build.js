@@ -169,12 +169,16 @@ calendars.forEach(function(filepath) {
 
     jsonData['totalChangedCollections'] = allChangedCollections.length;
 
-    jsonData['revisedCollectionDates'] = allChangedCollections.map(item => {
+    const revisedCollectionDates = allChangedCollections.map(item => {
         const collectionDate = item.collectionDate.toString();
         const revisedCollectionDate = getUsualCollectionDate(
             new Date(item.collectionDate), 
             daysOfWeek.indexOf(collectionWeekday)
         ).toLocaleString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit'});
+
+        if (collectionDate === revisedCollectionDate) {
+            return undefined;
+        }
 
         if (item.type !== 'garden-bin') {
             return { 
@@ -184,6 +188,8 @@ calendars.forEach(function(filepath) {
 
         return collectionDate;
     });
+
+    jsonData['revisedCollectionDates'] = revisedCollectionDates.filter( Boolean );
 
     jsonData['collectionDates'] = allEvents;
 
