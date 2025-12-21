@@ -18,7 +18,8 @@ Gedling Borough Council has a newer search tool available on the [bin collection
 
 The legacy [refuse collection days](https://apps.gedling.gov.uk/refuse/search.aspx) search exists which maps street addresses to the specific schedule name e.g. Monday G1. This project was originally designed around this model, as it was how the PDF calendars were structured. The legacy search is likely to be removed in the future and the specific schedule name is no longer displayed in the newer data.
 
-I am reviewing if I can update this project to use the newer search tool and possibly generate the JSON data from more automated data sources.
+> [!NOTE]
+I am reviewing if I can update this project to use the newer search tool and possibly generate the JSON data from more automated data sources. This however may have limitations given no direct API for the data exists and may involve using DOM scraping and reverse engineering API calls of the widget based system.
 
 ### Refuse/recycling/glass
 
@@ -95,13 +96,13 @@ The iCalendar files are named in the format of:
 
 * Black Bin Day (also known as grey bin) - For general/domestic waste collection.
 * Green Bin Day - Recycling collection.
-* Green Bin + Glass Box Day - Recycling and glass collection.
-* Glass Boxy Day - Glass collection only.
+* Green Bin + Glass Box Day - Recycling and glass box as a combined collection.
+* Glass Box Day - Glass collection only.
 * Garden Waste Collection - Extra garden waste collection service.
 
 When a collection day falls on a national holiday i.e. Bank holiday, the revised date is added as a single occurrence with (Changed Collection) in the title to denote this.
 
-The iCal calendars try to match the PDF document versions as closely as possible.
+The iCal calendar entries aim to replicate the original PDF document versions as closely as possible.
 
 All bin day events are set as "All day" events. Bin collections generally occur in the morning, but the time can vary.
 
@@ -113,9 +114,9 @@ The calendar files are updated yearly overwriting the previous year, this is to 
 
 ## PDF calendar sources (legacy)
 
-Gedling Borough Council used to produce the official calendars which were originally intended to be printed flyer documents. Gedling Borough Council no longer prints these document due to cost and sustainability and since 2025/26 no longer creates the PDFs at all. The location where older documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below.
+Gedling Borough Council used to produce PDF calendars which were originally flyers posted to each residental address in the Gedling borough area. Gedling Borough Council no longer prints these documents due to cost and sustainability and since 2025/26 no longer produces the PDFs at all. The location where older documents are hosted is on the `apps.gedling.gov.uk` domain within the following paths below.
 
-If you wanted to view the original source documents, you can find all of the PDF files following the instructions below.
+You can find all of the older PDF files following the instructions below.
 
 ### General bin collection PDFs
 
@@ -153,10 +154,10 @@ Using the excellent [ical.js](https://github.com/kewisch/ical.js) and wrapper li
 
 ## Disclaimer
 
-The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official printed calendar document provided by Gedling Borough Council, errors in translating this document into an iCal format are possible.
+The information and calendars published in this repository are not directly provided by Gedling Borough Council and hence this is an unofficial source. While every effort has been made to ensure each calendar is accurate per the official data provided by Gedling Borough Council, errors in translating into the iCal format are possible.
 
 A combination of human checks and [unit tests](test/json-calendar-validation.js) are performed when the iCalendar files are converted into JSON. These tests validate the calendar data by using various rules and known pattern/occurrence rules that should always be present, which aims to reduce the chance of errors.
 
-Any bin day collection schedule is also subject to change by Gedling Borough Council at any time. While this is unlikely, it is possible.
+Any bin day collection schedule is also subject to change by Gedling Borough Council at any time.
 
 If you spot an error or notice something wrong, please let me know.
