@@ -118,7 +118,7 @@
                 <ol class="list-unstyled">
                     {% for item in month.items %}
                         <li data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" {%- if item.isChangedCollection %} class="text-danger fw-bold schedule-item"{% endif %}>
-                            {{ item.collectionDate | date: "%A %-d %B" }}
+                            {% include ordinal-date.html collectionDate=item.collectionDate %}
                             {% if item.isChangedCollection %}
                                 (Changed Collection)
                             {% endif %}
