@@ -141,15 +141,14 @@
                 <h2 class="h3 schedule-title" id="{{ month.name | slugify }}">{{ month.name }}</h2>
     
                 {% for item in month.items %}
-                    <div data-is-changed-collection="{{ item.isChangedCollection ? 'true' : 'false' }}" data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} fw-bold position-relative schedule-item">
+                    <div data-is-changed-collection="{{ item.isChangedCollection ? 'true' : 'false' }}" data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} position-relative schedule-item">
+                        {% for icon in iconMap[item.type] %}
+                            <i class="bi bi-{{ icon }} d-inline" aria-hidden="true"></i>
+                        {% endfor %}
                         <p class="d-inline mb-0">
                             {% include ordinal-date.html collectionDate=item.collectionDate %}
                             <span class="d-print-none">- {{ item.name }}</span>
                         </p>
-
-                        {% for icon in iconMap[item.type] %}
-                            <i class="bi bi-{{ icon }} d-inline" aria-hidden="true"></i>
-                        {% endfor %}
                     </div>
                 {% endfor %}
             </div>
@@ -259,7 +258,15 @@
         let upcomingCollection = upcomingCollections[0];
 
         if (upcomingCollection.getAttribute('data-bin-type') !== 'garden-bin') {
-            upcomingCollection.classList.add('border', 'border-3', 'border-black');
+
+            const isChangedCollectionDate = upcomingCollection.getAttribute('data-is-changed-collection');
+
+            if (!isChangedCollectionDate) {
+                upcomingCollection.classList.add('border', 'border-3', 'border-black', 'fw-bold');
+            }
+            else {
+                 upcomingCollection.classList.add('fw-bold');
+            }
         }
         else {
             upcomingCollection.classList.add('fw-bold');

@@ -8,7 +8,7 @@ layout: default
 
 <p>The original idea behind this project was to provide Gedling Borough Council bin collection data in the iCalender format for importing or subscribing as calendar data. JSON is also another well used and portable format which other applications can use which this project supports.</p>
 
-<p>Each bin collection has it's own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="https://github.com/kewisch/ical.js">ical.js library</a>, every time a website deployment build occurs, the JSON data is generated from the original iCal source data.</p>
+<p>Each bin collection has its own JSON endpoint, which is automatically generated from the original iCal data. Using the <a href="https://github.com/kewisch/ical.js">ical.js library</a>, every time a website deployment build occurs, the JSON data is generated from the original iCal source data.</p>
 
 <p>The JSON schema is described below. Each JSON endpoint provides a header with various meta information for unit tests and reference purposes. The main data most applications will be interested in is the <code>collectionDates</code> key</p>
 
@@ -104,7 +104,7 @@ layout: default
   }
 {% endhighlight %}
 
-<p><b>Note:</b> A change from 2023/24 is the revised collection date can be the following day, rather than being being one or more days before the usual collection date. For Wednesday, Thursday and Friday schedules some revised dates are the next day after the original collection date.</p>
+<p><b>Note:</b> A change from 2023/24 is the revised collection date can be the following day, rather than being being one or more days before the usual collection date.</p>
 
 <p>A collection item provides the following keys:</p>
 
