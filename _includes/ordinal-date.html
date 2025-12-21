@@ -1,8 +1,16 @@
-{{ include.collectionDate | date: "%A" }}
+<span class="weekday">{{ include.collectionDate | date: "%A" }}</span>
 {% assign d = include.collectionDate | date: "%-d" %}
+<span class="date-ordinal">
 {% case d %}
   {% when "1" or "21" or "31" %}{{ d }}st
   {% when "2" or "22" %}{{ d }}nd
   {% when "3" or "23" %}{{ d }}rd
   {% else %}{{ d }}th
 {% endcase %}
+</span>
+{% if include.showMonth %}
+<span class="month">{{ include.collectionDate | date: "%B" }}</span>
+{% endif %}
+{% if include.showYear %}
+<span class="year">{{ include.collectionDate | date: "%Y" }}</span>
+{% endif %}

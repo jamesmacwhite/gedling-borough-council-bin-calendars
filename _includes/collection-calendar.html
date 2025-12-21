@@ -95,8 +95,8 @@
                         {% for dates in changedCollections %}
                             <tr>
                             {% for date in dates %}
-                                <td>{{ date[0] | date: "%A %-d %B %Y" }}</td>
-                                <td class="fw-bold text-danger">{{ date[1] | date: "%A %-d %B %Y" }}</td>
+                                <td>{% include ordinal-date.html collectionDate=date.first showMonth='true' showYear='true' %}</td>
+                                <td class="fw-bold text-danger">{% include ordinal-date.html collectionDate=date.last showMonth='true' showYear='true' %}</td>
                             {% endfor %}
                             </tr>
                         {% endfor %}
@@ -135,7 +135,7 @@
 
 {% else %}
 
-    <div id="refuse-schedule-container" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div id="refuse-schedule-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for month in months %}
             <div class="col" data-collection-first="{{ month.items.first.collectionDate | date: '%F'  }}" data-collection-last="{{ month.items.last.collectionDate | date: '%F' }}">
                 <h2 class="h3 schedule-title" id="{{ month.name | slugify }}">{{ month.name }}</h2>
