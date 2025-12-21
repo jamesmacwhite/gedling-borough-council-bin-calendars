@@ -1,9 +1,10 @@
-'use strict';
+import path from 'path'; 
+import jetpack from 'fs-jetpack';
+import icalJs from "ical.js";
+import IcalExpander from "ical-expander";
 
-const path = require('path');
-const jetpack = require('fs-jetpack');
-const calendars = jetpack.find("ical", { matching: "*.ics" });
-const icaljsDest = './_data/icaljs';
+const calendars = jetpack.find('ical', { matching: '*.ics' }); 
+const icaljsDest = './_data/icaljs'; 
 const jsonDest = './json';
 
 console.log("Copying Bootstrap JS bundle and fonts for build.");
@@ -109,8 +110,6 @@ function getUsualCollectionDate(date, normalCollectionDay) {
 // Process each ical file to convert to JSON format
 calendars.forEach(function(filepath) {
 
-    const icalJs = require('ical.js');
-    const IcalExpander = require('ical-expander');
     const ics = jetpack.read(filepath);
     const icalExpander = new IcalExpander({ ics, maxIterations: 55 });
     const events = icalExpander.all();

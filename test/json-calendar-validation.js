@@ -1,10 +1,8 @@
-'use strict';
-
-const _ = require('lodash');
-const fs = require('fs');
-const jetpack = require('fs-jetpack');
+import fs from 'fs';
+import jetpack from 'fs-jetpack';
+import groupBy from 'lodash-es/groupBy.js'
+import { assert } from 'chai';
 const jsonFolder = './json';
-const assert = require('chai').assert;
 
 // Valid event summary values to check against
 const validSummaryTitles = [
@@ -84,7 +82,7 @@ describe('JSON calendar validation', function() {
     // Validate collection dates
     describe(`${calendar.name} collection dates validation`, function() {
 
-      let collectionDatesByMonth = _.groupBy(collectionDates, (item) => item.collectionDate.substring(0, 7));
+      let collectionDatesByMonth = groupBy(collectionDates, (item) => item.collectionDate.substring(0, 7));
       
       for (const month in collectionDatesByMonth) {
 
