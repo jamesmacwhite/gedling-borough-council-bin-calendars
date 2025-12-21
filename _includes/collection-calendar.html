@@ -61,7 +61,7 @@
 {% assign months = jsonData.collectionDates | group_by_exp: "collection", "collection.collectionDate | date: '%B %Y'" %}
 
 {% assign lastCollectionDate = months.last.items.last.collectionDate %}
-<div calendar-last-collection-date="{{ lastCollectionDate | date: '%F' }}" class="alert alert-primary d-flex align-items-center mb-4 calendar-update-alert d-none" role="alert">
+<div calendar-last-collection-date="{{ lastCollectionDate | date: '%F' }}" class="alert alert-primary d-flex align-items-center mb-4 calendar-update-alert d-none d-print-none" role="alert">
     <i class="bi bi-info-circle-fill me-2 fs-4" aria-hidden="true"></i>
     <div>
         This calendar is due to be updated soon for the next year cycle. When Gedling Borough Council publishes the new calendars, the information will be updated after the last collection date: <strong>{{ lastCollectionDate | date: '%-d %B %Y' }}</strong>.
@@ -108,6 +108,8 @@
 {% endif %}
 
 {% assign iconMap = site.data.icons %}
+
+<span class="d-none d-print-block mb-3 fs-6">Last updated: {{ jsonData.lastModified | date: "%-d %B %Y" }}</span>
 
 {% if isGardenCollection %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
