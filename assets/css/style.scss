@@ -54,10 +54,12 @@ $link-color: $gedling-red;
 $link-hover-color: darken($link-color, 15%);
 $input-placeholder-color: $gray-600;
 
-$breadcrumb-divider: quote(">");
+$breadcrumb-divider: url("data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M12.6008%2012L8.70078%208.10005C8.51745%207.91672%208.42578%207.68338%208.42578%207.40005C8.42578%207.11672%208.51745%206.88338%208.70078%206.70005C8.88411%206.51672%209.11745%206.42505%209.40078%206.42505C9.68411%206.42505%209.91745%206.51672%2010.1008%206.70005L14.7008%2011.3C14.8008%2011.4%2014.8716%2011.5084%2014.9133%2011.625C14.9549%2011.7417%2014.9758%2011.8667%2014.9758%2012C14.9758%2012.1334%2014.9549%2012.2584%2014.9133%2012.375C14.8716%2012.4917%2014.8008%2012.6%2014.7008%2012.7L10.1008%2017.3C9.91745%2017.4834%209.68411%2017.575%209.40078%2017.575C9.11745%2017.575%208.88411%2017.4834%208.70078%2017.3C8.51745%2017.1167%208.42578%2016.8834%208.42578%2016.6C8.42578%2016.3167%208.51745%2016.0834%208.70078%2015.9L12.6008%2012Z'%20fill='#333333'/%3e%3c/svg%3e");
+$breadcrumb-active-color: black;
+$breadcrumb-item-padding-x: .3rem;
 
 $toast-background-color: white;
-$body-bg: white;
+$body-bg: #f2f2f2;
 
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
@@ -78,16 +80,6 @@ $body-bg: white;
 @import "bootstrap/scss/tables";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
-
-
-html {
-    background: $gray-100;
-}
-
-.bg-green-glass-bin {
-    background-color: $glass-bin;
-    @include gradient-directional($green-bin, $glass-bin, 90deg);
-}
 
 // Custom
 @import "syntax-highlighter.css";

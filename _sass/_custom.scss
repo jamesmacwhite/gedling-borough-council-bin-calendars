@@ -1,4 +1,14 @@
 // RESERVED FOR ANY CUSTOM CSS REQUIRED
+
+html {
+    background-color: $body-bg;
+}
+
+.bg-green-glass-bin {
+    background-color: $glass-bin;
+    @include gradient-directional($green-bin, $glass-bin, 90deg);
+}
+
 pre {
     margin-bottom: 0;
 }
@@ -10,6 +20,13 @@ pre {
 .header-full {
     background: url(../images/gedling-country-park.jpg) no-repeat center black;
     background-size: cover;
+}
+
+.breadcrumb li {
+    &:before {
+        color: #333333;
+        fill: #333333;
+    }
 }
 
 .development {
