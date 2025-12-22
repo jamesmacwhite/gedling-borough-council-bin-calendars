@@ -120,7 +120,9 @@ layout: default
 
 <h2 class="h3 mt-4">JSON endpoints</h2>
 
-<p>All the live JSON endpoints are available below. The URL paths for these endpoints can be used in other software without any imposed restrictions or limitations.</p>
+<p>All the JSON endpoints are available below. The URL paths for these endpoints can be used in other software without any imposed restrictions or limitations.</p>
+
+<p>The JSON data provided is mostly static and only changes when the iCal data it generated from changes.</p>
 
 {% for type in site.data.calendars.bin_collections %}
     <div class="{% if forloop.last %}mb-0{% else %}mb-5{% endif %}">
@@ -128,7 +130,7 @@ layout: default
         {% for weekday in type.collections %}
             {%- for collection in weekday[1] -%}
                 <div class="mb-4">
-                    <span class="fw-bold d-block mb-2">{{ weekday[0] }} {{ collection.name }} Calendar JSON URL:</span>
+                    <span class="fw-bold d-block mb-2">{{ weekday[0] }} {{ collection.name }} Calendar JSON endpoint:</span>
                     {%- highlight html -%}
                         {{- collection.json | absolute_url -}}
                     {%- endhighlight -%}
