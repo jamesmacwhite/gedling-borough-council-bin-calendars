@@ -159,7 +159,6 @@ router.get('/street-search', async (request, env, ctx) => {
       });
     }
 
-    // 2. Build POST form data
     const formData = new FormData();
 
     for (const key in searchPageFormData) {
@@ -171,7 +170,6 @@ router.get('/street-search', async (request, env, ctx) => {
     formData.append('ctl00$MainContent$street', streetName);
     formData.append('ctl00$MainContent$mybutton', 'Search');
 
-    // 3. POST search request
     const searchRequestResponse = await fetch(refuseSearchUrl.toString(), {
       method: 'POST',
       body: formData,
@@ -194,7 +192,6 @@ router.get('/street-search', async (request, env, ctx) => {
       'table#ctl00_MainContent_gardenGridView tbody tr'
     );
 
-    // 4. Parse refuse table
     if (refuseRows.length > 0) {
       let refuseSubscribeUrl = null;
 
@@ -207,7 +204,9 @@ router.get('/street-search', async (request, env, ctx) => {
             const link = cell.querySelector('a');
             const href = link?.getAttribute('href') ?? null;
 
-            if (!href) return null;
+            if (!href) {
+              return null;
+            }
 
             if (text === 'Download Calendar') {
               return formatRefuseCalendarPDFUrl(href);
@@ -236,7 +235,6 @@ router.get('/street-search', async (request, env, ctx) => {
       });
     }
 
-    // 5. Parse garden waste table
     if (gardenRows.length > 0) {
       let gardenSubscribeUrl = null;
 
