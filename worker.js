@@ -1,4 +1,5 @@
 import { Router, cors, json } from 'itty-router';
+import puppeteer from "@cloudflare/puppeteer";
 import { parse } from 'node-html-parser';
 
 const { preflight, corsify } = cors({
@@ -14,6 +15,62 @@ router.get('/', () => {
   return new Response('API worker is running.');
 });
 
+/**
+ * New bin collection calendar address lookup
+ */
+router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
+  const browser = await puppeteer.launch(env.MYBROWSER);
+  const page = await browser.newPage();
+  const address = request.query.address || null;
+
+  if (!address) {
+    return new Response('Missing address value', { status: 400 });
+  }
+
+  await Promise.all([
+    page.goto('https://waste.digital.gedling.gov.uk/w/webpage/bin-collections'),
+    page.waitForSelector('input.relation_path_type_ahead_search'),
+  ]);
+
+  await page.type(
+    'input.relation_path_type_ahead_search', 
+    address,
+    { delay: 50 }
+  );
+
+  await page.waitForSelector('.relation_path_type_ahead_results_holder > ul');
+  await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
+
+  await page.click('input[value="View collection days"]');
+  await page.waitForSelector('input[value="View 2025/2026 collection days"]');
+  await page.click('input[value="View 2025/2026 collection days"]');
+
+  const widgetSelector = '#mats_content_wrapper > div > form > div > div:nth-child(3) > div > div';
+  await page.waitForSelector(widgetSelector);
+
+  const widgetData = await page.$eval(widgetSelector, el => {
+    const raw = el.getAttribute('data-params');
+    try {
+      return JSON.parse(raw);
+    } 
+    catch {
+      return { error: "Invalid JSON", raw };
+    }
+});
+
+  await page.close();
+
+  const collections = widgetData?.template_data?.collections ?? null;
+
+  return new Response(JSON.stringify(collections), {
+    headers: { "Content-Type": "application/json" }
+  });
+});
+
+/**
+ * Legacy street search endpoint
+ * https://apps.gedling.gov.uk/refuse/search.aspx
+ */
 router.get('/street-search', async (request, env, ctx) => {
   const refuseCollectionJsonKeys = [
     'Location',

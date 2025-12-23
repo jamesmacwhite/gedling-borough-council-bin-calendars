@@ -12,6 +12,7 @@
     "node-html-parser": "^6.1.13"
   },
   "devDependencies": {
+    "@cloudflare/puppeteer": "^1.0.4",
     "chai": "^5.2.0",
     "mocha": "^11.0",
     "wrangler": "^4.56.0"
