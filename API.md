@@ -25,7 +25,7 @@ For best usage and meaningful search results, make sure street name queries are 
 An example GET request with `Westdale Lane` used as the street query:
 
 ```
-https://api.gbcbincalendars.co.uk/?streetName=Westdale%20Lane
+https://api.gbcbincalendars.co.uk/street-search?streetName=Westdale%20Lane
 ```
 
 Which will return the JSON response of:
