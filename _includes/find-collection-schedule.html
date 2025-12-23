@@ -1,5 +1,5 @@
 {% if jekyll.environment != 'production' %}
-    {% assign apiUrl = 'http://localhost:8787?streetName=' %}
+    {% assign apiUrl = 'http://localhost:8787/street-search/?streetName=' %}
 {% else %}
     {% assign apiUrl = site.collectionSearchUrl %}
 {% endif %}
