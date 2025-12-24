@@ -33,7 +33,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const searchInputSelector = 'input.relation_path_type_ahead_search';
 
   await Promise.all([
-    page.goto('https://waste.digital.gedling.gov.uk/w/webpage/bin-collections'),
+    page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL),
     page.waitForSelector(searchInputSelector),
   ]);
 
@@ -45,8 +45,8 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   await page.waitForSelector('.relation_path_type_ahead_results_holder > ul');
   await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
-
   await page.click('input[value="View collection days"]');
+
   await page.waitForSelector('input[value="View 2025/2026 collection days"]');
   await page.click('input[value="View 2025/2026 collection days"]');
 
@@ -59,7 +59,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
       return JSON.parse(raw);
     } 
     catch {
-      return { error: "Invalid widget JSON", raw };
+      return { error: 'Invalid widget JSON', raw };
     }
   }
 
@@ -67,7 +67,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
     await page.waitForSelector(selector);
 
     const raw = await page.$eval(selector, el =>
-      el.getAttribute("data-params")
+      el.getAttribute('data-params')
     );
 
     return parseWidget(raw);
@@ -88,7 +88,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
     address: address,
     collections: collections
   }), {
-    headers: { "Content-Type": "application/json" }
+    headers: { 'Content-Type': 'application/json' }
   });
 });
 
@@ -118,14 +118,16 @@ router.get('/street-search', async (request, env, ctx) => {
     'Calendar URL',
   ];
 
-  const gedlingAppsUrl = env.GEDLING_APPS_URL;
+  const gedlingRefuseSearchUrl = env.GEDLING_LEGACY_REFUSE_SEARCH_URL;
   const baseUrl = env.BASE_URL;
 
-  if (!gedlingAppsUrl || !baseUrl) {
-    return new Response('Server configuration error: missing GEDLING_APPS_URL or BASE_URL.', {
+  if (!gedlingRefuseSearchUrl || !baseUrl) {
+    return new Response('Worker configuration error: missing GEDLING_LEGACY_REFUSE_SEARCH_URL and/or BASE_URL.', {
       status: 500,
     });
   }
+
+  const appBaseUrl = new URL(gedlingRefuseSearchUrl).origin;
 
   function getAttributeValue(html, selector) {
     const root = parse(html);
@@ -148,7 +150,7 @@ router.get('/street-search', async (request, env, ctx) => {
       return null;
     }
 
-    return new URL(`/refuse/${path}`, gedlingAppsUrl).toString();
+    return new URL(`/refuse/${path}`, appBaseUrl).toString();
   }
 
   function formatGardenCalendarPDFUrl(path) {
@@ -156,7 +158,7 @@ router.get('/street-search', async (request, env, ctx) => {
       return null;
     }
 
-    return new URL(path, gedlingAppsUrl).toString();
+    return new URL(path, appBaseUrl).toString();
   }
 
   function formatCollectionUrl(slug, isGardenBinType = false) {
@@ -190,8 +192,6 @@ router.get('/street-search', async (request, env, ctx) => {
     return `${weekDay} ${schedule}`;
   }
 
-  const refuseSearchUrl = new URL('refuse/search.aspx', gedlingAppsUrl);
-
   const streetName = request.query.streetName ?? null;
 
   if (!streetName) {
@@ -217,11 +217,11 @@ router.get('/street-search', async (request, env, ctx) => {
   let gardenWasteCollectionData = [];
 
   try {
-    const searchPageResponse = await fetch(refuseSearchUrl.toString());
+    const searchPageResponse = await fetch(gedlingRefuseSearchUrl);
 
     if (!searchPageResponse.ok) {
       return new Response(
-        `Failed to fetch ${refuseSearchUrl}. HTTP error: ${searchPageResponse.status} ${searchPageResponse.statusText}.`,
+        `Failed to fetch ${gedlingRefuseSearchUrl}. HTTP error: ${searchPageResponse.status} ${searchPageResponse.statusText}.`,
         { status: 502 }
       );
     }
@@ -251,14 +251,14 @@ router.get('/street-search', async (request, env, ctx) => {
     formData.append('ctl00$MainContent$street', streetName);
     formData.append('ctl00$MainContent$mybutton', 'Search');
 
-    const searchRequestResponse = await fetch(refuseSearchUrl.toString(), {
+    const searchRequestResponse = await fetch(gedlingRefuseSearchUrl, {
       method: 'POST',
       body: formData,
     });
 
     if (!searchRequestResponse.ok) {
       return new Response(
-        `Failed to post search to ${refuseSearchUrl}. HTTP error: ${searchRequestResponse.status} ${searchRequestResponse.statusText}.`,
+        `Failed to post search to ${gedlingRefuseSearchUrl}. HTTP error: ${searchRequestResponse.status} ${searchRequestResponse.statusText}.`,
         { status: 502 }
       );
     }
