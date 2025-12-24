@@ -21,7 +21,7 @@ router.get('/', () => {
  */
 router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
-  const addressQuery = request.query.address || null;
+  const addressQuery = request.query.address ?? null;
 
   if (!addressQuery) {
     return new Response('Missing address value', { status: 400 });
@@ -30,13 +30,15 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const browser = await puppeteer.launch(env.MYBROWSER);
   const page = await browser.newPage();
 
+  const searchInputSelector = 'input.relation_path_type_ahead_search';
+
   await Promise.all([
     page.goto('https://waste.digital.gedling.gov.uk/w/webpage/bin-collections'),
-    page.waitForSelector('input.relation_path_type_ahead_search'),
+    page.waitForSelector(searchInputSelector),
   ]);
 
   await page.type(
-    'input.relation_path_type_ahead_search', 
+    searchInputSelector, 
     addressQuery,
     { delay: 50 }
   );
