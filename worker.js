@@ -21,9 +21,9 @@ router.get('/', () => {
  */
 router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
-  const address = request.query.address || null;
+  const addressQuery = request.query.address || null;
 
-  if (!address) {
+  if (!addressQuery) {
     return new Response('Missing address value', { status: 400 });
   }
 
@@ -37,7 +37,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   await page.type(
     'input.relation_path_type_ahead_search', 
-    address,
+    addressQuery,
     { delay: 50 }
   );
 
@@ -48,25 +48,44 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   await page.waitForSelector('input[value="View 2025/2026 collection days"]');
   await page.click('input[value="View 2025/2026 collection days"]');
 
-  const widgetSelector = '#mats_content_wrapper > div > form > div > div:nth-child(3) > div > div';
-  await page.waitForSelector(widgetSelector);
-
-  const widgetData = await page.$eval(widgetSelector, el => {
-    const raw = el.getAttribute('data-params');
+  function parseWidget(raw) {
+    if (!raw) { 
+      return { error: "Missing data-params attribute" };
+    }
 
     try {
       return JSON.parse(raw);
     } 
     catch {
-      return { error: "Invalid JSON", raw };
+      return { error: "Invalid widget JSON", raw };
     }
-  });
+  }
+
+  async function extractWidget(page, selector) {
+    await page.waitForSelector(selector);
+
+    const raw = await page.$eval(selector, el =>
+      el.getAttribute("data-params")
+    );
+
+    return parseWidget(raw);
+  }
+
+  const addressDataSelector = '#mats_content_wrapper > div > form > div > div:nth-child(2) > div > div.page_cell.contains_widget.col-12.col-lg-8 > div > div';
+  const widgetSelector = '#mats_content_wrapper > div > form > div > div:nth-child(3) > div > div';
+
+  const addressWidgetData = await extractWidget(page, addressDataSelector);
+  const collectionWidgetData = await extractWidget(page, widgetSelector);
 
   await page.close();
 
-  const collections = widgetData?.template_data?.collections ?? null;
+  const address = addressWidgetData?.template_data?.address ?? null;
+  const collections = collectionWidgetData?.template_data?.collections ?? null;
 
-  return new Response(JSON.stringify(collections), {
+  return new Response(JSON.stringify({
+    address: address,
+    collections: collections
+  }), {
     headers: { "Content-Type": "application/json" }
   });
 });
@@ -171,27 +190,26 @@ router.get('/street-search', async (request, env, ctx) => {
 
   const refuseSearchUrl = new URL('refuse/search.aspx', gedlingAppsUrl);
 
-  const url = new URL(request.url);
-  const streetName = url.searchParams.get('streetName');
+  const streetName = request.query.streetName ?? null;
 
-    if (!streetName) {
-      return new Response('Missing street name parameter.', {
-        status: 400,
-      });
-    }
+  if (!streetName) {
+    return new Response('Missing street name parameter.', {
+      status: 400,
+    });
+  }
 
-    if (streetName.length < 5) {
-      return new Response('Street name query should be 5 or more characters.', {
-        status: 400,
-      });
-    }
+  if (streetName.length < 5) {
+    return new Response('Street name query should be 5 or more characters.', {
+      status: 400,
+    });
+  }
 
-    if (/\d+/.test(streetName)) {
-      return new Response(
-        'For more accurate results, please enter only street name values, no property numbers or other address information.',
-        { status: 400 }
-      );
-    }
+  if (/\d+/.test(streetName)) {
+    return new Response(
+      'For more accurate results, please enter only street name values, no property numbers or other address information.',
+      { status: 400 }
+    );
+  }
 
   let refuseCollectionData = [];
   let gardenWasteCollectionData = [];
