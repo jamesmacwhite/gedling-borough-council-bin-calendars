@@ -17,15 +17,18 @@ router.get('/', () => {
 
 /**
  * New bin collection calendar address lookup
+ * https://waste.digital.gedling.gov.uk/w/webpage/bin-collections
  */
 router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
-  const browser = await puppeteer.launch(env.MYBROWSER);
-  const page = await browser.newPage();
+
   const address = request.query.address || null;
 
   if (!address) {
     return new Response('Missing address value', { status: 400 });
   }
+
+  const browser = await puppeteer.launch(env.MYBROWSER);
+  const page = await browser.newPage();
 
   await Promise.all([
     page.goto('https://waste.digital.gedling.gov.uk/w/webpage/bin-collections'),
@@ -50,13 +53,14 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   const widgetData = await page.$eval(widgetSelector, el => {
     const raw = el.getAttribute('data-params');
+
     try {
       return JSON.parse(raw);
     } 
     catch {
       return { error: "Invalid JSON", raw };
     }
-});
+  });
 
   await page.close();
 
