@@ -13,14 +13,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}?streetName=example street name",
+					"raw": "{{apiBaseUrl}}/street-search?streetName=Westdale Lane",
 					"host": [
-						"{{baseUrl}}"
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"street-search"
 					],
 					"query": [
 						{
 							"key": "streetName",
-							"value": "example street name"
+							"value": "Westdale Lane"
 						}
 					]
 				}
@@ -84,6 +87,29 @@
 					"body": null
 				}
 			]
+		},
+		{
+			"name": "Get Bin Collection Calendar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiBaseUrl}}/get-bin-collection-calendar?address=101 Arnold Lane Gedling Nottingham NG4 4HE",
+					"host": [
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"get-bin-collection-calendar"
+					],
+					"query": [
+						{
+							"key": "address",
+							"value": "101 Arnold Lane Gedling Nottingham NG4 4HE"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
