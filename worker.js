@@ -29,13 +29,19 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   const browser = await puppeteer.launch(env.MYBROWSER);
   const page = await browser.newPage();
+  const timeout = env.PUPPETEER_BROWSER_TIMEOUT ?? 30000;
 
   const searchInputSelector = 'input.relation_path_type_ahead_search';
 
-  await Promise.all([
-    page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL),
-    page.waitForSelector(searchInputSelector),
-  ]);
+  try {
+    await Promise.all([
+      page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL, { timeout: timeout }),
+      page.waitForSelector(searchInputSelector, { timeout: timeout}),
+    ]);
+  }
+  catch (err) {
+    return json({ error: `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`});
+  }
 
   await page.type(
     searchInputSelector, 
@@ -43,28 +49,28 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
     { delay: 50 }
   );
 
-  await page.waitForSelector('.relation_path_type_ahead_results_holder > ul');
+  await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
   await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
   await page.click('input[value="View collection days"]');
 
-  await page.waitForSelector('input[value="View 2025/2026 collection days"]');
+  await page.waitForSelector('input[value="View 2025/2026 collection days"]',  { timeout: timeout });
   await page.click('input[value="View 2025/2026 collection days"]');
 
   function parseWidget(raw) {
     if (!raw) { 
-      return { error: "Missing data-params attribute" };
+      return json({ error: 'Missing data-params attribute'});
     }
 
     try {
       return JSON.parse(raw);
     } 
     catch {
-      return { error: 'Invalid widget JSON', raw };
+      return json({ error: 'Invalid JSON was returned.'});
     }
   }
 
   async function extractWidget(page, selector) {
-    await page.waitForSelector(selector);
+    await page.waitForSelector(selector, { timeout: timeout });
 
     const raw = await page.$eval(selector, el =>
       el.getAttribute('data-params')
