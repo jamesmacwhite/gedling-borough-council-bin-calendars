@@ -84,12 +84,10 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const address = addressWidgetData?.template_data?.address ?? null;
   const collections = collectionWidgetData?.template_data?.collections ?? null;
 
-  return new Response(JSON.stringify({
-    address: address,
+  return json({ 
+    address: address, 
     collections: collections
-  }), {
-    headers: { 'Content-Type': 'application/json' }
-  });
+  })
 });
 
 /**
@@ -373,13 +371,10 @@ router.get('/street-search', async (request, env, ctx) => {
       eventValidation: searchPageFormData.__EVENTVALIDATION ?? null,
     };
 
-    return new Response(JSON.stringify(body), { 
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      } 
-    });
+    return json(body);
 
-  } catch (err) {
+  } 
+  catch (err) {
     console.error('Street search handler error:', err);
     return new Response('Internal error while processing street search.', {
       status: 500,
