@@ -18,28 +18,35 @@ The router endpoints exposed only support GET requests, but set CORS headers, so
 
 `/get-bin-collection-calendar`
 
-* Parameters: `address` - Full Gedling address, for best results, use Royal Mail PAF format
+* Parameters: `address` - An address in the Gedling borough area. For best results, use Royal Mail PAF format.
 
-Since November 2025, Gedling Borough Council changed the data model from street name/schedule mapping to calendar data being available per address. They also implemented a front-end and made it more accessible to view the data, which this was one of the reasons behind this project in the first place.
+Since November 2025, Gedling Borough Council changed the data model from street name/schedule mapping to calendar data being available per address.
 
 Because of the changes to Gedling Borough Council's website, the use of puppeteer with browser rendering is used to provide this data, as it requires searching individual addresses and viewing each collection page for that address. The design of the new system uses AJAX and has various CSRF and generated website tokens which are difficult to generate/scrape without using a browser/interaction.
 
-The address value provided should ideally be a full Gedling address e.g. `101 Arnold Lane Gedling Nottingham NG4 4HE`. This is because the autocomplete search does partial matching and the worker selects the first result from the autocomplete results. Using full searches reduces the issue of selecting the wrong address.
+The address value provided should ideally be a full Gedling address e.g. `101 Arnold Lane Gedling Nottingham NG4 4HE`. This is because the autocomplete search does partial matching and the worker selects the first result from the autocomplete results. Using full searches reduces the issue of selecting the wrong address. Although searches such as `101 Arnold Lane` will work, but depending on the search input, could lead to ambigious results.
 
 The following process happens with this endpoint:
 
-1. Navigate to https://waste.digital.gedling.gov.uk/w/webpage/bin-collections
-2. Trigger the autocomplete search from the address search input provided and select the first result
-3. Go to the view collection days widget
-4. View the full 2025/26 collection data for the returned address
-5. Locate the widget data-params which provides full data as JSON
+1. A headless browser through puppeteer is used to navigate to `https://waste.digital.gedling.gov.uk/w/webpage/bin-collections`
+2. The search input provided is passed to the autocomplete address search component to trigger the address selection
+3. Go to the view collection days widget page for the address input
+4. View the full 2025/26 collection data widget to obtain the full calendar data.
+5. Locate the widget data-params which provides full data as encoded JSON.
 6. Extract the JSON and return the collection data information as a JSON response.
 
 The following JSON response is returned if successful:
 
+* `addressQuery` - The original search input sent
+* `address` - The actual matched full address from the autocomplete search result
+* `binCollectionUrl` - The bin collection page for the address with valid tokens to view/bookmark
+* `collections` - The calendar data of all collections across the calendar year from the page
+
 ```json
 {
+  "addressQuery": "101 Arnold Lane",
   "address": "101 Arnold Lane Gedling Nottingham NG4 4HE",
+  "binCollectionUrl": "https://waste.digital.gedling.gov.uk/w/webpage/620GBSHB1?webpage_hash=24cd16e4de8c69655761e97d01430996fbacca8b7865b5762f59607ef7aaf62a&webpage_token=79175661266514791221023577abc0fb0b64e4980fd3811eaa77c279d888e4e9&auth=MzU3ZmY1ODhjMmJl&id=7162197",
   "collections": [
     {
       "month": "2025-12",

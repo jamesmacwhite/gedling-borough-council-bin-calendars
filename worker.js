@@ -24,7 +24,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const addressQuery = request.query.address ?? null;
 
   if (!addressQuery) {
-    return new Response('Missing address value', { status: 400 });
+    return json({ error: 'No address search value was provided'}, { status: 400 });
   }
 
   const browser = await puppeteer.launch(env.MYBROWSER);
@@ -36,11 +36,11 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   try {
     await Promise.all([
       page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL, { timeout: timeout }),
-      page.waitForSelector(searchInputSelector, { timeout: timeout}),
+      page.waitForSelector(searchInputSelector, { timeout: timeout }),
     ]);
   }
   catch (err) {
-    return json({ error: `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`});
+    return json({ error: `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`}, { status: 500 });
   }
 
   await page.type(
@@ -58,14 +58,14 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   function parseWidget(raw) {
     if (!raw) { 
-      return json({ error: 'Missing data-params attribute'});
+      return json({ error: 'The data-params attribute could not be found'}, { status: 400 });
     }
 
     try {
       return JSON.parse(raw);
     } 
     catch {
-      return json({ error: 'Invalid JSON was returned.'});
+      return json({ error: 'Invalid JSON was returned.'}, { status: 500 });
     }
   }
 
@@ -84,16 +84,19 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   const addressWidgetData = await extractWidget(page, addressDataSelector);
   const collectionWidgetData = await extractWidget(page, widgetSelector);
+  const collectionUrl = page.url();
 
   await page.close();
 
   const address = addressWidgetData?.template_data?.address ?? null;
   const collections = collectionWidgetData?.template_data?.collections ?? null;
 
-  return json({ 
-    address: address, 
+  return json({
+    addressQuery: addressQuery,
+    address: address,
+    binCollectionUrl: collectionUrl,
     collections: collections
-  })
+  });
 });
 
 /**
