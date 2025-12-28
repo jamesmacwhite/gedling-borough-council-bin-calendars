@@ -46,9 +46,10 @@
                 const address = data.address;
                 const collections = data.collections;
                 const binCollectionsCalendar = document.createElement("div");
+                binCollectionsCalendar.id = 'refuse-schedule-container';
                 binCollectionsCalendar.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-md-3", "g-4");
 
-                calendarCollectionData.innerHTML = `<h2>Bin collection data for: <span class="text-gedling-red">${address}</span></h2>`;
+                calendarCollectionData.innerHTML = `<h2 class="mb-2">Bin collection calendar for: <span class="text-gedling-red">${address}</span></h2>`;
 
                 data.collections.forEach(calendarMonth => {
 
@@ -57,19 +58,26 @@
                     const monthFormatted = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(month);
 
                     const calendarDates = document.createElement("div");
-                    calendarDates.innerHTML += `<h3>${monthFormatted}</h3>`;
+                    calendarDates.classList.add("col");
+                    calendarDates.innerHTML += `<h3 class="schedule-title">${monthFormatted}</h3>`;
 
                     calendarMonth.dates.forEach(occurrence => {
+                        const iconMap = {
+                            "General Collection Service": "trash-fill",
+                            "Glass Collection Service": "archive-fill",
+                            "Recycling Collection Service": "recycle",
+                        };
+
                         const item = document.createElement("div");
                         const d = new Date(occurrence.date); 
                         const day = d.getDate();
-                        const weekday = d.toLocaleString("en-GB",{ weekday:"long"} );
+                        const weekday = d.toLocaleString("en-GB", { weekday:"long" } );
                         const suffix = ["th","st","nd","rd"][day % 10] || "th"; 
 
                         item.innerHTML = `
-                        <div class="date">${weekday} ${day}${suffix}</div>
-                        <ul class="collections">
-                            ${occurrence.collections.map(s => `<li>${s}</li>`).join("")}
+                        <div class="date mb-2 fw-bold schedule-title">${weekday} ${day}${suffix}</div>
+                        <ul class="list-unstyled schedule-item">
+                            ${occurrence.collections.map(s => `<li>${s} <i class="d-print-none bi bi-${iconMap[s]}" aria-hidden="true"></i></li>`).join("")}
                         </ul>
                         `;
 

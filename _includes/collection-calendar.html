@@ -4,11 +4,11 @@
 
 {% if page.url contains 'garden' %}
     {% assign isGardenCollection = true %}
-    {% assign binType = "Refuse/Recycling Collections" %}
+    {% assign binType = "Garden Waste Collections" %}
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_garden_bin_schedule" %}
 {% else %}
     {% assign isGardenCollection = false %}
-    {% assign binType = "Garden Waste Collections" %}
+    {% assign binType = "Refuse/Recycling Collections" %}
     {% assign dataKey = "gedling_borough_council_" | append: dataId | append: "_bin_schedule" %}
 {% endif %}
 
@@ -155,17 +155,17 @@
         {% endfor %}
     </div>
 
-    <p class="fw-bold fs-5 mt-3 text-gedling-red">Don’t forget to put your bin and glass box out by 6am.</p>
+    <p class="fw-bold fs-5 mt-3 text-gedling-red">Don’t forget to put your bin/glass box out by 6am.</p>
 
-    <div class="d-print-block d-none border border-1 p-2 rounded mb-3">
+    <div class="d-print-block d-none border border-1 p-2 rounded mb-3 bg-white">
         <div class="d-flex gap-5 justify-content-center fw-bold">
             <div>
                 <i class="bi bi-trash-fill text-gedling-red"></i>
                 General Waste
             </div>
             <div>
-                <i class="bi bi-box-fill text-primary"></i>
-                Glass
+                <i class="bi bi-archive-fill text-primary"></i>
+                Glass Box
             </div>
             <div>
                 <i class="bi bi-recycle text-success"></i>
@@ -190,7 +190,7 @@
 
             <div class="gap-2">
                 <span class="d-inline-block" aria-hidden="true" style="background: linear-gradient(to right, #6EB43F 0%, #00AEEF 100%); width: 16px; height: 16px; border-radius: 2px; vertical-align: -.125em;"></span>
-                <span class="ms-1">Recycling &amp; Glass</span>
+                <span class="ms-1">Recycling &amp; Glass Box</span>
             </div>
 
             <div class="gap-2">
@@ -262,10 +262,10 @@
             const isChangedCollectionDate = upcomingCollection.getAttribute('data-is-changed-collection');
 
             if (!isChangedCollectionDate) {
-                upcomingCollection.classList.add('border', 'border-3', 'border-black', 'fw-bold');
+                upcomingCollection.classList.add('fw-bold');
             }
             else {
-                 upcomingCollection.classList.add('fw-bold');
+                upcomingCollection.classList.add('border', 'border-3', 'border-black', 'fw-bold');
             }
         }
         else {
