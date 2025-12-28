@@ -1,0 +1,95 @@
+{% if jekyll.environment != 'production' %}
+    {% assign apiUrl = 'http://localhost:8787/get-bin-collection-calendar?address=' %}
+{% else %}
+    {% assign apiUrl = calendarSearchUrl %}
+{% endif %}
+
+<form id="calendar-collection-dates" class="d-print-none">
+    <div class="mb-4">
+        <label for="address" class="form-label fw-bold">Enter your address</label>
+        <input type="search" class="form-control bg-white form-control-lg mb-3" id="address" placeholder="E.g. 101 Arnold Lane" required>
+        <button id="collection-search-btn" type="submit" class="btn btn-lg btn-gedling-red">
+            Get collection dates
+        </button>  
+    </div>
+</form>
+
+<div id="calendar-collections-data" role="region" aria-live="polite" class="bg-light mb-4 p-3 border border-1 mb-3 d-none"></div>
+
+<script>
+    const form = document.querySelector('#calendar-collection-dates');
+    let addressInput = document.querySelector('#address');
+    let calendarCollectionData = document.querySelector('#calendar-collections-data');
+
+    form.addEventListener('submit', event => {
+
+        event.preventDefault();
+        calendarCollectionData.classList.remove('d-none');
+
+        calendarCollectionData.innerHTML = `
+        <div class="d-flex justify-content-center gap-3">
+            <div class="spinner-border" role="status"></div>
+                Loading calendar data...
+        </div>`;
+
+
+        fetch(`{{ apiUrl }}${addressInput.value}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Response(`HTTP error occurred. HTTP error: ${response.status} ${response.statusText}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+
+                const address = data.address;
+                const collections = data.collections;
+                const binCollectionsCalendar = document.createElement("div");
+                binCollectionsCalendar.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-md-3", "g-4");
+
+                calendarCollectionData.innerHTML = `<h2>Bin collection data for: <span class="text-gedling-red">${address}</span></h2>`;
+
+                data.collections.forEach(calendarMonth => {
+
+                    const monthData = calendarMonth.month; 
+                    const month = new Date(monthData + "-01");
+                    const monthFormatted = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(month);
+
+                    const calendarDates = document.createElement("div");
+                    calendarDates.innerHTML += `<h3>${monthFormatted}</h3>`;
+
+                    calendarMonth.dates.forEach(occurrence => {
+                        const item = document.createElement("div");
+                        const d = new Date(occurrence.date); 
+                        const day = d.getDate();
+                        const weekday = d.toLocaleString("en-GB",{ weekday:"long"} );
+                        const suffix = ["th","st","nd","rd"][day % 10] || "th"; 
+
+                        item.innerHTML = `
+                        <div class="date">${weekday} ${day}${suffix}</div>
+                        <ul class="collections">
+                            ${occurrence.collections.map(s => `<li>${s}</li>`).join("")}
+                        </ul>
+                        `;
+
+                        calendarDates.appendChild(item);
+                    });
+
+                    binCollectionsCalendar.appendChild(calendarDates);
+                });
+
+                calendarCollectionData.appendChild(binCollectionsCalendar);
+                calendarCollectionData.scrollIntoView();
+
+                window.dataLayer.push({
+                    'event': 'calendar_collection_search',
+                    'address': addressInput.value
+                });
+            })
+            .catch((error) => {
+                calendarCollectionData.innerHTML = `<p class="text-danger fw-bold mb-0">${error}</p>`
+                console.error("Error fetching data:", error);
+            });
+    });
+</script>
