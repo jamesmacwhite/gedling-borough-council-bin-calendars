@@ -27,6 +27,7 @@ exclude:
   - test/
   - USAGE.md
   - worker.js
+  - .wrangler/
   - wrangler.toml
 
 sass:
@@ -40,5 +41,6 @@ gtm:
   auth: J1DjljiZzoVaDdrd1ACJBw
   preview: env-3
 
+calendarSearchUrl: "https://api.gbcbincalendars.co.uk/get-bin-collection-calendar?address="
 collectionSearchUrl: "https://api.gbcbincalendars.co.uk/street-search?streetName="
 gedlingRefuseSearchUrl: https://apps.gedling.gov.uk/refuse/search.aspx
