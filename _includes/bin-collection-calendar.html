@@ -1,7 +1,7 @@
 {% if jekyll.environment != 'production' %}
     {% assign apiUrl = 'http://localhost:8787/get-bin-collection-calendar?address=' %}
 {% else %}
-    {% assign apiUrl = calendarSearchUrl %}
+    {% assign apiUrl = site.calendarSearchUrl %}
 {% endif %}
 
 <form id="calendar-collection-dates" class="d-print-none">
