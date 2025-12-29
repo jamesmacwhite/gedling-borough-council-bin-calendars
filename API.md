@@ -4,7 +4,7 @@ A serveless API exists through a Cloudflare Worker and is deployed under `api.gb
 
 The API is powered by Cloudflare Workers and the full source code for this worker is available at [worker.js](worker.js).
 
-You can locally run the Cloudflare Worker through wrangler.
+You can locally run the Cloudflare Worker through wrangler, which is useful for local API testing.
 
 ```
 npx wrangler dev
@@ -12,19 +12,19 @@ npx wrangler dev
 
 This will run the worker/API on `http://localhost:8787`. The `BASE_URL` variable is set to `http://localhost:4000` the default port when using `jekyll serve`, so the API responds to the local environment and not live.
 
-The router endpoints exposed only support GET requests, but set CORS headers, so you can use this API in any project if you wish witout issues.
+The router endpoints exposed only support GET requests, but set CORS headers, so you can use this API in any project if you wish without issues.
 
 ## Address search (dynamic calendar data)
 
 `/get-bin-collection-calendar`
 
-* Parameters: `address` - An address in the Gedling borough area. For best results, use Royal Mail PAF format.
+* Query Parameter: `address` - An address in the Gedling borough area.
 
 Since November 2025, Gedling Borough Council changed the data model from street name/schedule mapping to calendar data being available per address.
 
-Because of the changes to Gedling Borough Council's website, the use of puppeteer with browser rendering is used to provide this data, as it requires searching individual addresses and viewing each collection page for that address. The design of the new system uses AJAX and has various CSRF and generated website tokens which are difficult to generate/scrape without using a browser/interaction.
+Because of the changes to Gedling Borough Council's website, the use of puppeteer with browser rendering is used to provide this data, as it requires searching individual addresses and viewing each generated collection days page for that address. The design of the new system uses AJAX and has various CSRF and generated website tokens which are difficult to generate/scrape without using a browser/interaction.
 
-The address value provided should ideally be a full Gedling address e.g. `101 Arnold Lane Gedling Nottingham NG4 4HE`. This is because the autocomplete search does partial matching and the worker selects the first result from the autocomplete results. Using full searches reduces the issue of selecting the wrong address. Although searches such as `101 Arnold Lane` will work, but depending on the search input, could lead to ambigious results.
+The address value provided should ideally be a full Gedling address e.g. `101 Arnold Lane Gedling Nottingham NG4 4HE`. This is because the autocomplete search does partial matching and the worker selects the first result from the autocomplete results. Using full searches reduces the issue of selecting the wrong address. Although searches such as `101 Arnold Lane` will work, but depending on the search input, could lead to ambigious results if multiple are returned.
 
 The following process happens with this endpoint:
 
@@ -437,19 +437,19 @@ The following JSON response is returned if successful:
 }
 ```
 
-The data is scraped from the Yearly Calendar webpage as there is encoded JSON stored in data attributes on various widgets on this page, the address value can be different from the original query because it is the returned data from the address autocomplete results. 
+The data is scraped from the Yearly Calendar webpage as there is encoded JSON stored in data attributes on various widgets on this page, the address value may be different from the original query because it is the returned data from the address autocomplete results. 
 
 The collection data is helpfully present in the DOM and extracted under the `collections` key.
 
-The benefit of this endpoint is that it is always dynamic, in the event Gedling change any schedules any updates will be immediately reflected, unlike the static JSON endpoints, which are based off the iCal data and converted to JSON, which requires the iCal source files to be changed.
+The benefit of this endpoint is that it is always dynamic, in the event Gedling change any schedules any updates will be immediately reflected, unlike the static JSON endpoints, which are based off the iCal data and converted to JSON, which requires the iCal source files to be changed and is also static.
 
 ## Street Search (legacy)
 
 `/street-search`
 
-* Parameters: `streetName` - Full/partial street name value
+* Query Parameter: `streetName` - Full/partial street name value
 
-Until November 2025, Gedling Borough Council never provided anything but PDF documents for bin calendars which is why this project was initially started. To make it easier to map a schedule to a street search, this endpoint uses the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) to make queries and provide mapping between the data. Given the new bin collection data process, I believe that this system is likely to be removed in the future.
+Until November 2025, Gedling Borough Council never provided anything but PDF documents for bin calendars which is why this project was initially started. To make it easier to map a schedule to a street search, this endpoint uses the [Gedling Borough Council refuse collection days search](https://apps.gedling.gov.uk/refuse/search.aspx) to make queries and provide mapping between the data. Given the new bin collection data process, I believe that this system is likely to be removed in the future. The system still returns PDF calendar URLs but they are all invalid and return 404 responses.
 
 This worker will make search queries and scrape the results to return the data formatted as JSON. The origin data behind the search is not published as open data, which is why DOM/HTML scraping is used. The Gedling refuse search site uses ASP.NET and in order to send a valid POST request the __VIEWSTATE and __EVENTVALIDATION values must be scraped and passed in the request to be valid.
 

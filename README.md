@@ -4,22 +4,21 @@
 
 As a resident within the Gedling district in Nottingham, I like to have the bin collection day in my calendar which can be used by multiple devices as well for home automation. 
 
-For a few years now I had always created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I started this project with the original intention of providing all the bin collections in the iCal format, this then expanded to going further by providing HTML for better accessibility as well as JSON for other software to leverage a consistent API for using the data too.
+For a few years now I had always created my own calendar for my specific collection schedule (Wednesday G2). After seeing a few other residents wanting to use this data in home automation, I started this project with the original intention of providing all the bin collections in the iCal format, this then expanded to going further by providing HTML for better website accessibility as well as JSON for other software to leverage a consistent API for using the data too.
 
-More recently Gedling Borough Council implemented a [new bin collection day search and calendar tool](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which replaced the previously horrible PDFs, however it lacks any proper API to obtain the data for programmatic usage. The new search is based around street address, but requires a specific address value per search.
+More recently Gedling Borough Council implemented a [new bin collection day search and calendar tool](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which replaced the non-accessible PDFs, improving accessibility, however their new collection system still lacks any proper API to obtain the data for programmatic usage, which is one of the main reasons behind this project.
 
 ## Gedling bin collection schedules
 
 If you are a new resident or are unsure of how the bin schedules work, they are explained below.
 
-### Finding your bin collection schedule
+### Finding your bin collection calendar
 
-Gedling Borough Council has a newer search tool available on the [bin collections page](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which uses an address search to select a specific full address with postcode.
+Gedling Borough Council has a more accessible search tool available on the [bin collections page](https://waste.digital.gedling.gov.uk/w/webpage/bin-collections) which uses an autocomplete address search to select a specific full address with postcode. This provides a yearly calendar page, allowing you to view the full calendar data. A URL with a unique hash and tokens are provided, allowing use you bookmark or re-use the URL.
 
-The legacy [refuse collection days](https://apps.gedling.gov.uk/refuse/search.aspx) search exists which maps street addresses to the specific schedule name e.g. Monday G1. This project was originally designed around this model, as it was how the PDF calendars were structured. The legacy search is likely to be removed in the future and the specific schedule name is no longer displayed in the newer data.
+The legacy [refuse collection days](https://apps.gedling.gov.uk/refuse/search.aspx) search exists which maps street addresses to the specific schedule name e.g. Monday G1. This project was originally designed around this model, as it was how the PDF calendars were structured. The legacy search system is likely to be removed in the future and the specific schedule name is no longer displayed in the newer data, however the general schedule model likely remains valid.
 
-> [!NOTE]
-I am reviewing if I can update this project to use the newer search tool and possibly generate the JSON data from more automated data sources. This however may have limitations given no direct API for the data exists and may involve using DOM scraping and reverse engineering API calls of the widget based system.
+This project uses its own [API to proxy requests](https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/blob/main/API.md) and return data from both systems which can be used by other projects or applications interested in using the data.
 
 ### Refuse/recycling/glass
 
@@ -33,7 +32,7 @@ There are a total of 20 bin schedules provided by Gedling Borough Council (who k
 
 The Green bin collection is combined with the glass bin collection and occurs on same day, although any glass recycling is collected separately.
 
-Since 2025/26 it is no longer possible to directly see the specific schedule name for your address. Using the 2024/25 dataset from the legacy refuse search tool, the following address lookups are samples to map against.
+Since 2025/26 it is no longer possible to directly see the specific schedule name for your address under the newer system. Using the previous dataset from the legacy refuse search system, the following address lookups are samples to map against.
 
 | Schedule name  | Sample address search |
 |----------------|-----------------------|
