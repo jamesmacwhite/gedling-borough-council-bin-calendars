@@ -91,7 +91,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const collectionWidgetData = await extractWidget(page, widgetSelector);
   const collectionUrl = page.url();
 
-  await page.close();
+  await browser.close();
 
   const address = addressWidgetData?.template_data?.address ?? null;
   const collections = collectionWidgetData?.template_data?.collections ?? null;
