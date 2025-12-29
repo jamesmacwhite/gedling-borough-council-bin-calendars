@@ -294,7 +294,7 @@ router.get('/street-search', async (request, env, ctx) => {
             }
           }
 
-          return text || null;
+          return text ?? null;
         });
 
         const identifier = getCollectionIdentifier(refuseSubscribeUrl);
@@ -323,7 +323,9 @@ router.get('/street-search', async (request, env, ctx) => {
             const link = cell.querySelector('a');
             const href = link?.getAttribute('href') ?? null;
 
-            if (!href) return null;
+            if (!href) {
+              return null;
+            }
 
             if (text === 'Download Calendar') {
               return formatGardenCalendarPDFUrl(href);
@@ -335,7 +337,7 @@ router.get('/street-search', async (request, env, ctx) => {
             }
           }
 
-          return text || null;
+          return text ?? null;
         });
 
         const identifier = getCollectionIdentifier(gardenSubscribeUrl);

@@ -12,7 +12,7 @@ binding = "MYBROWSER"
 BASE_URL = "https://www.gbcbincalendars.co.uk"
 GEDLING_LEGACY_REFUSE_SEARCH_URL = "https://apps.gedling.gov.uk/refuse/search.aspx"
 GEDLING_BIN_COLLECTIONS_SEARCH_URL = "https://waste.digital.gedling.gov.uk/w/webpage/bin-collections"
-PUPPETEER_BROWSER_TIMEOUT = 15000
+PUPPETEER_BROWSER_TIMEOUT = 25000
 
 [[routes]]
 pattern = "api.gbcbincalendars.co.uk"
