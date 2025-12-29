@@ -1,4 +1,4 @@
-import { Router, cors, json } from 'itty-router';
+import { Router, cors, error, json } from 'itty-router';
 import puppeteer from "@cloudflare/puppeteer";
 import { parse } from 'node-html-parser';
 
@@ -24,7 +24,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const addressQuery = request.query.address ?? null;
 
   if (!addressQuery) {
-    return json({ error: 'No address search value was provided'}, { status: 400 });
+    return error(400, 'No address search value was provided');
   }
 
   const browser = await puppeteer.launch(env.MYBROWSER);
@@ -40,32 +40,37 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
     ]);
   }
   catch (err) {
-    return json({ error: `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`}, { status: 500 });
+    return error(500, `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`);
   }
 
-  await page.type(
-    searchInputSelector, 
-    addressQuery,
-    { delay: 50 }
-  );
+  try {
+    await page.type(
+      searchInputSelector, 
+      addressQuery,
+      { delay: 50 }
+    );
 
-  await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
-  await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
-  await page.click('input[value="View collection days"]');
+    await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
+    await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
+    await page.click('input[value="View collection days"]');
+  }
+  catch (err) {
+    return error(500, 'Address search did not return autocomplete results');
+  }
 
   await page.waitForSelector('input[value="View 2025/2026 collection days"]',  { timeout: timeout });
   await page.click('input[value="View 2025/2026 collection days"]');
 
   function parseWidget(raw) {
     if (!raw) { 
-      return json({ error: 'The data-params attribute could not be found'}, { status: 400 });
+      return error(400, 'The data-params attribute could not be found');
     }
 
     try {
       return JSON.parse(raw);
     } 
     catch {
-      return json({ error: 'Invalid JSON was returned.'}, { status: 500 });
+      return error(500, 'Invalid JSON was returned.');
     }
   }
 
@@ -129,9 +134,7 @@ router.get('/street-search', async (request, env, ctx) => {
   const baseUrl = env.BASE_URL;
 
   if (!gedlingRefuseSearchUrl || !baseUrl) {
-    return new Response('Worker configuration error: missing GEDLING_LEGACY_REFUSE_SEARCH_URL and/or BASE_URL.', {
-      status: 500,
-    });
+    return error(500, 'Worker configuration error: missing GEDLING_LEGACY_REFUSE_SEARCH_URL and/or BASE_URL.');
   }
 
   const appBaseUrl = new URL(gedlingRefuseSearchUrl).origin;
@@ -202,22 +205,15 @@ router.get('/street-search', async (request, env, ctx) => {
   const streetName = request.query.streetName ?? null;
 
   if (!streetName) {
-    return new Response('Missing street name parameter.', {
-      status: 400,
-    });
+    return error(400, 'Missing street name parameter.');
   }
 
   if (streetName.length < 5) {
-    return new Response('Street name query should be 5 or more characters.', {
-      status: 400,
-    });
+    return error(400, 'Street name query should be 5 or more characters.');
   }
 
   if (/\d+/.test(streetName)) {
-    return new Response(
-      'For more accurate results, please enter only street name values, no property numbers or other address information.',
-      { status: 400 }
-    );
+    return error(400, 'For more accurate results, please enter only street name values, no property numbers or other address information.');
   }
 
   let refuseCollectionData = [];
@@ -227,10 +223,7 @@ router.get('/street-search', async (request, env, ctx) => {
     const searchPageResponse = await fetch(gedlingRefuseSearchUrl);
 
     if (!searchPageResponse.ok) {
-      return new Response(
-        `Failed to fetch ${gedlingRefuseSearchUrl}. HTTP error: ${searchPageResponse.status} ${searchPageResponse.statusText}.`,
-        { status: 502 }
-      );
+      return error(502, `Failed to fetch ${gedlingRefuseSearchUrl}. HTTP error: ${searchPageResponse.status} ${searchPageResponse.statusText}`);
     }
 
     const searchPageHtml = await searchPageResponse.text();
@@ -242,9 +235,7 @@ router.get('/street-search', async (request, env, ctx) => {
     };
 
     if (!searchPageFormData.__VIEWSTATE || !searchPageFormData.__EVENTVALIDATION) {
-      return new Response('Unable to parse required form fields from upstream site.', {
-        status: 502,
-      });
+      return error(502, `Unable to parse VIEWSTATE or EVENTVALIDATION from {$env.GEDLING_LEGACY_REFUSE_SEARCH_URL}`);
     }
 
     const formData = new FormData();
@@ -264,10 +255,7 @@ router.get('/street-search', async (request, env, ctx) => {
     });
 
     if (!searchRequestResponse.ok) {
-      return new Response(
-        `Failed to post search to ${gedlingRefuseSearchUrl}. HTTP error: ${searchRequestResponse.status} ${searchRequestResponse.statusText}.`,
-        { status: 502 }
-      );
+      return error(502, `Failed to post search to ${gedlingRefuseSearchUrl}. HTTP error: ${searchRequestResponse.status} ${searchRequestResponse.statusText}.`)
     }
 
     const searchRequestResults = await searchRequestResponse.text();
@@ -365,10 +353,7 @@ router.get('/street-search', async (request, env, ctx) => {
     }
 
     if (refuseCollectionData.length === 0 && gardenWasteCollectionData.length === 0) {
-      return new Response(
-        'The street name query did not return any bin collection data. Please check the street name entered is valid and within the Gedling Borough Council district and try again.',
-        { status: 404 }
-      );
+      return error(404, 'The street name query did not return any bin collection data. Please check the street name entered is valid and within the Gedling Borough Council district and try again.');
     }
 
     const body = {
@@ -385,9 +370,7 @@ router.get('/street-search', async (request, env, ctx) => {
   } 
   catch (err) {
     console.error('Street search handler error:', err);
-    return new Response('Internal error while processing street search.', {
-      status: 500,
-    });
+    return error(500, 'Internal error occurred while processing street search.');
   }
 });
 
