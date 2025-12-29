@@ -4,6 +4,8 @@
     {% assign apiUrl = site.calendarSearchUrl %}
 {% endif %}
 
+<p class="d-print-none">For best results, use searches like "101 Arnold Lane" or full addresses like "101 Arnold Lane Gedling Nottingham NG4 4HE"</p>
+
 <form id="calendar-collection-dates" class="d-print-none">
     <div class="mb-4">
         <label for="address" class="form-label fw-bold">Enter your address</label>
@@ -17,11 +19,11 @@
 <div id="calendar-collections-data" role="region" aria-live="polite" class="bg-light mb-4 p-3 border border-1 mb-3 d-none"></div>
 
 <script>
-    const form = document.querySelector('#calendar-collection-dates');
+    const calendarForm = document.querySelector('#calendar-collection-dates');
     let addressInput = document.querySelector('#address');
     let calendarCollectionData = document.querySelector('#calendar-collections-data');
 
-    form.addEventListener('submit', event => {
+    calendarForm.addEventListener('submit', event => {
 
         event.preventDefault();
         calendarCollectionData.classList.remove('d-none');
@@ -29,7 +31,7 @@
         calendarCollectionData.innerHTML = `
         <div class="d-flex justify-content-center gap-3">
             <div class="spinner-border" role="status"></div>
-                Loading calendar data...
+                Generating calendar data...
         </div>`;
 
 
@@ -49,7 +51,17 @@
                 binCollectionsCalendar.id = 'refuse-schedule-container';
                 binCollectionsCalendar.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-md-3", "g-4");
 
-                calendarCollectionData.innerHTML = `<h2 class="mb-2">Bin collection calendar for: <span class="text-gedling-red">${address}</span></h2>`;
+                calendarCollectionData.innerHTML = `
+                <div class="d-none d-print-block bg-gedling-red p-2 mb-3">
+                    <img src="{{ "/assets/images/gedling-logo-white.svg" | absolute_url }}" alt="Gedling Borough Council">
+                </div>
+
+                <h2 class="mb-2">Bin collection calendar for: <span class="text-gedling-red">${address}</span></h2>`;
+                calendarCollectionData.innerHTML += `
+                    <div class="d-flex mb-3 gap-3 d-print-none">
+                        <a href="${data.binCollectionUrl}" class="btn btn-gedling-red">View collection dates</a>
+                        <button onclick="window.print();" class="btn btn-secondary">Print calendar</button>
+                    </div>`;
 
                 data.collections.forEach(calendarMonth => {
 
@@ -68,16 +80,23 @@
                             "Recycling Collection Service": "recycle",
                         };
 
+                        // Re-label schedule names from API data
+                        const scheduleLabelMap = {
+                            "General Collection Service": "Black Bin Day",
+                            "Glass Collection Service": "Glass Box Day",
+                            "Recycling Collection Service": "Green Bin Day",
+                        }
+
                         const item = document.createElement("div");
                         const d = new Date(occurrence.date); 
                         const day = d.getDate();
-                        const weekday = d.toLocaleString("en-GB", { weekday:"long" } );
+                        const weekday = d.toLocaleString("en-GB", { weekday: "long" } );
                         const suffix = ["th","st","nd","rd"][day % 10] || "th"; 
 
                         item.innerHTML = `
-                        <div class="date mb-2 fw-bold schedule-title">${weekday} ${day}${suffix}</div>
+                        <div class="date my-2 fw-bold schedule-title">${weekday} ${day}${suffix}</div>
                         <ul class="list-unstyled schedule-item">
-                            ${occurrence.collections.map(s => `<li>${s} <i class="d-print-none bi bi-${iconMap[s]}" aria-hidden="true"></i></li>`).join("")}
+                            ${occurrence.collections.map(s => `<li>${scheduleLabelMap[s] || s} <i class="bi bi-${iconMap[s]}" aria-hidden="true"></i></li>`).join("")}
                         </ul>
                         `;
 

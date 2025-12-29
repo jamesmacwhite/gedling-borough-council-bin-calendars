@@ -55,4 +55,11 @@
     [data-is-changed-collection="true"] {
         color: $danger;
     }
+
+    #calendar-collections-data {
+        background-color: transparent !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }

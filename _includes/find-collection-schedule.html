@@ -4,8 +4,9 @@
     {% assign apiUrl = site.collectionSearchUrl %}
 {% endif %}
 
+<p class="d-print-none">For the most relevant search results, enter a street name that is within the Gedling local authority. Avoid entering other data such as property numbers with your search.</p>
+
 <form id="collection-search">
-    
     <div class="mb-4">
         <label for="street-name" class="form-label fw-bold">Enter your street name</label>
         <div class="input-group">
@@ -36,10 +37,10 @@
         }
     });
 
-    let form = document.querySelector('form#collection-search');
+    let streetSearchForm = document.querySelector('form#collection-search');
     let searchResult = document.querySelector('.collection-search-result');
 
-    form.addEventListener('submit', event => {
+    streetSearchForm.addEventListener('submit', event => {
         event.preventDefault();
 
         fetch(`{{ apiUrl }}${streetNameInput.value}`)
@@ -69,7 +70,7 @@
                 let streetQuery = data.streetNameQuery;
                 const streetTitle = document.createElement('p');
                 streetTitle.classList.add('fs-3')
-                streetTitle.innerHTML = `Bin collection results for: <strong>${streetQuery}</strong>`;
+                streetTitle.innerHTML = `Bin collection results for: <span class="text-gedling-red fw-bold">${streetQuery}</span>`;
                 searchResult.append(streetTitle);
                 
                 const rowWrapper = document.createElement('div');

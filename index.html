@@ -3,27 +3,48 @@ layout: default
 title: "Waste, Recycling, Glass and Garden bin schedules"
 ---
 
-<h2>Find your collection day</h2>
+<div class="d-print-none">
+    <h2>Find your collection day</h2>
 
-<p>Using the street name search below you can enter any valid street name in the Gedling local authority area to find your collection day and schedule for waste, recycling and garden bin collections. This search uses live data from Gedling Borough Council.</p>
+    <p>Search by your address or street name to find your bin collection schedule/calendar.</p>
 
-{% include find-collection-schedule.html %}
+    <ul class="nav nav-tabs mb-3" id="search-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="address-search-tab" data-bs-toggle="tab" data-bs-target="#address-search" type="button" role="tab" aria-controls="address-search-pane" aria-selected="true">Address search</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="street-search-tab" data-bs-toggle="tab" data-bs-target="#street-search" type="button" role="tab" aria-controls="street-search-pane" aria-selected="false">Street name search</button>
+        </li>
+    </ul>
+</div>
 
-<p class="mt-2">You can also view all calendars using the buttons below. Each calendar published is provided in HTML, iCalendar (iCal) and JSON. All data is derived from <a href="https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/tree/main/ical">iCalendar data</a>.</p>
+<div class="tab-content">
+  <div class="tab-pane show active" id="address-search" role="tabpanel" aria-labelledby="address-search-tab" tabindex="0">
+    {% include bin-collection-calendar.html %}
+  </div>
+  <div class="tab-pane" id="street-search" role="tabpanel" aria-labelledby="street-search-tab" tabindex="0">
+    {% include find-collection-schedule.html %}
+  </div>
+</div>
 
-<h2>View all bin calendars</h2>
+<div class="d-print-none">
 
-<p>Gedling Borough Council operate two different types of bin collections, which are explained below:</p>
+    <p class="mt-2">You can also view all calendars using the buttons below. Each calendar published is provided as HTML, iCalendar (iCal) and JSON. All data is derived from <a href="https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/tree/main/ical">iCalendar data</a>.</p>
 
-<dl>
-    <dt>Refuse bin collections</dt>
-    <dd>These collections include waste and recycling, which is Black Bin (general waste) Green Bin (recycling) and Glass Box (glass recycling).</dd>
-  
-    <dt>Garden bin collections</dt>
-    <dd>The garden waste bin is an additional paid service and runs differently to the refuse collections.</dd>
-</dl>
+    <h2>View all bin calendars</h2>
 
-<div class="d-grid gap-2 d-md-block mb-4">
-    <a href="{{ '/collections/refuse' | absolute_url }}" class="btn btn-lg btn-gedling-red me-md-2">View all refuse bin calendars</a>
-    <a href="{{ '/collections/garden' | absolute_url }}" class="btn btn-lg btn-success">View all garden bin calendars</a>
+    <p>Gedling Borough Council operate two different types of bin collections, which are explained below:</p>
+
+    <dl>
+        <dt>Refuse bin collections</dt>
+        <dd>These collections include waste and recycling, which is Black Bin (general waste) Green Bin (recycling) and Glass Box (glass recycling).</dd>
+    
+        <dt>Garden bin collections</dt>
+        <dd>The garden waste bin is an additional paid service and runs differently to the refuse collections.</dd>
+    </dl>
+
+    <div class="d-grid gap-2 d-md-block mb-4">
+        <a href="{{ '/collections/refuse' | absolute_url }}" class="btn btn-lg btn-gedling-red me-md-2">View all refuse bin calendars</a>
+        <a href="{{ '/collections/garden' | absolute_url }}" class="btn btn-lg btn-success">View all garden bin calendars</a>
+    </div>
 </div>
