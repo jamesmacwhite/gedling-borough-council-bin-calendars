@@ -376,6 +376,9 @@ router.get('/street-search', async (request, env, ctx) => {
   }
 });
 
+// Catch-all route for anything else
+router.all('*', () => error(404));
+
 export default { 
   fetch(request, env, ctx) {
     return router.fetch(request, env, ctx) 
