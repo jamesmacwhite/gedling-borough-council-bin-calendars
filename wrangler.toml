@@ -15,5 +15,13 @@ GEDLING_BIN_COLLECTIONS_SEARCH_URL = "https://waste.digital.gedling.gov.uk/w/web
 PUPPETEER_BROWSER_TIMEOUT = 15000
 
 [observability]
+[observability.logs]
 enabled = true
 head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+head_sampling_rate = 1
+persist = true
