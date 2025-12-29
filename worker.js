@@ -223,7 +223,7 @@ router.get('/street-search', async (request, env, ctx) => {
     const searchPageResponse = await fetch(gedlingRefuseSearchUrl);
 
     if (!searchPageResponse.ok) {
-      return error(502, `Failed to fetch ${gedlingRefuseSearchUrl}. HTTP error: ${searchPageResponse.status} ${searchPageResponse.statusText}`);
+      return error(502, `Failed to fetch ${gedlingRefuseSearchUrl}`);
     }
 
     const searchPageHtml = await searchPageResponse.text();
@@ -235,7 +235,7 @@ router.get('/street-search', async (request, env, ctx) => {
     };
 
     if (!searchPageFormData.__VIEWSTATE || !searchPageFormData.__EVENTVALIDATION) {
-      return error(502, `Unable to parse VIEWSTATE or EVENTVALIDATION from {$env.GEDLING_LEGACY_REFUSE_SEARCH_URL}`);
+      return error(502, `Unable to parse VIEWSTATE or EVENTVALIDATION from ${env.GEDLING_LEGACY_REFUSE_SEARCH_URL}`);
     }
 
     const formData = new FormData();
@@ -255,7 +255,7 @@ router.get('/street-search', async (request, env, ctx) => {
     });
 
     if (!searchRequestResponse.ok) {
-      return error(502, `Failed to post search to ${gedlingRefuseSearchUrl}. HTTP error: ${searchRequestResponse.status} ${searchRequestResponse.statusText}.`)
+      return error(502, `POST request to ${gedlingRefuseSearchUrl} failed.`)
     }
 
     const searchRequestResults = await searchRequestResponse.text();
