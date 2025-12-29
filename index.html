@@ -10,19 +10,19 @@ title: "Waste, Recycling, Glass and Garden bin schedules"
 
     <ul class="nav nav-tabs mb-3" id="search-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="address-search-tab" data-bs-toggle="tab" data-bs-target="#address-search" type="button" role="tab" aria-controls="address-search-pane" aria-selected="true">Address search</button>
+            <button class="nav-link" id="address-search-tab" data-bs-toggle="tab" data-bs-target="#address-search" type="button" role="tab" aria-controls="address-search-pane" aria-selected="true">Address search</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="street-search-tab" data-bs-toggle="tab" data-bs-target="#street-search" type="button" role="tab" aria-controls="street-search-pane" aria-selected="false">Street name search</button>
+            <button class="nav-link active" id="street-search-tab" data-bs-toggle="tab" data-bs-target="#street-search" type="button" role="tab" aria-controls="street-search-pane" aria-selected="false">Street name search</button>
         </li>
     </ul>
 </div>
 
 <div class="tab-content">
-  <div class="tab-pane show active" id="address-search" role="tabpanel" aria-labelledby="address-search-tab" tabindex="0">
+  <div class="tab-pane" id="address-search" role="tabpanel" aria-labelledby="address-search-tab" tabindex="0">
     {% include bin-collection-calendar.html %}
   </div>
-  <div class="tab-pane" id="street-search" role="tabpanel" aria-labelledby="street-search-tab" tabindex="0">
+  <div class="tab-pane show active" id="street-search" role="tabpanel" aria-labelledby="street-search-tab" tabindex="0">
     {% include find-collection-schedule.html %}
   </div>
 </div>
