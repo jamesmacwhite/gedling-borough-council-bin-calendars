@@ -29,6 +29,7 @@
         <button id="copy-ical-url-btn" type="button" class="btn btn-secondary">Copy iCal URL</button>
         <a href="{{ icalUrl }}" class="btn btn-light" download>Download calendar (.ics)</a>
         <a href="https://waste.digital.gedling.gov.uk/w/webpage/bin-reminders" target="_blank" rel="nofollow" class="btn btn-dark">Email alerts</a>
+        <button type="button" onclick="window.print()" class="btn btn-info">Print Calendar</button>
     </div>
 </div>
 
@@ -142,12 +143,12 @@
     
                 {% for item in month.items %}
                     <div data-is-changed-collection="{{ item.isChangedCollection ? 'true' : 'false' }}" data-bin-type="{{ item.type }}" data-bin-collection-date="{{ item.collectionDate | date: '%F' }}" class="{%- if item.isChangedCollection %} border border-3 border-danger{% endif %} p-3 mb-2 {{ item.type }} bg-{{ item.type }} position-relative schedule-item">
-                        {% for icon in iconMap[item.type] %}
-                            <i class="bi bi-{{ icon }} d-inline" aria-hidden="true"></i>
-                        {% endfor %}
                         <p class="d-inline mb-0">
                             {% include ordinal-date.html collectionDate=item.collectionDate %}
                             <span class="d-print-none">- {{ item.name }}</span>
+                            {% for icon in iconMap[item.type] %}
+                                <i class="d-none d-print-inline calendar-icon bi bi-{{ icon }} {{ item.type }}" aria-hidden="true"></i>
+                            {% endfor %}
                         </p>
                     </div>
                 {% endfor %}

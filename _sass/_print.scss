@@ -62,4 +62,20 @@
         margin: 0 !important;
         padding: 0 !important;
     }
+
+    .calendar-icon {
+        &.black-bin {
+            color: $gedling-red;
+        }
+
+        &.green-bin,
+        &.bi-recycle {
+            color: $success;
+        }
+
+        &.glass-box,
+        &.bi-archive-fill {
+            color: $primary;
+        }
+    }
 }

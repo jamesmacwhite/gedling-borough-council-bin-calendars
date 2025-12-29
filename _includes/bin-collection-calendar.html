@@ -60,7 +60,7 @@
                 calendarCollectionData.innerHTML += `
                     <div class="d-flex mb-3 gap-3 d-print-none">
                         <a href="${data.binCollectionUrl}" class="btn btn-gedling-red">View collection dates</a>
-                        <button onclick="window.print();" class="btn btn-secondary">Print calendar</button>
+                        <button type="button" onclick="window.print();" class="btn btn-secondary">Print calendar</button>
                     </div>`;
 
                 data.collections.forEach(calendarMonth => {
