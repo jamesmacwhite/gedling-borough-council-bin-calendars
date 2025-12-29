@@ -1,4 +1,4 @@
-import { Router, cors, error, json } from 'itty-router';
+import { Router, cors, error, json, text } from 'itty-router';
 import puppeteer from "@cloudflare/puppeteer";
 import { parse } from 'node-html-parser';
 
@@ -12,7 +12,7 @@ const router = Router({
 });
 
 router.get('/', () => {
-  return new Response('API worker is running.');
+  return text('API worker is running.');
 });
 
 /**
@@ -376,7 +376,7 @@ router.get('/street-search', async (request, env, ctx) => {
   }
 });
 
-// Catch-all route for anything else
+// Catch-all route for anything
 router.all('*', () => error(404));
 
 export default { 
