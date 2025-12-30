@@ -1,8 +1,10 @@
 {% if jekyll.environment != 'production' %}
-    {% assign apiUrl = 'http://localhost:8787/get-bin-collection-calendar?address=' %}
+    {% assign calendarSearchUrl = 'http://localhost:8787/get-bin-collection-calendar?address=' %}
 {% else %}
-    {% assign apiUrl = site.calendarSearchUrl %}
+    {% assign calendarSearchUrl = site.calendarSearchUrl %}
 {% endif %}
+
+<div class="alert bg-primary text-white p-2">The address search option uses Gedling Borough Council's new <a href="https://waste.digital.gedling.gov.uk/w/webpage/bin-collections" target="_blank" rel="nofollow" class="text-white">bin collection search tool</a> and may occasionally fail to return results. If you encounter problems, use the street search option as an alternative.</div>
 
 <p class="d-print-none">For best results, use searches like "101 Arnold Lane" or full addresses like "101 Arnold Lane Gedling Nottingham NG4 4HE"</p>
 
@@ -35,7 +37,7 @@
         </div>`;
 
 
-        fetch(`{{ apiUrl }}${addressInput.value}`)
+        fetch(`{{ calendarSearchUrl }}${addressInput.value}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Response(`HTTP error occurred. HTTP error: ${response.status} ${response.statusText}`);
@@ -111,7 +113,8 @@
 
                 window.dataLayer.push({
                     'event': 'calendar_collection_search',
-                    'address': addressInput.value
+                    'addressQuery': addressInput.value,
+                    'address': data.address
                 });
             })
             .catch((error) => {

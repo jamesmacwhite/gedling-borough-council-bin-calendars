@@ -1,7 +1,7 @@
 {% if jekyll.environment != 'production' %}
-    {% assign apiUrl = 'http://localhost:8787/street-search?streetName=' %}
+    {% assign collectionSearchUrl = 'http://localhost:8787/street-search?streetName=' %}
 {% else %}
-    {% assign apiUrl = site.collectionSearchUrl %}
+    {% assign collectionSearchUrl = site.collectionSearchUrl %}
 {% endif %}
 
 <p class="d-print-none">For the most relevant search results, enter a street name that is within the Gedling local authority. Avoid entering other data such as property numbers with your search.</p>
@@ -43,7 +43,7 @@
     streetSearchForm.addEventListener('submit', event => {
         event.preventDefault();
 
-        fetch(`{{ apiUrl }}${streetNameInput.value}`)
+        fetch(`{{ collectionSearchUrl }}${streetNameInput.value}`)
             .then((response) => {
 
                 if (!response.ok) {

@@ -6,12 +6,18 @@ layout: default
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>Gedling Borough Council has a total of 20 different refuse/recycling collections and 10 garden waste collections. Depending on the area within the Gedling district, a specific weekday and schedule name is assigned. Using this search tool, you can find the specific your specific bin collections schedule.</p>
+<p>Gedling Borough Council has a total of 20 different refuse/recycling collections and 10 garden waste collections. Depending on the area within the Gedling district, a specific weekday and schedule name is assigned. Using this search tool, you can find the specific your specific bin collection dates/schedule.</p>
 
-{% include find-collection-schedule.html %}
+<dl>
+    <dt>Address search</dt>
+    <dd>Uses the newer <a href="https://waste.digital.gedling.gov.uk/w/webpage/bin-collections" target="_blank" rel="nofollow">Gedling bin collection day search</a> which gets bin collections by address and uses live data.</dd>
 
-<p>Some street name queries will return multiple collection results, this is due to being on an area boundary. When multiple results are returned, the area and in some cases property numbers displayed below the collection name to help identify the correct collection in these instances. This additional data is provided by Gedling Borough Council.</p>
+    <dt>Street search</dt>
+    <dd>Uses the older <a href="https://apps.gedling.gov.uk/refuse/search.aspx" target="_blank" rel="nofollow">refuse search</a> to search general street names to map to calendar schedules.</dd>
+</dl>
+
+{% include collection-combo-search.html %}
 
 <h2 class="h3">About this data</h2>
 
-<p>This search tool uses data from the <a href="{{ site.gedlingRefuseSearchUrl }}">Gedling Borough Council refuse collection days search</a>. The search result format provided by apps.gedling.gov.uk does not directly provide the collection weekday or schedule name but this search tool scrapes the data and formats the information in a more readable format that's easier to understand and links directly to the correct calendar information on this website. You can find more information <a href="https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/blob/main/API.md" target="_blank">about the API behind this search</a> from the main repository.</p>
+<p>This search tool uses data from Gedling Borough Council with an open-source API to provide the data in consumable formats for display on this website as well as other applications. You can read more <a href="https://github.com/jamesmacwhite/gedling-borough-council-bin-calendars/blob/main/API.md" target="_blank">about the API behind this search</a> from the main repository.</p>
