@@ -30,36 +30,49 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const browser = await puppeteer.launch(env.MYBROWSER);
   const page = await browser.newPage();
   const timeout = env.PUPPETEER_BROWSER_TIMEOUT ?? 30000;
-
   const searchInputSelector = 'input.relation_path_type_ahead_search';
 
   try {
-    await Promise.all([
-      page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL, { timeout: timeout }),
-      page.waitForSelector(searchInputSelector, { timeout: timeout }),
-    ]);
+    await page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL, { timeout: timeout });
+    await page.waitForSelector(searchInputSelector, { timeout: timeout });
   }
   catch (err) {
     return error(500, `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`);
   }
 
   try {
-    await page.type(
-      searchInputSelector, 
-      addressQuery,
-      { delay: 50 }
-    );
-
-    await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
-    await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
-    await page.click('input[value="View collection days"]');
+      await page.type(searchInputSelector, addressQuery, { delay: 100 });
+      await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
+      await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
   }
   catch (err) {
-    return error(500, 'Address search did not return autocomplete results');
+    return error(500, 'Failed to select an address from autocomplete results');
   }
 
-  await page.waitForSelector('input[value="View 2025/2026 collection days"]',  { timeout: timeout });
-  await page.click('input[value="View 2025/2026 collection days"]');
+  // Trigger navigation to initial summary page
+  try {
+    await Promise.all([
+      page.waitForNavigation(),
+      page.click('input[value="View collection days"]')
+    ]);
+  }
+  catch (err) {
+    return error(500, 'Failed to get collection summary page');
+  }
+
+  const yearlyCalendarButton = 'input[value="View 2025/2026 collection days"]';
+  await page.waitForSelector(yearlyCalendarButton, { timeout: timeout });
+
+  // Trigger navigation to yearly calendar view page
+  try {
+    await Promise.all([
+      page.waitForNavigation(),
+      page.click(yearlyCalendarButton)
+    ]);
+  }
+  catch (err) {
+    return error(500, 'Failed to get yearly calendar page');
+  }
 
   function parseWidget(raw) {
     if (!raw) { 
@@ -75,13 +88,17 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   }
 
   async function extractWidget(page, selector) {
-    await page.waitForSelector(selector, { timeout: timeout });
+    try {
+      await page.waitForSelector(selector, { timeout: timeout });
+      const raw = await page.$eval(selector, el =>
+        el.getAttribute('data-params')
+      );
 
-    const raw = await page.$eval(selector, el =>
-      el.getAttribute('data-params')
-    );
-
-    return parseWidget(raw);
+      return parseWidget(raw);
+    }
+    catch(err) {
+      return error(500, 'Failed to extract widget data from the page.');
+    }
   }
 
   const addressDataSelector = '#mats_content_wrapper > div > form > div > div:nth-child(2) > div > div.page_cell.contains_widget.col-12.col-lg-8 > div > div';
