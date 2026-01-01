@@ -32,9 +32,11 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const timeout = env.PUPPETEER_BROWSER_TIMEOUT ?? 30000;
   const searchInputSelector = 'input.relation_path_type_ahead_search';
 
+  page.setDefaultTimeout(timeout);
+
   try {
-    await page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL, { timeout: timeout });
-    await page.waitForSelector(searchInputSelector, { timeout: timeout });
+    await page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL);
+    await page.waitForSelector(searchInputSelector);
   }
   catch (err) {
     return error(500, `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`);
@@ -42,7 +44,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   try {
       await page.type(searchInputSelector, addressQuery, { delay: 100 });
-      await page.waitForSelector('.relation_path_type_ahead_results_holder > ul', { timeout: timeout });
+      await page.waitForSelector('.relation_path_type_ahead_results_holder > ul');
       await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
   }
   catch (err) {
@@ -52,7 +54,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   // Trigger navigation to initial summary page
   try {
     await Promise.all([
-      page.waitForNavigation(),
+      page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click('input[value="View collection days"]')
     ]);
   }
@@ -61,12 +63,12 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   }
 
   const yearlyCalendarButton = 'input[value="View 2025/2026 collection days"]';
-  await page.waitForSelector(yearlyCalendarButton, { timeout: timeout });
+  await page.waitForSelector(yearlyCalendarButton);
 
   // Trigger navigation to yearly calendar view page
   try {
     await Promise.all([
-      page.waitForNavigation(),
+      page.waitForNavigation({ waitUntil: 'networkidle0' }),
       page.click(yearlyCalendarButton)
     ]);
   }
@@ -76,7 +78,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   function parseWidget(raw) {
     if (!raw) { 
-      return error(400, 'The data-params attribute could not be found');
+      return error(500, 'The data-params attribute could not be found');
     }
 
     try {
@@ -89,7 +91,7 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
 
   async function extractWidget(page, selector) {
     try {
-      await page.waitForSelector(selector, { timeout: timeout });
+      await page.waitForSelector(selector);
       const raw = await page.$eval(selector, el =>
         el.getAttribute('data-params')
       );
