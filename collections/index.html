@@ -7,7 +7,7 @@ layout: default
 
 <h1 class="h2">{{ page.title }}</h1>
 
-<p>Find all links to the calendars for refuse/garden bin collections in the Gedling local authority. If you know your specific weekday and schedule identifier you can find it below. You can also <a href="{{ '/collection-search' | absolute_url }}">search using your street name</a> to find out your specific calendar schedule.</p>
+<p>Find all links to the calendars for refuse/garden bin collections in the Gedling local authority. If you know your specific weekday and schedule identifier you can find it below. You can also <a href="{{ '/collection-search' | absolute_url }}">search using your street name/address</a> to find out your specific calendar schedule.</p>
 
 <div class="row row-cols-1 row-cols-sm-2 g-4">
     {% for type in site.data.calendars.bin_collections %}
