@@ -136,7 +136,7 @@
 
                 window.dataLayer.push({
                     'event': 'bin_collection_search',
-                    'streetQuery': streetNameInput.value
+                    'streetQuery': streetNameInput.value.toLowerCase()
                 });
             })
             .catch((error) => {

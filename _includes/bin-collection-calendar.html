@@ -113,8 +113,8 @@
 
                 window.dataLayer.push({
                     'event': 'calendar_collection_search',
-                    'addressQuery': addressInput.value,
-                    'address': data.address
+                    'addressQuery': addressInput.value.toLowerCase(),
+                    'address': data.address.toLowerCase()
                 });
             })
             .catch((error) => {
