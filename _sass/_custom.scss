@@ -29,6 +29,31 @@ pre {
     }
 }
 
+@include media-breakpoint-down(sm) { 
+    .nav-tabs {
+
+        --bs-nav-tabs-border-width: 0;
+
+        li {
+            --bs-nav-tabs-border-width: 0;
+            width: 100%;
+            display: block;
+
+            button {
+                display: block;
+                width: 100%;
+            }
+
+            > .nav-link {
+                --bs-nav-tabs-border-radius: 0;
+                --bs-nav-link-padding-y: .7rem;
+                --bs-nav-link-padding-x: 1.2rem;
+                @include rfs(.3rem, border-radius);
+            }
+        }
+    }
+}
+
 .development {
     &:before {
         position: fixed;
