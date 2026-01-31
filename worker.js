@@ -30,25 +30,28 @@ router.get('/get-bin-collection-calendar', async (request, env, ctx) => {
   const browser = await puppeteer.launch(env.MYBROWSER);
   const page = await browser.newPage();
   const timeout = env.PUPPETEER_BROWSER_TIMEOUT ?? 30000;
+  const manualAddressCheckboxSelector = '.custom-control-input.input_boolean';
   const searchInputSelector = 'input.relation_path_type_ahead_search';
 
   page.setDefaultTimeout(timeout);
 
   try {
     await page.goto(env.GEDLING_BIN_COLLECTIONS_SEARCH_URL);
-    await page.waitForSelector(searchInputSelector);
   }
   catch (err) {
     return error(500, `Failed to load Gedling Borough Council bin collections page: ${env.GEDLING_BIN_COLLECTIONS_SEARCH_URL}`);
   }
 
   try {
+      const manualAddressCheckbox = await page.waitForSelector(manualAddressCheckboxSelector);
+      await manualAddressCheckbox.click();
+      await page.waitForSelector(searchInputSelector);
       await page.type(searchInputSelector, addressQuery, { delay: 100 });
       await page.waitForSelector('.relation_path_type_ahead_results_holder > ul');
       await page.click('.relation_path_type_ahead_results_holder > ul > li:first-child');
   }
   catch (err) {
-    return error(500, 'Failed to select an address from autocomplete results');
+    return error(500, 'Failed to select an address from autocomplete results.');
   }
 
   // Trigger navigation to initial summary page
